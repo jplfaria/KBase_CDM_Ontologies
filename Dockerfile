@@ -62,13 +62,13 @@ ENV PATH="/home/ontology/tools/bin:/home/ontology/tools:/home/ontology/tools/rel
 ENV ROBOT_JAVA_ARGS="-Xmx8g"
 ENV _JAVA_OPTIONS="-Xmx8g"
 
+# Copy requirements and install Python dependencies globally as root
+COPY requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt && rm /tmp/requirements.txt
+
 # Switch to non-root user
 USER ontology
 WORKDIR /home/ontology/workspace
-
-# Copy requirements and install Python dependencies
-COPY --chown=ontology:ontology requirements.txt .
-RUN pip install --user --no-cache-dir -r requirements.txt
 
 # Copy the application code
 COPY --chown=ontology:ontology . .
