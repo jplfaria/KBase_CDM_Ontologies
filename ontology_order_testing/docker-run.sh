@@ -32,6 +32,12 @@ run_docker() {
     echo "🚀 Running: $description"
     echo "📋 Script: $script_path"
     
+    # Export host user ID for Docker (UID might be readonly, so check first)
+    if [ -z "$UID" ] || [ "$UID" = "" ]; then
+        export UID=$(id -u)
+    fi
+    export GID=$(id -g)
+    
     # Load environment variables from local env file  
     source "$TESTING_DIR/local_env/.env.local"
     
@@ -50,6 +56,12 @@ run_docker_custom() {
     echo ""
     echo "🚀 Running: $description"
     echo "📋 Command: $command"
+    
+    # Export host user ID for Docker (UID might be readonly, so check first)
+    if [ -z "$UID" ] || [ "$UID" = "" ]; then
+        export UID=$(id -u)
+    fi
+    export GID=$(id -g)
     
     # Load environment variables from local env file  
     source "$TESTING_DIR/local_env/.env.local"
