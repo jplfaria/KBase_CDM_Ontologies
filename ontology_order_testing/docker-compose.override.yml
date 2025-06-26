@@ -11,15 +11,15 @@ services:
       - ./ontology_order_testing/local_env/.env.local
     # Override hardcoded Java memory settings from Dockerfile
     environment:
-      # Override ROBOT_JAVA_ARGS from Dockerfile (was hardcoded to 8g)
-      - ROBOT_JAVA_ARGS=-Xmx64g -XX:MaxMetaspaceSize=8g -XX:+UseG1GC
-      # Override _JAVA_OPTIONS from Dockerfile (was hardcoded to 8g) 
-      - _JAVA_OPTIONS=-Xmx64g -XX:MaxMetaspaceSize=8g -XX:+UseG1GC
-      # Additional memory configurations
-      - RELATION_GRAPH_JAVA_ARGS=-Xmx64g -XX:MaxMetaspaceSize=8g -XX:+UseG1GC
-      - SEMSQL_MEMORY_LIMIT=64g
-      - PYTHON_MEMORY_LIMIT=64g
-      - ENABLE_MEMORY_MONITORING=false
+      # Override ROBOT_JAVA_ARGS from Dockerfile (1TB to match main pipeline)
+      - ROBOT_JAVA_ARGS=-Xmx1024g -XX:MaxMetaspaceSize=8g -XX:+UseG1GC
+      # Override _JAVA_OPTIONS from Dockerfile (1TB to match main pipeline) 
+      - _JAVA_OPTIONS=-Xmx1024g -XX:MaxMetaspaceSize=8g -XX:+UseG1GC
+      # Additional memory configurations (1TB to match main pipeline)
+      - RELATION_GRAPH_JAVA_ARGS=-Xmx1024g -XX:MaxMetaspaceSize=8g -XX:+UseG1GC
+      - SEMSQL_MEMORY_LIMIT=1024g
+      - PYTHON_MEMORY_LIMIT=1024g
+      - ENABLE_MEMORY_MONITORING=true
       - SKIP_RESOURCE_CHECK=true
       # Performance tuning
       - JAVA_PARALLEL_GC=true
