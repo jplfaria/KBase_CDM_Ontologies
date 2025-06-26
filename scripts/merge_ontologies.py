@@ -8,7 +8,8 @@ from enhanced_download import get_output_directories, is_test_mode
 def merge_ontologies(
     repo_path: str,
     input_dir_name: str = 'ontology_data_owl',
-    output_filename: str = 'CDM_merged_ontologies.owl'
+    output_filename: str = 'CDM_merged_ontologies.owl',
+    ontology_order: Optional[List[str]] = None
 ) -> bool:
     """
     Merge multiple ontology files using ROBOT tool and remove specific axioms.
@@ -17,6 +18,7 @@ def merge_ontologies(
         repo_path (str): Path to the repository root directory
         input_dir_name (str): Name of input directory within repo_path
         output_filename (str): Name of output OWL file
+        ontology_order (Optional[List[str]]): Optional list of ontology filenames in desired order
     
     Returns:
         bool: True if merge was successful, False otherwise
@@ -60,11 +62,23 @@ def merge_ontologies(
         os.environ['ROBOT_JAVA_ARGS'] = '-Xmx4000G -XX:+UseParallelGC'
         
         # Get list of ontology files with full paths
-        ontology_files = [
-            os.path.join(input_dir, f) 
-            for f in os.listdir(input_dir) 
-            if f.endswith(('.owl', '.ofn', '.obo'))
-        ]
+        if ontology_order is not None:
+            # Use specified order from parameter
+            ontology_files = []
+            for filename in ontology_order:
+                file_path = os.path.join(input_dir, filename)
+                if not os.path.exists(file_path):
+                    raise FileNotFoundError(f"Specified ontology file not found: {file_path}")
+                if not filename.endswith(('.owl', '.ofn', '.obo')):
+                    raise ValueError(f"File '{filename}' does not have a valid ontology extension")
+                ontology_files.append(file_path)
+        else:
+            # Default: get all ontology files in the directory (alphabetical order)
+            ontology_files = [
+                os.path.join(input_dir, f) 
+                for f in sorted(os.listdir(input_dir))
+                if f.endswith(('.owl', '.ofn', '.obo'))
+            ]
         
         print(f"Found {len(ontology_files)} ontology files:")
         for f in ontology_files:
@@ -84,7 +98,9 @@ def merge_ontologies(
         merged_filename = 'ontologies_merged_test.txt' if test_mode else 'ontologies_merged.txt'
         merged_list_path = os.path.join(repo_path, 'config', merged_filename)
         with open(merged_list_path, 'w') as f:
-            for filename in sorted(ontology_filenames):
+            # If custom order was provided, preserve that order; otherwise sort alphabetically
+            filenames_to_write = ontology_filenames if ontology_order is not None else sorted(ontology_filenames)
+            for filename in filenames_to_write:
                 f.write(f"{filename}\n")
         print(f"Created list of merged ontologies at: {merged_list_path}")
         

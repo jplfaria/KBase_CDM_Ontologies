@@ -1,0 +1,9 @@
+# Size-Based Order (Largest First)
+# Order based on file size - may help with memory allocation patterns
+
+envo.owl          # 9.9MB  - Environment Ontology
+pato-base.owl     # 3.1MB  - Phenotype and Trait Ontology  
+ro-base.owl       # 821KB  - Relations Ontology
+iao-base.owl      # 354KB  - Information Artifact Ontology
+bfo-base.owl      # 155KB  - Basic Formal Ontology
+credit.owl        # 8.4KB  - CRediT contributor roles

@@ -1,0 +1,225 @@
+#!/usr/bin/env python3
+"""
+Test different ontology merge orders to compare results.
+
+This script tests how different ordering strategies affect ROBOT merge behavior,
+particularly with the --annotate-defined-by flag.
+"""
+
+import os
+import sys
+import subprocess
+import shutil
+from pathlib import Path
+from typing import List, Dict, Optional
+
+# Add the scripts directory to the path to import our modules
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'scripts'))
+from enhanced_download import get_output_directories, is_test_mode
+
+def read_order_config(config_file: str) -> List[str]:
+    """Read ontology order from configuration file."""
+    ontologies = []
+    config_path = os.path.join(os.path.dirname(__file__), 'configs', config_file)
+    
+    with open(config_path, 'r') as f:
+        for line in f:
+            line = line.strip()
+            # Skip comments and empty lines
+            if line and not line.startswith('#'):
+                # Extract just the filename if it has comments after it
+                filename = line.split('#')[0].strip()
+                if filename.endswith('.owl'):
+                    ontologies.append(filename)
+    
+    return ontologies
+
+def merge_with_order(repo_path: str, order_name: str, ontology_order: List[str]) -> bool:
+    """
+    Merge ontologies using specified order.
+    
+    Args:
+        repo_path: Repository root path
+        order_name: Name for this test (e.g., 'alphabetical', 'hierarchy')
+        ontology_order: List of ontology filenames in desired order
+    
+    Returns:
+        True if merge successful, False otherwise
+    """
+    try:
+        # Use test mode paths
+        test_mode = True
+        ontology_data_path, _, outputs_path, version_dir = get_output_directories(repo_path, test_mode)
+        
+        # Create results directory for this test
+        results_dir = os.path.join(os.path.dirname(__file__), 'results')
+        os.makedirs(results_dir, exist_ok=True)
+        
+        output_file = os.path.join(results_dir, f'CDM_merged_{order_name}.owl')
+        
+        print(f"\\n🔍 Testing {order_name} order...")
+        print(f"📁 Input directory: {ontology_data_path}")
+        print(f"📁 Output file: {output_file}")
+        
+        # Find ROBOT executable in PATH
+        robot_path = shutil.which('robot')
+        if not robot_path:
+            raise FileNotFoundError("ROBOT executable not found. Please ensure ROBOT is installed and in your PATH.")
+        
+        print(f"🤖 Using ROBOT at: {robot_path}")
+        
+        # Build list of ontology files in specified order
+        ontology_files = []
+        for filename in ontology_order:
+            file_path = os.path.join(ontology_data_path, filename)
+            if os.path.exists(file_path):
+                ontology_files.append(file_path)
+                print(f"  ✓ {filename}")
+            else:
+                print(f"  ⚠️  Missing: {filename}")
+        
+        if not ontology_files:
+            raise FileNotFoundError(f"No ontology files found in specified order")
+        
+        print(f"\\n📊 Merging {len(ontology_files)} ontologies in {order_name} order:")
+        for i, f in enumerate(ontology_files, 1):
+            print(f"  {i:2d}. {os.path.basename(f)}")
+        
+        # Build ROBOT command
+        robot_command = ['robot', 'merge']
+        
+        # Add annotate-defined-by parameter (this is key for testing)
+        robot_command.extend(['--annotate-defined-by', 'true'])
+        
+        # Add input files in specified order
+        for ontology_file in ontology_files:
+            robot_command.extend(['--input', ontology_file])
+        
+        # Remove disjoint axioms (matching main pipeline)
+        robot_command.extend([
+            'remove', '--axioms', 'disjoint',
+            '--trim', 'true', '--preserve-structure', 'false'
+        ])
+        
+        # Remove 'owl:Nothing' term (matching main pipeline)
+        robot_command.extend([
+            'remove', '--term', 'owl:Nothing',
+            '--trim', 'true', '--preserve-structure', 'false'
+        ])
+        
+        # Add output file
+        robot_command.extend(['--output', output_file])
+        
+        print(f"\\n🚀 Executing ROBOT merge...")
+        print(f"Command: {' '.join(robot_command[:10])}...{robot_command[-2:]}")
+        
+        # Run ROBOT command
+        result = subprocess.run(
+            robot_command,
+            check=True,
+            capture_output=True,
+            text=True,
+            cwd=repo_path
+        )
+        
+        print(f"✅ Successfully created: {output_file}")
+        if result.stdout:
+            print(f"ROBOT output: {result.stdout[:200]}...")
+        
+        # Save order configuration for reference
+        order_file = os.path.join(results_dir, f'order_{order_name}.txt')
+        with open(order_file, 'w') as f:
+            f.write(f"# {order_name.title()} Order Test\\n")
+            f.write(f"# Generated by test_merge_orders.py\\n\\n")
+            for i, filename in enumerate([os.path.basename(f) for f in ontology_files], 1):
+                f.write(f"{i:2d}. {filename}\\n")
+        
+        return True
+        
+    except subprocess.CalledProcessError as e:
+        print(f"❌ ROBOT merge failed for {order_name} order:")
+        print(f"Return code: {e.returncode}")
+        if e.stderr:
+            print(f"STDERR: {e.stderr}")
+        if e.stdout:
+            print(f"STDOUT: {e.stdout}")
+        return False
+        
+    except Exception as e:
+        print(f"❌ Error during {order_name} merge: {str(e)}")
+        return False
+
+def run_all_order_tests(repo_path: str) -> Dict[str, bool]:
+    """
+    Run all ontology order tests.
+    
+    Returns:
+        Dictionary mapping order name to success status
+    """
+    results = {}
+    
+    # Test configurations
+    test_configs = [
+        ('alphabetical', 'order_alphabetical.txt'),
+        ('hierarchy', 'order_hierarchy.txt'), 
+        ('size', 'order_size.txt')
+    ]
+    
+    print("🧪 Starting Ontology Order Testing Framework")
+    print("=" * 60)
+    
+    for order_name, config_file in test_configs:
+        try:
+            # Read order configuration
+            ontology_order = read_order_config(config_file)
+            
+            # Run merge test
+            success = merge_with_order(repo_path, order_name, ontology_order)
+            results[order_name] = success
+            
+            if success:
+                print(f"✅ {order_name.title()} order test: PASSED")
+            else:
+                print(f"❌ {order_name.title()} order test: FAILED")
+                
+        except Exception as e:
+            print(f"❌ {order_name.title()} order test: ERROR - {str(e)}")
+            results[order_name] = False
+    
+    return results
+
+def main():
+    """Main testing function."""
+    repo_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+    
+    print(f"Repository path: {repo_path}")
+    print(f"Test mode: {is_test_mode()}")
+    
+    # Run all tests
+    results = run_all_order_tests(repo_path)
+    
+    # Summary
+    print("\\n" + "=" * 60)
+    print("🏁 TESTING SUMMARY")
+    print("=" * 60)
+    
+    passed = sum(results.values())
+    total = len(results)
+    
+    for order_name, success in results.items():
+        status = "✅ PASSED" if success else "❌ FAILED"
+        print(f"{order_name.title():12} order: {status}")
+    
+    print(f"\\nOverall: {passed}/{total} tests passed")
+    
+    if passed == total:
+        print("\\n🎉 All order tests completed successfully!")
+        print("🔍 Next step: Run compare_merges.py to analyze differences")
+    else:
+        print(f"\\n⚠️  {total - passed} test(s) failed. Check output above for details.")
+        return 1
+    
+    return 0
+
+if __name__ == "__main__":
+    sys.exit(main())

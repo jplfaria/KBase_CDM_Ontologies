@@ -1,0 +1,9 @@
+# Ignore test results and temporary files
+results/
+*.owl
+*.db
+*.tsv
+*.gz
+*.log
+__pycache__/
+*.pyc

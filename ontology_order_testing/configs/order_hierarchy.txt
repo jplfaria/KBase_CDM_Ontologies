@@ -1,0 +1,16 @@
+# Hierarchical Order (Foundational → Domain → Reference)
+# Order based on ontological dependency hierarchy
+
+# 1. Upper-level foundational ontologies (most general)
+bfo-base.owl      # Basic Formal Ontology - top-level categories
+ro-base.owl       # Relations Ontology - foundational relations
+
+# 2. Mid-level foundational ontologies 
+iao-base.owl      # Information Artifact Ontology - information entities
+pato-base.owl     # Phenotype and Trait Ontology - qualities
+
+# 3. Domain-specific ontologies
+envo.owl          # Environment Ontology - environmental entities
+
+# 4. External vocabularies/metadata
+credit.owl        # CRediT - contributor roles
