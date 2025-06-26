@@ -35,7 +35,7 @@ run_docker() {
     # Load environment variables from local env file  
     source "$TESTING_DIR/local_env/.env.local"
     
-    docker-compose -f "$REPO_DIR/docker-compose.yml" -f "$TESTING_DIR/docker-compose.override.yml" run --rm \
+    docker compose -f "$REPO_DIR/docker compose.yml" -f "$TESTING_DIR/docker compose.override.yml" run --rm \
         -v "$TESTING_DIR:/home/ontology/workspace/testing" \
         -w "/home/ontology/workspace/testing" \
         cdm-ontologies \
@@ -54,7 +54,7 @@ run_docker_custom() {
     # Load environment variables from local env file  
     source "$TESTING_DIR/local_env/.env.local"
     
-    docker-compose -f "$REPO_DIR/docker-compose.yml" -f "$TESTING_DIR/docker-compose.override.yml" run --rm \
+    docker compose -f "$REPO_DIR/docker compose.yml" -f "$TESTING_DIR/docker compose.override.yml" run --rm \
         -v "$TESTING_DIR:/home/ontology/workspace/testing" \
         -w "/home/ontology/workspace/testing" \
         cdm-ontologies \
