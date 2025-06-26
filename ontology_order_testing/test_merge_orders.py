@@ -13,9 +13,7 @@ import shutil
 from pathlib import Path
 from typing import List, Dict, Optional
 
-# Add the scripts directory to the path to import our modules
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'scripts'))
-from enhanced_download import get_output_directories, is_test_mode
+# Self-contained testing - no external imports needed
 
 def read_order_config(config_file: str) -> List[str]:
     """Read ontology order from configuration file."""
@@ -39,7 +37,7 @@ def merge_with_order(repo_path: str, order_name: str, ontology_order: List[str])
     Merge ontologies using specified order.
     
     Args:
-        repo_path: Repository root path
+        repo_path: Repository root path (testing directory)
         order_name: Name for this test (e.g., 'alphabetical', 'hierarchy')
         ontology_order: List of ontology filenames in desired order
     
@@ -47,12 +45,11 @@ def merge_with_order(repo_path: str, order_name: str, ontology_order: List[str])
         True if merge successful, False otherwise
     """
     try:
-        # Use test mode paths
-        test_mode = True
-        ontology_data_path, _, outputs_path, version_dir = get_output_directories(repo_path, test_mode)
+        # Use local data directory (testing is self-contained)
+        ontology_data_path = os.path.join(repo_path, 'data')
         
         # Create results directory for this test
-        results_dir = os.path.join(os.path.dirname(__file__), 'results')
+        results_dir = os.path.join(repo_path, 'results')
         os.makedirs(results_dir, exist_ok=True)
         
         output_file = os.path.join(results_dir, f'CDM_merged_{order_name}.owl')
@@ -190,10 +187,11 @@ def run_all_order_tests(repo_path: str) -> Dict[str, bool]:
 
 def main():
     """Main testing function."""
-    repo_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+    # Use the testing directory as repo_path for self-contained execution
+    repo_path = os.path.abspath(os.path.dirname(__file__))
     
-    print(f"Repository path: {repo_path}")
-    print(f"Test mode: {is_test_mode()}")
+    print(f"Testing directory: {repo_path}")
+    print(f"Data directory: {os.path.join(repo_path, 'data')}")
     
     # Run all tests
     results = run_all_order_tests(repo_path)

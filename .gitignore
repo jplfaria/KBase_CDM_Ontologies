@@ -113,3 +113,7 @@ coverage.xml
 *.cover
 .hypothesis/
 .pytest_cache/
+
+# Ontology order testing data (downloaded separately)
+ontology_order_testing/data/
+ontology_order_testing/results/

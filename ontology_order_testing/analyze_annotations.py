@@ -223,6 +223,7 @@ def generate_definer_report(results: Dict, output_dir: str):
 def main():
     """Main analysis function."""
     
+    # Setup paths - self-contained in testing directory  
     script_dir = os.path.dirname(__file__)
     results_dir = os.path.join(script_dir, 'results')
     

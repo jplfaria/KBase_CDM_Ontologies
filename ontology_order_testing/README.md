@@ -20,51 +20,72 @@ ROBOT's merge command can produce different results depending on the order of in
 ```
 ontology_order_testing/
 ├── README.md                    # This file
+├── docker-run.sh                # Self-contained Docker execution
+├── ontologies_source_full.txt   # Full dataset (23 ontologies)
 ├── test_merge_orders.py         # Main testing script
 ├── compare_merges.py            # Merge comparison utilities
 ├── analyze_annotations.py       # Annotation analysis tools
-├── configs/
-│   ├── order_alphabetical.txt   # Current default (alphabetical)
-│   ├── order_hierarchy.txt      # Foundational → domain → reference
-│   └── order_size.txt          # Size-based ordering
-└── results/                    # Test outputs (gitignored)
+├── data/                        # Downloaded ontologies (gitignored)
+├── results/                     # Test outputs (gitignored)
+├── local_env/
+│   └── .env.local              # Local environment configuration
+├── scripts/
+│   ├── download_ontologies.py  # Self-contained downloader
+│   └── create_pseudo_base_local.py # Local pseudo-base creator
+└── configs/
+    ├── order_alphabetical.txt   # Alphabetical order (23 ontologies)
+    ├── order_hierarchy.txt      # Foundational → domain → reference  
+    └── order_size.txt          # Size-based ordering
 ```
 
 ## Test Cases
 
 ### 1. Alphabetical Order (Current Default)
-Standard filesystem order, currently used by the pipeline.
+Standard filesystem order, currently used by the pipeline. **23 ontologies** in alphabetical order.
 
 ### 2. Hierarchical Order (Recommended)
+**23 ontologies** ordered by ontological dependency:
 ```
 1. Upper-level ontologies (BFO, RO)
-2. Mid-level foundational (IAO, OMO, PATO, CARO)
-3. Domain-specific base versions (UBERON, CL, PO, etc.)
-4. Large reference ontologies (CHEBI, GO, ENVO)
-5. Application ontologies (FOODON, SO, UO)
-6. External vocabularies (ECCODE, RHEA, etc.)
-7. In-house ontologies (last)
+2. Mid-level foundational (IAO, OMO, PATO)
+3. Anatomical/structural (UBERON, PCO)
+4. Domain-specific base versions (OBI, FAO, PO, FOODON)
+5. Large reference ontologies (GO, CHEBI, ENVO)
+6. Specialized domains (SO, UO, TAXRANK)
+7. External vocabularies (ECCODE, RHEA, PFAM, INTERPRO, GTDB, ROR)
+8. Metadata (CRediT)
 ```
 
 ### 3. Size-Based Order
-Largest ontologies first to optimize memory usage.
+**23 ontologies** ordered by expected file size (largest first):
+- GO (~500MB) and CHEBI (~200MB) first
+- Medium ontologies (UBERON, OBI, ENVO)
+- Small ontologies and vocabularies last
 
-## Exclusions for Local Testing
+## Dataset
 
-To make testing manageable locally, we exclude:
-- **NCBITaxon**: Too large for local testing
-- **Very large ontologies**: Focus on representative subset
+**Full realistic dataset**: 23 ontologies from production pipeline
+- **Included**: All from config/ontologies_source.txt except NCBITaxon and in-house ontologies
+- **Excluded**: NCBITaxon (too large), seed/metacyc/kegg/modelseed (in-house)
+- **Processing**: Non-base ontologies converted to pseudo-base versions locally
 
-## Docker Execution
+## Self-Contained Execution
 
-All tests must be run via Docker using the existing containerized environment:
+All operations are contained within `ontology_order_testing/` directory:
 
 ```bash
-# Run specific order test
-docker-compose -f docker-compose.yml run cdm-ontologies python ontology_order_testing/test_merge_orders.py
+# Complete workflow (download, create base versions, test orders, analyze)
+./ontology_order_testing/docker-run.sh all
 
-# Compare merge results
-docker-compose -f docker-compose.yml run cdm-ontologies python ontology_order_testing/compare_merges.py
+# Individual steps
+./ontology_order_testing/docker-run.sh download        # Download 23 ontologies
+./ontology_order_testing/docker-run.sh pseudo-base     # Create pseudo-base versions  
+./ontology_order_testing/docker-run.sh test-orders     # Test merge orders
+./ontology_order_testing/docker-run.sh compare         # Compare results
+./ontology_order_testing/docker-run.sh analyze         # Analyze annotations
+
+# Interactive debugging
+./ontology_order_testing/docker-run.sh shell
 ```
 
 ## Expected Outcomes
@@ -80,3 +101,29 @@ Successful testing may lead to:
 1. Modified `merge_ontologies.py` with configurable ordering
 2. Recommended default order in main pipeline
 3. Documentation of ordering rationale
+
+## Getting Started on a New Machine
+
+When checking out this branch on a larger machine, users will need to:
+
+1. **Download all 23 ontologies** (approx. 1.6GB total):
+   ```bash
+   ./ontology_order_testing/docker-run.sh download
+   ```
+
+2. **Create pseudo-base versions** for non-base ontologies:
+   ```bash
+   ./ontology_order_testing/docker-run.sh pseudo-base
+   ```
+
+3. **Run the full testing workflow**:
+   ```bash
+   ./ontology_order_testing/docker-run.sh all
+   ```
+
+This will:
+- Test three different merge orders (alphabetical, hierarchical, size-based)
+- Compare the results to identify differences
+- Analyze term annotations to see how ordering affects attribution
+
+**Note**: The large ontology files (CHEBI ~783MB, GO ~121MB) require significant memory. Ensure your machine has at least 128GB RAM available for Docker.

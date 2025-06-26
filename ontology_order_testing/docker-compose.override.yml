@@ -1,0 +1,28 @@
+# Local Docker Compose override for ontology order testing
+# This file overrides hardcoded memory settings from the main Dockerfile
+# All contained within ontology_order_testing/ folder
+
+version: '3.8'
+
+services:
+  cdm-ontologies:
+    # Load environment from local env file
+    env_file:
+      - ./ontology_order_testing/local_env/.env.local
+    # Override hardcoded Java memory settings from Dockerfile
+    environment:
+      # Override ROBOT_JAVA_ARGS from Dockerfile (was hardcoded to 8g)
+      - ROBOT_JAVA_ARGS=-Xmx64g -XX:MaxMetaspaceSize=8g -XX:+UseG1GC
+      # Override _JAVA_OPTIONS from Dockerfile (was hardcoded to 8g) 
+      - _JAVA_OPTIONS=-Xmx64g -XX:MaxMetaspaceSize=8g -XX:+UseG1GC
+      # Additional memory configurations
+      - RELATION_GRAPH_JAVA_ARGS=-Xmx64g -XX:MaxMetaspaceSize=8g -XX:+UseG1GC
+      - SEMSQL_MEMORY_LIMIT=64g
+      - PYTHON_MEMORY_LIMIT=64g
+      - ENABLE_MEMORY_MONITORING=false
+      - SKIP_RESOURCE_CHECK=true
+      # Performance tuning
+      - JAVA_PARALLEL_GC=true
+      - ENABLE_TSV_EXPORT=false
+      - ENABLE_PARQUET_EXPORT=false
+      - CREATE_UTILS_LOGS=false

@@ -1,16 +1,42 @@
-# Hierarchical Order (Foundational → Domain → Reference)
+# Hierarchical Order (Foundational → Domain → Reference) - 23 Ontologies
 # Order based on ontological dependency hierarchy
 
 # 1. Upper-level foundational ontologies (most general)
-bfo-base.owl      # Basic Formal Ontology - top-level categories
-ro-base.owl       # Relations Ontology - foundational relations
+bfo-base.owl        # Basic Formal Ontology - top-level categories
+ro-base.owl         # Relations Ontology - foundational relations
 
 # 2. Mid-level foundational ontologies 
-iao-base.owl      # Information Artifact Ontology - information entities
-pato-base.owl     # Phenotype and Trait Ontology - qualities
+iao-base.owl        # Information Artifact Ontology - information entities
+omo-base.owl        # OBO Metadata Ontology - metadata standards
+pato-base.owl       # Phenotype and Trait Ontology - qualities
 
-# 3. Domain-specific ontologies
-envo.owl          # Environment Ontology - environmental entities
+# 3. Anatomical/structural ontologies
+uberon-base.owl     # Uberon - multi-species anatomy
+pco-base.owl        # Population and Community Ontology
 
-# 4. External vocabularies/metadata
-credit.owl        # CRediT - contributor roles
+# 4. Domain-specific base ontologies
+obi-base.owl        # Ontology for Biomedical Investigations
+fao-base.owl        # Functional Aquatic Ontology
+po-base.owl         # Plant Ontology - base version
+foodon-base.owl     # Food Ontology - base version
+
+# 5. Large reference ontologies (potential overlaps)
+go.owl              # Gene Ontology - huge, many cross-references
+chebi.owl           # Chemical Entities of Biological Interest
+envo.owl            # Environment Ontology
+
+# 6. Specialized domain ontologies
+so.owl              # Sequence Ontology
+uo.owl              # Units of Measurement Ontology
+taxrank.owl         # Taxonomic Rank Vocabulary
+
+# 7. External vocabularies and databases
+eccode.owl          # Enzyme Commission numbers
+rhea.owl            # Rhea reaction database
+pfam.owl            # Protein families database
+interpro.owl        # InterPro protein analysis
+gtdb.owl            # Genome Taxonomy Database
+ror.owl             # Research Organization Registry
+
+# 8. Metadata and attribution
+credit.owl          # CRediT - contributor roles (last, minimal impact)

@@ -1,9 +1,27 @@
-# Alphabetical Order (Current Default)
+# Alphabetical Order (Current Default) - 23 Ontologies
 # This represents the current filesystem-based ordering
 
 bfo-base.owl
+chebi.owl
 credit.owl
+eccode.owl
 envo.owl
+fao-base.owl
+foodon-base.owl
+go.owl
+gtdb.owl
 iao-base.owl
+interpro.owl
+obi-base.owl
+omo-base.owl
 pato-base.owl
+pco-base.owl
+pfam.owl
+po-base.owl
+rhea.owl
 ro-base.owl
+ror.owl
+so.owl
+taxrank.owl
+uberon-base.owl
+uo.owl

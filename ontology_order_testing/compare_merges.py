@@ -264,7 +264,7 @@ def generate_report(analysis: Dict, results_dir: str):
 def main():
     """Main comparison function."""
     
-    # Setup paths
+    # Setup paths - self-contained in testing directory
     script_dir = os.path.dirname(__file__)
     results_dir = os.path.join(script_dir, 'results')
     

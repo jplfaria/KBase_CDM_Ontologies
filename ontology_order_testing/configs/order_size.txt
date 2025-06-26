@@ -1,9 +1,28 @@
-# Size-Based Order (Largest First)
-# Order based on file size - may help with memory allocation patterns
+# Size-Based Order (Largest First) - 23 Ontologies
+# Order based on expected file size - largest ontologies first for memory optimization
 
-envo.owl          # 9.9MB  - Environment Ontology
-pato-base.owl     # 3.1MB  - Phenotype and Trait Ontology  
-ro-base.owl       # 821KB  - Relations Ontology
-iao-base.owl      # 354KB  - Information Artifact Ontology
-bfo-base.owl      # 155KB  - Basic Formal Ontology
-credit.owl        # 8.4KB  - CRediT contributor roles
+# Expected sizes based on typical downloads:
+go.owl              # ~500MB - Gene Ontology (massive)
+chebi.owl           # ~200MB - Chemical entities
+uberon-base.owl     # ~50MB  - Multi-species anatomy
+obi-base.owl        # ~20MB  - Biomedical investigations
+envo.owl            # ~10MB  - Environment ontology
+interpro.owl        # ~8MB   - InterPro protein analysis
+pato-base.owl       # ~3MB   - Phenotype and trait ontology
+foodon-base.owl     # ~2MB   - Food ontology
+pfam.owl            # ~2MB   - Protein families
+rhea.owl            # ~2MB   - Rhea reactions
+so.owl              # ~1.5MB - Sequence ontology
+po-base.owl         # ~1MB   - Plant ontology
+ro-base.owl         # ~800KB - Relations ontology
+gtdb.owl            # ~500KB - Genome taxonomy
+ror.owl             # ~400KB - Research organizations
+iao-base.owl        # ~350KB - Information artifacts
+uo.owl              # ~200KB - Units of measurement
+bfo-base.owl        # ~150KB - Basic formal ontology
+fao-base.owl        # ~100KB - Functional aquatic
+pco-base.owl        # ~100KB - Population and community
+omo-base.owl        # ~80KB  - OBO metadata
+taxrank.owl         # ~50KB  - Taxonomic ranks
+eccode.owl          # ~30KB  - Enzyme commission
+credit.owl          # ~8KB   - CRediT roles (smallest)
