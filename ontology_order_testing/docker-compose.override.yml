@@ -6,6 +6,8 @@ version: '3.8'
 
 services:
   cdm-ontologies:
+    # Override hardcoded user ID 502 from Dockerfile to match host user
+    user: "1000:1000"
     # Load environment from local env file
     env_file:
       - ./ontology_order_testing/local_env/.env.local
