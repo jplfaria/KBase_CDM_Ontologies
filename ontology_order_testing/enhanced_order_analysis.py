@@ -16,6 +16,10 @@ from pathlib import Path
 from typing import Dict, List, Set, Tuple
 from collections import defaultdict, Counter
 
+# Import enhanced metrics collector
+sys.path.insert(0, os.path.dirname(__file__))
+from enhanced_metrics import EnhancedMetricsCollector
+
 # Key terms to track across different ontologies (excluding NCBITaxon)
 KEY_TERMS = {
     'upper_level': {
@@ -64,6 +68,9 @@ class EnhancedOrderAnalyzer:
         # Ensure directories exist
         self.results_dir.mkdir(exist_ok=True)
         self.utils_dir.mkdir(exist_ok=True)
+        
+        # Initialize metrics collector
+        self.metrics_collector = EnhancedMetricsCollector()
         
         # Flatten key terms for easier access
         self.all_key_terms = {}
@@ -164,9 +171,14 @@ class EnhancedOrderAnalyzer:
                 # Get file stats
                 file_size = output_file.stat().st_size
                 
-                # Count axioms and classes
-                axiom_count = self.count_axioms(output_file)
-                class_count = self.count_classes(output_file)
+                # Collect enhanced metrics
+                print(f"  📊 Collecting detailed metrics...")
+                metrics = self.metrics_collector.collect_all_metrics(output_file)
+                
+                # Extract key counts for backward compatibility
+                basic_counts = metrics.get('basic_counts', {})
+                axiom_count = basic_counts.get('total_axioms', 0)
+                class_count = basic_counts.get('total_classes', 0)
                 
                 return {
                     'success': True,
@@ -174,6 +186,7 @@ class EnhancedOrderAnalyzer:
                     'file_size': file_size,
                     'axiom_count': axiom_count,
                     'class_count': class_count,
+                    'enhanced_metrics': metrics,
                     'command': robot_command
                 }
             else:

@@ -15,6 +15,10 @@ from pathlib import Path
 from typing import Dict, List, Set, Tuple
 from collections import defaultdict, Counter
 
+# Import enhanced metrics collector
+sys.path.insert(0, os.path.dirname(__file__))
+from enhanced_metrics import EnhancedMetricsCollector
+
 # The 4 ontologies with known relationships
 TEST_ONTOLOGIES = [
     'chebi.owl',        # Base chemical ontology (783MB)
@@ -47,6 +51,9 @@ class PermutationTester:
         self.results_dir.mkdir(exist_ok=True)
         self.perm_results_dir.mkdir(exist_ok=True)
         self.utils_dir.mkdir(exist_ok=True)
+        
+        # Initialize metrics collector
+        self.metrics_collector = EnhancedMetricsCollector()
         
         # Convert key terms to IRI format
         self.key_term_iris = {}
@@ -108,9 +115,13 @@ class PermutationTester:
                 # Get file stats
                 file_size = output_file.stat().st_size
                 
-                # Count axioms
-                axiom_count = self.count_axioms(output_file)
-                class_count = self.count_classes(output_file)
+                # Collect enhanced metrics
+                metrics = self.metrics_collector.collect_all_metrics(output_file)
+                
+                # Extract key counts
+                basic_counts = metrics.get('basic_counts', {})
+                axiom_count = basic_counts.get('total_axioms', 0)
+                class_count = basic_counts.get('total_classes', 0)
                 
                 # Extract key term definers
                 definers = self.extract_key_term_definers(output_file)
@@ -124,6 +135,7 @@ class PermutationTester:
                     'axiom_count': axiom_count,
                     'class_count': class_count,
                     'key_term_definers': definers,
+                    'enhanced_metrics': metrics,
                     'include_removes': include_removes
                 }
             else:
