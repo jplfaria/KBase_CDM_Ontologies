@@ -4,6 +4,19 @@
 
 set -e
 
+# Parse arguments for nohup support
+USE_NOHUP=false
+ORIGINAL_ARGS=("$@")
+FILTERED_ARGS=()
+
+for arg in "$@"; do
+    if [[ "$arg" == "--nohup" ]]; then
+        USE_NOHUP=true
+    else
+        FILTERED_ARGS+=("$arg")
+    fi
+done
+
 # Get the absolute path to the testing directory
 TESTING_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="$(dirname "$TESTING_DIR")"
@@ -11,6 +24,35 @@ REPO_DIR="$(dirname "$TESTING_DIR")"
 echo "🔧 Order Testing Docker Runner"
 echo "📁 Testing directory: $TESTING_DIR"
 echo "📁 Repository directory: $REPO_DIR"
+
+# Handle nohup execution
+if [ "$USE_NOHUP" = true ]; then
+    LOG_DIR="$TESTING_DIR/logs"
+    mkdir -p "$LOG_DIR"
+    
+    TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+    LOG_FILE="$LOG_DIR/docker_run_${TIMESTAMP}.log"
+    
+    echo "🚀 Running with nohup support..."
+    echo "📋 Log file: $LOG_FILE"
+    echo "📊 Monitor progress with: tail -f $LOG_FILE"
+    echo "🔍 Check if running with: ps aux | grep docker"
+    echo ""
+    echo "Starting background execution..."
+    
+    # Re-run this script without --nohup in background
+    nohup "$0" "${FILTERED_ARGS[@]}" > "$LOG_FILE" 2>&1 &
+    
+    echo "✅ Background process started with PID: $!"
+    echo "📋 Log file: $LOG_FILE"
+    echo ""
+    echo "Commands to monitor:"
+    echo "  tail -f $LOG_FILE                    # Follow log output"
+    echo "  grep -E '(✅|❌|🧪|📊)' $LOG_FILE    # Show status updates"
+    echo "  ps aux | grep docker                # Check if still running"
+    echo ""
+    exit 0
+fi
 
 # Check if we have the required files
 if [ ! -f "$TESTING_DIR/local_env/.env.local" ]; then
@@ -168,7 +210,7 @@ case "${1:-all}" in
         ;;
     
     *)
-        echo "Usage: $0 [download|pseudo-base|test-orders|enhanced|permutations|summary|compare|analyze|shell|all]"
+        echo "Usage: $0 [download|pseudo-base|test-orders|enhanced|permutations|summary|compare|analyze|shell|all] [--nohup]"
         echo ""
         echo "Commands:"
         echo "  download     - Download all 23 ontologies"
@@ -181,6 +223,14 @@ case "${1:-all}" in
         echo "  analyze      - Analyze term annotations (legacy)"
         echo "  shell        - Open interactive shell"
         echo "  all          - Run complete workflow (default)"
+        echo ""
+        echo "Options:"
+        echo "  --nohup      - Run in background with nohup (survives SSH disconnection)"
+        echo ""
+        echo "Examples:"
+        echo "  $0 all                    # Run complete workflow in foreground"
+        echo "  $0 all --nohup           # Run complete workflow in background"
+        echo "  $0 enhanced --nohup      # Run enhanced analysis in background"
         exit 1
         ;;
 esac
