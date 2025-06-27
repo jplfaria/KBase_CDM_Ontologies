@@ -18,13 +18,13 @@ clean_directory() {
     if [ -d "$dir_path" ]; then
         echo "🗑️  Cleaning $dir_name/..."
         
-        # Use Docker to remove files as root
+        # Use Docker to remove entire directory as root and recreate it
         docker run --rm \
             -v "$TESTING_DIR:/workspace" \
             -w /workspace \
             --user root \
             alpine:latest \
-            rm -rf "$dir_name/*"
+            sh -c "rm -rf $dir_name && mkdir -p $dir_name"
         
         echo "✅ $dir_name/ cleaned"
     else
