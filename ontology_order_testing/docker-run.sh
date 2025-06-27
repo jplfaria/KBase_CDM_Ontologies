@@ -94,6 +94,21 @@ case "${1:-all}" in
         run_docker "test_merge_orders.py" "Test different merge orders"
         ;;
     
+    "enhanced")
+        echo "🔬 Running enhanced analysis (24 ontologies)..."
+        run_docker "enhanced_order_analysis.py" "Enhanced 24-ontology analysis"
+        ;;
+    
+    "permutations")
+        echo "🧬 Running permutation tests (4 ontologies)..."
+        run_docker "test_permutations_4onto.py" "4-ontology permutation tests"
+        ;;
+    
+    "summary")
+        echo "📋 Generating summary report..."
+        run_docker "generate_summary.py" "Generate summary report"
+        ;;
+    
     "compare")
         echo "🔍 Comparing merge results..."
         run_docker "compare_merges.py" "Compare merge results"
@@ -126,26 +141,26 @@ case "${1:-all}" in
         echo "=" * 60
         run_docker "scripts/create_pseudo_base_local.py" "Create pseudo-base versions"
         
-        # Step 3: Test merge orders
+        # Step 3: Enhanced analysis (24 ontologies)
         echo ""
         echo "=" * 60
-        echo "STEP 3: Test merge orders"
+        echo "STEP 3: Enhanced analysis (24 ontologies)"
         echo "=" * 60
-        run_docker "test_merge_orders.py" "Test different merge orders"
+        run_docker "enhanced_order_analysis.py" "Enhanced 24-ontology analysis"
         
-        # Step 4: Compare results
+        # Step 4: Permutation tests (4 ontologies)
         echo ""
         echo "=" * 60
-        echo "STEP 4: Compare merge results"
+        echo "STEP 4: Permutation tests (4 ontologies)"
         echo "=" * 60
-        run_docker "compare_merges.py" "Compare merge results"
+        run_docker "test_permutations_4onto.py" "4-ontology permutation tests"
         
-        # Step 5: Analyze annotations
+        # Step 5: Generate summary report
         echo ""
         echo "=" * 60
-        echo "STEP 5: Analyze annotations"
+        echo "STEP 5: Generate summary report"
         echo "=" * 60
-        run_docker "analyze_annotations.py" "Analyze term annotations"
+        run_docker "generate_summary.py" "Generate summary report"
         
         echo ""
         echo "🎉 Complete testing workflow finished!"
@@ -153,14 +168,17 @@ case "${1:-all}" in
         ;;
     
     *)
-        echo "Usage: $0 [download|pseudo-base|test-orders|compare|analyze|shell|all]"
+        echo "Usage: $0 [download|pseudo-base|test-orders|enhanced|permutations|summary|compare|analyze|shell|all]"
         echo ""
         echo "Commands:"
         echo "  download     - Download all 23 ontologies"
         echo "  pseudo-base  - Create pseudo-base versions of non-base ontologies"
-        echo "  test-orders  - Test different merge orders"
-        echo "  compare      - Compare merge results"
-        echo "  analyze      - Analyze term annotations"
+        echo "  test-orders  - Test different merge orders (legacy)"
+        echo "  enhanced     - Enhanced 24-ontology analysis with term tracking"
+        echo "  permutations - Exhaustive 4-ontology permutation testing"
+        echo "  summary      - Generate comprehensive summary report"
+        echo "  compare      - Compare merge results (legacy)"
+        echo "  analyze      - Analyze term annotations (legacy)"
         echo "  shell        - Open interactive shell"
         echo "  all          - Run complete workflow (default)"
         exit 1
