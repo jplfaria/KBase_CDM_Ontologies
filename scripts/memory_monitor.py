@@ -43,7 +43,11 @@ def get_java_processes_memory():
     for proc in psutil.process_iter(['pid', 'name', 'cmdline', 'memory_info']):
         try:
             if proc.info['name'] == 'java':
-                cmdline = ' '.join(proc.info['cmdline'])
+                cmdline_info = proc.info['cmdline']
+                if cmdline_info and isinstance(cmdline_info, (list, tuple)):
+                    cmdline = ' '.join(str(arg) for arg in cmdline_info)
+                else:
+                    cmdline = ''
                 memory_mb = proc.info['memory_info'].rss / (1024**2)
                 
                 process_type = 'unknown'
