@@ -87,9 +87,18 @@ class EnhancedOrderAnalyzer:
             for line in f:
                 line = line.strip()
                 if line and not line.startswith('#'):
-                    filename = line.split('#')[0].strip()
-                    if filename.endswith('.owl'):
-                        ontologies.append(filename)
+                    url = line.split('#')[0].strip()
+                    if url.endswith('.owl') or url.endswith('.owl.gz'):
+                        # Extract filename from URL
+                        filename = url.split('/')[-1]
+                        # Remove .gz extension if present
+                        if filename.endswith('.gz'):
+                            filename = filename[:-3]
+                        
+                        # Check if file actually exists in data directory
+                        file_path = self.data_dir / filename
+                        if file_path.exists():
+                            ontologies.append(filename)
         
         return ontologies
     
