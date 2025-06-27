@@ -151,6 +151,11 @@ case "${1:-all}" in
         run_docker "generate_summary.py" "Generate summary report"
         ;;
     
+    "detailed")
+        echo "🔬 Generating detailed comparison report..."
+        run_docker "generate_detailed_report.py" "Generate detailed comparison report"
+        ;;
+    
     "compare")
         echo "🔍 Comparing merge results..."
         run_docker "compare_merges.py" "Compare merge results"
@@ -210,7 +215,7 @@ case "${1:-all}" in
         ;;
     
     *)
-        echo "Usage: $0 [download|pseudo-base|test-orders|enhanced|permutations|summary|compare|analyze|shell|all] [--nohup]"
+        echo "Usage: $0 [download|pseudo-base|test-orders|enhanced|permutations|summary|detailed|compare|analyze|shell|all] [--nohup]"
         echo ""
         echo "Commands:"
         echo "  download     - Download all 23 ontologies"
@@ -219,6 +224,7 @@ case "${1:-all}" in
         echo "  enhanced     - Enhanced 24-ontology analysis with term tracking"
         echo "  permutations - Exhaustive 4-ontology permutation testing"
         echo "  summary      - Generate comprehensive summary report"
+        echo "  detailed     - Generate detailed comparison report with metrics"
         echo "  compare      - Compare merge results (legacy)"
         echo "  analyze      - Analyze term annotations (legacy)"
         echo "  shell        - Open interactive shell"
