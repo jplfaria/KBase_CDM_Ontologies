@@ -28,10 +28,27 @@ echo "📁 Repository directory: $REPO_DIR"
 # Handle nohup execution
 if [ "$USE_NOHUP" = true ]; then
     LOG_DIR="$TESTING_DIR/logs"
-    mkdir -p "$LOG_DIR"
+    # Ensure directory exists
+    mkdir -p "$LOG_DIR" 2>/dev/null || {
+        echo "❌ Failed to create logs directory: $LOG_DIR"
+        echo "Trying current directory instead..."
+        LOG_DIR="."
+    }
     
     TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
     LOG_FILE="$LOG_DIR/docker_run_${TIMESTAMP}.log"
+    
+    # Test if we can write to the log file
+    touch "$LOG_FILE" 2>/dev/null || {
+        echo "❌ Cannot write to log file: $LOG_FILE"
+        echo "Using current directory instead..."
+        LOG_FILE="./docker_run_${TIMESTAMP}.log"
+        touch "$LOG_FILE" || {
+            echo "❌ Cannot create log file even in current directory"
+            echo "Please check permissions and try again"
+            exit 1
+        }
+    }
     
     echo "🚀 Running with nohup support..."
     echo "📋 Log file: $LOG_FILE"
@@ -42,15 +59,28 @@ if [ "$USE_NOHUP" = true ]; then
     
     # Re-run this script without --nohup in background
     nohup "$0" "${FILTERED_ARGS[@]}" > "$LOG_FILE" 2>&1 &
+    PID=$!
     
-    echo "✅ Background process started with PID: $!"
-    echo "📋 Log file: $LOG_FILE"
-    echo ""
-    echo "Commands to monitor:"
-    echo "  tail -f $LOG_FILE                    # Follow log output"
-    echo "  grep -E '(✅|❌|🧪|📊)' $LOG_FILE    # Show status updates"
-    echo "  ps aux | grep docker                # Check if still running"
-    echo ""
+    # Give it a moment to start
+    sleep 1
+    
+    # Check if process started successfully
+    if ps -p $PID > /dev/null 2>&1; then
+        echo "✅ Background process started with PID: $PID"
+        echo "📋 Log file: $LOG_FILE"
+        echo ""
+        echo "Commands to monitor:"
+        echo "  tail -f $LOG_FILE                    # Follow log output"
+        echo "  grep -E '(✅|❌|🧪|📊)' $LOG_FILE    # Show status updates"
+        echo "  ps -p $PID                          # Check if still running"
+        echo "  kill $PID                           # Stop the process if needed"
+        echo ""
+    else
+        echo "❌ Failed to start background process"
+        echo "Check the log file for errors: $LOG_FILE"
+        exit 1
+    fi
+    
     exit 0
 fi
 
