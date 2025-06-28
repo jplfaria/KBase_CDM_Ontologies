@@ -12,8 +12,25 @@ from pathlib import Path
 from typing import Dict, List, Set, Tuple
 from datetime import datetime
 
+# Fix Python path for imports
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+# Try importing defaultdict with fallback
+try:
+    from collections import defaultdict
+except ImportError:
+    # Fallback implementation if import fails
+    class defaultdict(dict):
+        def __init__(self, factory):
+            self.factory = factory
+            super().__init__()
+        
+        def __getitem__(self, key):
+            if key not in self:
+                self[key] = self.factory()
+            return super().__getitem__(key)
+
 # Import enhanced metrics
-sys.path.insert(0, os.path.dirname(__file__))
 from enhanced_metrics import EnhancedMetricsCollector
 
 class DetailedReportGenerator:
@@ -234,11 +251,14 @@ class DetailedReportGenerator:
     
     def analyze_first_ontology_impact(self, results: Dict) -> Dict:
         """Analyze impact of which ontology comes first."""
-        first_onto_stats = defaultdict(lambda: {'total_size': 0, 'count': 0})
+        first_onto_stats = {}
         
         for perm_id, result in results.items():
             if result.get('success'):
                 first = result['order'][0]
+                # Initialize if not exists
+                if first not in first_onto_stats:
+                    first_onto_stats[first] = {'total_size': 0, 'count': 0}
                 first_onto_stats[first]['total_size'] += result['file_size']
                 first_onto_stats[first]['count'] += 1
         
@@ -246,17 +266,20 @@ class DetailedReportGenerator:
         for onto, stats in first_onto_stats.items():
             stats['avg_size'] = stats['total_size'] // stats['count'] if stats['count'] > 0 else 0
         
-        return dict(first_onto_stats)
+        return first_onto_stats
     
     def analyze_position_impact(self, results: Dict, target_onto: str) -> Dict:
         """Analyze impact of a specific ontology's position."""
-        position_sizes = defaultdict(list)
+        position_sizes = {}
         
         for perm_id, result in results.items():
             if result.get('success'):
                 order = result['order']
                 if target_onto in order:
                     position = order.index(target_onto) + 1
+                    # Initialize list if not exists
+                    if position not in position_sizes:
+                        position_sizes[position] = []
                     position_sizes[position].append(result['file_size'])
         
         # Calculate averages

@@ -166,6 +166,16 @@ case "${1:-all}" in
         run_docker "analyze_annotations.py" "Analyze term annotations"
         ;;
     
+    "test-metrics")
+        echo "🧪 Testing enhanced metrics functionality..."
+        run_docker "test_enhanced_metrics.py" "Test enhanced metrics collector"
+        ;;
+    
+    "test-imports")
+        echo "🐍 Testing Python imports and environment..."
+        run_docker "test_imports.py" "Test Python environment"
+        ;;
+    
     "shell")
         echo "🐚 Opening interactive shell..."
         run_docker_custom "bash" "Interactive shell"
@@ -215,7 +225,7 @@ case "${1:-all}" in
         ;;
     
     *)
-        echo "Usage: $0 [download|pseudo-base|test-orders|enhanced|permutations|summary|detailed|compare|analyze|shell|all] [--nohup]"
+        echo "Usage: $0 [download|pseudo-base|test-orders|enhanced|permutations|summary|detailed|compare|analyze|test-metrics|shell|all] [--nohup]"
         echo ""
         echo "Commands:"
         echo "  download     - Download all 23 ontologies"
@@ -227,6 +237,7 @@ case "${1:-all}" in
         echo "  detailed     - Generate detailed comparison report with metrics"
         echo "  compare      - Compare merge results (legacy)"
         echo "  analyze      - Analyze term annotations (legacy)"
+        echo "  test-metrics - Test enhanced metrics functionality"
         echo "  shell        - Open interactive shell"
         echo "  all          - Run complete workflow (default)"
         echo ""

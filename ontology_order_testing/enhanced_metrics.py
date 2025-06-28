@@ -36,57 +36,246 @@ class EnhancedMetricsCollector:
         return metrics
     
     def get_basic_counts(self, owl_file: Path) -> Dict:
-        """Get basic entity counts using multiple methods."""
+        """Get basic entity counts using multiple robust methods."""
         counts = {}
+        file_size_gb = owl_file.stat().st_size / (1024**3) if owl_file.exists() else 0
         
-        # Method 1: Use ROBOT stats if available
-        try:
-            stats_file = tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False)
-            stats_file.close()
-            
-            result = subprocess.run([
-                'robot', 'stats',
-                '--input', str(owl_file),
-                '--output', stats_file.name
-            ], capture_output=True, text=True, timeout=300)
-            
-            if result.returncode == 0 and Path(stats_file.name).exists():
-                with open(stats_file.name, 'r') as f:
-                    content = f.read()
-                    # Parse stats output
-                    for line in content.split('\n'):
-                        if 'Classes:' in line:
-                            counts['total_classes'] = int(line.split(':')[1].strip())
-                        elif 'Object properties:' in line:
-                            counts['object_properties'] = int(line.split(':')[1].strip())
-                        elif 'Data properties:' in line:
-                            counts['data_properties'] = int(line.split(':')[1].strip())
-                        elif 'Annotation properties:' in line:
-                            counts['annotation_properties'] = int(line.split(':')[1].strip())
-                        elif 'Individuals:' in line:
-                            counts['individuals'] = int(line.split(':')[1].strip())
-                        elif 'Axioms:' in line and 'Logical' not in line:
-                            counts['total_axioms'] = int(line.split(':')[1].strip())
-                        elif 'Logical axioms:' in line:
-                            counts['logical_axioms'] = int(line.split(':')[1].strip())
-            
-            os.unlink(stats_file.name)
-        except Exception as e:
-            print(f"  ⚠️  Stats collection failed: {str(e)}")
+        print(f"    📏 File size: {file_size_gb:.2f}GB - selecting appropriate method")
         
-        # Method 2: SPARQL queries as fallback
-        if 'total_classes' not in counts:
-            counts['total_classes'] = self.count_by_sparql(owl_file, 'owl:Class')
+        # Method 1: ROBOT measure with high memory (primary method)
+        counts = self.count_with_robot_measure(owl_file)
         
-        if 'object_properties' not in counts:
-            counts['object_properties'] = self.count_by_sparql(owl_file, 'owl:ObjectProperty')
+        # Method 2: SPARQL queries (fallback if ROBOT fails)
+        if not counts or counts.get('total_axioms', 0) == 0:
+            print(f"    🔄 ROBOT measure failed, trying SPARQL fallbacks...")
+            sparql_counts = self.count_with_sparql_fallbacks(owl_file)
+            counts.update(sparql_counts)
         
-        if 'data_properties' not in counts:
-            counts['data_properties'] = self.count_by_sparql(owl_file, 'owl:DatatypeProperty')
+        # Method 3: Pattern-based counting (last resort)
+        if not counts or counts.get('total_axioms', 0) == 0:
+            print(f"    🔄 SPARQL failed, trying pattern-based counting...")
+            pattern_counts = self.count_with_pattern_matching(owl_file)
+            counts.update(pattern_counts)
+        
+        # Add analysis metadata
+        counts['analysis_method'] = self.determine_method_used(counts)
+        counts['file_size_gb'] = file_size_gb
         
         return counts
     
-    def count_by_sparql(self, owl_file: Path, rdf_type: str) -> int:
+    def count_with_robot_measure(self, owl_file: Path) -> Dict:
+        """Use ROBOT measure with high memory allocation."""
+        counts = {}
+        
+        try:
+            # Create temporary output file
+            measure_file = tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False)
+            measure_file.close()
+            
+            # Prepare environment with maximum memory allocation
+            env = os.environ.copy()
+            
+            # Inherit high memory from testing environment, fallback to very generous defaults
+            default_memory = '-Xmx128g -XX:MaxMetaspaceSize=16g -XX:+UseG1GC -XX:G1HeapRegionSize=32m'
+            java_opts = env.get('ROBOT_JAVA_ARGS', default_memory)
+            
+            # Ensure we have adequate memory for large ontologies
+            if 'Xmx' not in java_opts or ('8g' in java_opts and owl_file.stat().st_size > 100*1024*1024):
+                java_opts = default_memory
+            
+            env['ROBOT_JAVA_ARGS'] = java_opts
+            
+            print(f"    🤖 ROBOT measure: {java_opts.split()[0]} memory")
+            
+            # Run ROBOT measure with extended timeout for large files
+            file_size_mb = owl_file.stat().st_size / (1024*1024)
+            timeout = min(1800, max(300, int(file_size_mb * 2)))  # 5-30 minutes based on file size
+            
+            result = subprocess.run([
+                'robot', 'measure',
+                '--input', str(owl_file),
+                '--metrics', 'all',
+                '--output', measure_file.name
+            ], capture_output=True, text=True, timeout=timeout, env=env)
+            
+            if result.returncode == 0 and Path(measure_file.name).exists():
+                with open(measure_file.name, 'r') as f:
+                    content = f.read()
+                    counts = self.parse_robot_measure_output(content)
+                if counts.get('total_axioms', 0) > 0:
+                    print(f"    ✅ ROBOT measure successful: {counts.get('total_axioms', 0):,} axioms")
+                else:
+                    print(f"    ⚠️  ROBOT measure returned zero axioms")
+            else:
+                error_msg = result.stderr[:300] if result.stderr else "Unknown error"
+                print(f"    ❌ ROBOT measure failed: {error_msg}")
+            
+            # Cleanup
+            try:
+                os.unlink(measure_file.name)
+            except:
+                pass
+            
+        except subprocess.TimeoutExpired:
+            print(f"    ⏱️  ROBOT measure timed out after {timeout//60} minutes")
+            try:
+                os.unlink(measure_file.name)
+            except:
+                pass
+        except Exception as e:
+            print(f"    ⚠️  ROBOT measure exception: {str(e)}")
+        
+        return counts
+    
+    def parse_robot_measure_output(self, content: str) -> Dict:
+        """Parse ROBOT measure output to extract counts."""
+        counts = {}
+        
+        for line in content.split('\n'):
+            line = line.strip()
+            if ':' in line:
+                key, value = line.split(':', 1)
+                key = key.strip()
+                value = value.strip()
+                
+                # Map ROBOT measure output to our standard keys
+                if 'class' in key.lower() and 'count' in key.lower():
+                    counts['total_classes'] = int(value)
+                elif 'object' in key.lower() and 'propert' in key.lower():
+                    counts['object_properties'] = int(value)
+                elif 'data' in key.lower() and 'propert' in key.lower():
+                    counts['data_properties'] = int(value)
+                elif 'annotation' in key.lower() and 'propert' in key.lower():
+                    counts['annotation_properties'] = int(value)
+                elif 'individual' in key.lower():
+                    counts['individuals'] = int(value)
+                elif 'axiom' in key.lower() and 'logical' not in key.lower():
+                    counts['total_axioms'] = int(value)
+                elif 'logical' in key.lower() and 'axiom' in key.lower():
+                    counts['logical_axioms'] = int(value)
+        
+        return counts
+    
+    def count_with_sparql_fallbacks(self, owl_file: Path) -> Dict:
+        """Use SPARQL queries with memory management as fallback."""
+        counts = {}
+        
+        # Basic entity counts with adaptive timeouts based on file size
+        file_size_mb = owl_file.stat().st_size / (1024*1024)
+        base_timeout = min(600, max(60, int(file_size_mb * 0.5)))  # 1-10 minutes based on size
+        
+        sparql_queries = {
+            'total_classes': ('owl:Class', 'owl'),
+            'object_properties': ('owl:ObjectProperty', 'owl'),
+            'data_properties': ('owl:DatatypeProperty', 'owl'),
+            'annotation_properties': ('owl:AnnotationProperty', 'owl'),
+            'individuals': ('owl:NamedIndividual', 'owl')
+        }
+        
+        print(f"    🔍 SPARQL queries with {base_timeout}s timeout")
+        
+        for count_type, (rdf_type, prefix) in sparql_queries.items():
+            try:
+                count = self.count_by_sparql(owl_file, rdf_type, timeout=base_timeout)
+                if count > 0:
+                    counts[count_type] = count
+                    print(f"    ✅ SPARQL {count_type}: {count:,}")
+                else:
+                    print(f"    ⚪ SPARQL {count_type}: 0 (may indicate query issues)")
+            except Exception as e:
+                print(f"    ⚠️  SPARQL {count_type} failed: {str(e)}")
+                continue
+        
+        # Try to estimate total axioms if we have entity counts
+        if counts and 'total_axioms' not in counts:
+            estimated_axioms = self.estimate_axioms_from_entities(counts)
+            if estimated_axioms > 0:
+                counts['total_axioms'] = estimated_axioms
+                counts['axiom_estimation_method'] = 'entity_based'
+                print(f"    📊 Estimated axioms from entities: {estimated_axioms:,}")
+        
+        return counts
+    
+    def count_with_pattern_matching(self, owl_file: Path) -> Dict:
+        """Use pattern matching as last resort for very large files."""
+        counts = {}
+        
+        try:
+            print(f"    🔍 Pattern-based counting (most robust method)")
+            
+            # Multiple pattern strategies for reliability
+            strategies = {
+                'xml_tags': {
+                    'total_classes': r'<owl:Class[>\s]',
+                    'object_properties': r'<owl:ObjectProperty[>\s]',
+                    'data_properties': r'<owl:DatatypeProperty[>\s]',
+                    'annotation_properties': r'<owl:AnnotationProperty[>\s]',
+                    'individuals': r'<owl:NamedIndividual[>\s]'
+                },
+                'rdf_about': {
+                    'total_classes': r'rdf:about="[^"]*"[^>]*>\s*<rdf:type[^>]*owl:Class',
+                    'object_properties': r'rdf:about="[^"]*"[^>]*>\s*<rdf:type[^>]*owl:ObjectProperty',
+                    'annotation_properties': r'rdf:about="[^"]*"[^>]*>\s*<rdf:type[^>]*owl:AnnotationProperty'
+                }
+            }
+            
+            best_counts = {}
+            
+            for strategy_name, patterns in strategies.items():
+                strategy_counts = {}
+                
+                for count_type, pattern in patterns.items():
+                    try:
+                        # Use grep with extended regex support
+                        result = subprocess.run([
+                            'grep', '-E', '-c', pattern, str(owl_file)
+                        ], capture_output=True, text=True, timeout=120)
+                        
+                        if result.returncode == 0:
+                            count = int(result.stdout.strip())
+                            strategy_counts[count_type] = count
+                    
+                    except Exception as e:
+                        continue
+                
+                # Use strategy with highest total counts (likely most accurate)
+                total_entities = sum(strategy_counts.values())
+                if total_entities > sum(best_counts.values()):
+                    best_counts = strategy_counts
+                    print(f"    📊 Best strategy: {strategy_name} ({total_entities:,} entities)")
+            
+            counts = best_counts
+            
+            # Report findings
+            for count_type, count in counts.items():
+                print(f"    📊 Pattern {count_type}: {count:,}")
+            
+            # Enhanced axiom estimation using multiple factors
+            if counts:
+                estimated_axioms = self.estimate_axioms_comprehensive(counts, owl_file)
+                counts['total_axioms'] = estimated_axioms
+                counts['estimation_note'] = 'Comprehensive axiom estimation from patterns and file analysis'
+                print(f"    📊 Estimated total axioms: {estimated_axioms:,}")
+        
+        except Exception as e:
+            print(f"    ❌ Pattern matching failed: {str(e)}")
+        
+        return counts
+    
+    def determine_method_used(self, counts: Dict) -> str:
+        """Determine which counting method was successful."""
+        if 'estimation_note' in counts:
+            return 'pattern_matching'
+        elif 'axiom_estimation_method' in counts:
+            return 'sparql_with_estimation'
+        elif counts.get('total_axioms', 0) > 0 and 'estimation' not in str(counts.get('total_axioms', '')):
+            return 'robot_measure'
+        elif counts.get('total_classes', 0) > 0:
+            return 'sparql_fallback'
+        else:
+            return 'failed'
+    
+    def count_by_sparql(self, owl_file: Path, rdf_type: str, timeout: int = 120) -> int:
         """Count entities of a specific type using SPARQL."""
         try:
             prefix = "owl" if rdf_type.startswith("owl:") else "rdf"
@@ -96,21 +285,112 @@ class EnhancedMetricsCollector:
                 WHERE {{ ?s a {rdf_type} }}
             '''
             
+            # Inherit environment for memory settings with generous defaults
+            env = os.environ.copy()
+            if 'ROBOT_JAVA_ARGS' not in env:
+                env['ROBOT_JAVA_ARGS'] = '-Xmx64g -XX:MaxMetaspaceSize=8g -XX:+UseG1GC'
+            
             result = subprocess.run([
                 'robot', 'query',
                 '--input', str(owl_file),
                 '--query', query,
                 '--format', 'csv'
-            ], capture_output=True, text=True, timeout=120)
+            ], capture_output=True, text=True, timeout=timeout, env=env)
             
             if result.returncode == 0 and result.stdout:
                 lines = result.stdout.strip().split('\n')
-                if len(lines) > 1:
-                    return int(lines[1])
+                if len(lines) > 1 and lines[1].strip():
+                    try:
+                        return int(lines[1].strip())
+                    except ValueError:
+                        print(f"  ⚠️  Invalid SPARQL result for {rdf_type}: '{lines[1]}'")
+                        return 0
+        except subprocess.TimeoutExpired:
+            print(f"  ⏱️  SPARQL count timed out for {rdf_type} after {timeout}s")
         except Exception as e:
             print(f"  ⚠️  SPARQL count failed for {rdf_type}: {str(e)}")
         
         return 0
+    
+    def estimate_axioms_from_entities(self, counts: Dict) -> int:
+        """Estimate total axioms based on entity counts using known ratios."""
+        # Based on analysis of typical OBO ontologies
+        entity_axiom_ratios = {
+            'total_classes': 4.5,        # Classes typically have multiple axioms each
+            'object_properties': 3.0,    # Properties have domain/range axioms
+            'data_properties': 2.5,      # Fewer axioms per data property
+            'annotation_properties': 2.0, # Mainly declaration axioms
+            'individuals': 1.5           # Individual assertions
+        }
+        
+        total_estimated = 0
+        for entity_type, count in counts.items():
+            if entity_type in entity_axiom_ratios:
+                total_estimated += count * entity_axiom_ratios[entity_type]
+        
+        return int(total_estimated) if total_estimated > 0 else 0
+    
+    def estimate_axioms_comprehensive(self, counts: Dict, owl_file: Path) -> int:
+        """Comprehensive axiom estimation using multiple factors."""
+        # Method 1: Entity-based estimation
+        entity_estimate = self.estimate_axioms_from_entities(counts)
+        
+        # Method 2: File size heuristic (based on typical OWL compression ratios)
+        file_size = owl_file.stat().st_size
+        size_estimate = file_size // 200  # Rough bytes-per-axiom ratio
+        
+        # Method 3: Pattern-based axiom counting
+        pattern_estimate = self.count_axiom_patterns(owl_file)
+        
+        # Use the highest estimate as it's likely most accurate
+        estimates = [e for e in [entity_estimate, size_estimate, pattern_estimate] if e > 0]
+        
+        if estimates:
+            # Use median of available estimates for robustness
+            estimates.sort()
+            if len(estimates) == 1:
+                return estimates[0]
+            elif len(estimates) == 2:
+                return int((estimates[0] + estimates[1]) / 2)
+            else:
+                return estimates[len(estimates)//2]
+        
+        return 0
+    
+    def count_axiom_patterns(self, owl_file: Path) -> int:
+        """Count axioms using pattern matching."""
+        try:
+            # Common axiom patterns in OWL files
+            axiom_patterns = [
+                r'<owl:Class[^>]*>',
+                r'<rdfs:subClassOf[^>]*>',
+                r'<owl:equivalentClass[^>]*>',
+                r'<owl:disjointWith[^>]*>',
+                r'<owl:ObjectProperty[^>]*>',
+                r'<owl:DatatypeProperty[^>]*>',
+                r'<owl:AnnotationProperty[^>]*>',
+                r'<rdfs:domain[^>]*>',
+                r'<rdfs:range[^>]*>',
+                r'<rdfs:label[^>]*>',
+                r'<rdfs:comment[^>]*>',
+                r'<obo:IAO_0000115[^>]*>'  # definition annotations
+            ]
+            
+            total_axioms = 0
+            for pattern in axiom_patterns:
+                try:
+                    result = subprocess.run([
+                        'grep', '-E', '-c', pattern, str(owl_file)
+                    ], capture_output=True, text=True, timeout=60)
+                    
+                    if result.returncode == 0:
+                        total_axioms += int(result.stdout.strip())
+                except:
+                    continue
+            
+            return total_axioms
+        except:
+            return 0
     
     def get_axiom_breakdown(self, owl_file: Path) -> Dict:
         """Get detailed axiom type counts."""
