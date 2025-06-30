@@ -1,5 +1,12 @@
 # Makefile for CDM Ontologies Workflow
 
+# Set shell to bash for consistent behavior
+SHELL := /bin/bash
+
+# Auto-export UID/GID for Docker - no manual setup needed
+export UID := $(shell id -u)
+export GID := $(shell id -g)
+
 # Configuration
 PYTHON := python3
 REPO_PATH := $(shell pwd)
@@ -133,21 +140,33 @@ test-workflow: setup
 	@echo "Testing complete workflow with test dataset..."
 	@ONTOLOGIES_SOURCE_FILE=config/ontologies_source_test.txt PYTHONPATH=$(SCRIPTS_DIR):$(PYTHONPATH) $(PYTHON) -m cdm_ontologies.cli run-all
 
-# Docker targets
+# Docker targets with automatic permission handling
 .PHONY: docker-build
 docker-build:
-	@echo "Building Docker image..."
-	@docker build -t kbase-cdm-ontologies:latest .
+	@echo "Building Docker image with UID=$(UID) GID=$(GID)..."
+	@docker build --build-arg USER_ID=$(UID) --build-arg GROUP_ID=$(GID) -t kbase-cdm-ontologies:latest .
 
 .PHONY: docker-run-production
 docker-run-production: docker-build
 	@echo "Running pipeline with production dataset..."
-	@ENV_FILE=.env docker-compose run --rm cdm-ontologies
+	@ENV_FILE=.env UID=$(UID) GID=$(GID) docker compose run --rm cdm-ontologies
+	@echo "Fixing any permission issues..."
+	@docker run --rm -v "$(PWD):/workspace" --user root alpine:latest sh -c "chown -R $(UID):$(GID) /workspace/outputs /workspace/ontology_data_owl /workspace/logs 2>/dev/null || true"
 
 .PHONY: docker-test
 docker-test: docker-build
 	@echo "Running pipeline with test dataset in Docker..."
-	@ENV_FILE=.env.test docker-compose run --rm cdm-ontologies make test-workflow
+	@ENV_FILE=.env.test UID=$(UID) GID=$(GID) docker compose run --rm cdm-ontologies make test-workflow
+	@echo "Fixing any permission issues..."
+	@docker run --rm -v "$(PWD):/workspace" --user root alpine:latest sh -c "chown -R $(UID):$(GID) /workspace/outputs_test /workspace/ontology_data_owl_test /workspace/logs 2>/dev/null || true"
+
+# Large dataset target
+.PHONY: docker-run-large
+docker-run-large: docker-build
+	@echo "Running pipeline with large production dataset..."
+	@ENV_FILE=.env UID=$(UID) GID=$(GID) docker compose run --rm cdm-ontologies
+	@echo "Fixing any permission issues..."
+	@docker run --rm -v "$(PWD):/workspace" --user root alpine:latest sh -c "chown -R $(UID):$(GID) /workspace/outputs /workspace/ontology_data_owl /workspace/logs 2>/dev/null || true"
 
 # Help target
 .PHONY: help
@@ -184,6 +203,7 @@ help:
 	@echo "  make docker-build       - Build Docker image"
 	@echo "  make docker-run-production - Run with production dataset in Docker"
 	@echo "  make docker-test        - Run with test dataset in Docker"
+	@echo "  make docker-run-large   - Run with large production dataset in Docker"
 	@echo ""
 	@echo "Environment variables:"
 	@echo "  ENV_FILE=.env      - Use production dataset configuration (default)"

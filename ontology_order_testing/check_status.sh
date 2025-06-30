@@ -1,6 +1,10 @@
 #!/bin/bash
 # Quick status checker for background order testing processes
 
+# Auto-export UID/GID - no manual setup needed
+export UID=$(id -u) 2>/dev/null || export UID=$(id -u)
+export GID=$(id -g) 2>/dev/null || export GID=$(id -g)
+
 TESTING_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LOG_DIR="$TESTING_DIR/logs"
 

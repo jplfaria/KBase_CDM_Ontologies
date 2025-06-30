@@ -5,9 +5,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        USER_ID: ${UID:-1000}
+        GROUP_ID: ${GID:-1000}
     image: kbase-cdm-ontologies:latest
     container_name: cdm-ontologies-pipeline
-    user: "${UID:-1000}:${GID:-1000}"  # Match host user UID:GID to avoid permission issues
+    # User is now set dynamically in Dockerfile, not needed here
     env_file:
       - ${ENV_FILE:-.env}
     environment:
@@ -40,9 +43,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        USER_ID: ${UID:-1000}
+        GROUP_ID: ${GID:-1000}
     image: kbase-cdm-ontologies:latest
     container_name: cdm-ontologies-notebook
-    user: "${UID:-1000}:${GID:-1000}"  # Match host user UID:GID to avoid permission issues
+    # User is now set dynamically in Dockerfile, not needed here
     env_file:
       - ${ENV_FILE:-.env}
     environment:

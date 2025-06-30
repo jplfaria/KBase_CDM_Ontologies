@@ -5,6 +5,7 @@ import sys
 import os
 import argparse
 import logging
+import subprocess
 from pathlib import Path
 
 # Add scripts directory to path
@@ -34,6 +35,38 @@ def setup_logging(verbose=False):
             logging.StreamHandler()
         ]
     )
+
+
+def fix_docker_permissions():
+    """Fix permissions for Docker-created files."""
+    try:
+        uid = os.getuid()
+        gid = os.getgid()
+        
+        # Directories to fix
+        dirs_to_fix = [
+            'outputs', 'outputs_test',
+            'ontology_data_owl', 'ontology_data_owl_test',
+            'logs', 'results', 'data'
+        ]
+        
+        # Build the chown command
+        dirs_str = ' '.join(f'/workspace/{d}' for d in dirs_to_fix)
+        
+        # Run Docker to fix permissions
+        cmd = [
+            'docker', 'run', '--rm',
+            '-v', f'{os.getcwd()}:/workspace',
+            '--user', 'root',
+            'alpine:latest',
+            'sh', '-c',
+            f'chown -R {uid}:{gid} {dirs_str} 2>/dev/null || true'
+        ]
+        
+        subprocess.run(cmd, capture_output=True)
+        logging.debug("Fixed Docker file permissions")
+    except Exception as e:
+        logging.debug(f"Permission fix skipped: {e}")
 
 
 def run_all(args):
@@ -115,6 +148,12 @@ def run_all(args):
         logging.error(f"Failed to create parquet files: {e}")
         if not args.continue_on_error:
             return 1
+    
+    # Fix any Docker permission issues
+    if os.path.exists('/.dockerenv') or os.getenv('DOCKER_CONTAINER'):
+        logging.debug("Running in Docker, skipping permission fix")
+    else:
+        fix_docker_permissions()
     
     print("\nWorkflow completed successfully!")
     return 0

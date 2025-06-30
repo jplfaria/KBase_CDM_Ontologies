@@ -4,6 +4,10 @@
 
 set -e
 
+# Auto-export UID/GID - no manual setup needed
+export UID=$(id -u) 2>/dev/null || export UID=$(id -u)
+export GID=$(id -g) 2>/dev/null || export GID=$(id -g)
+
 # Parse arguments for nohup support
 USE_NOHUP=false
 ORIGINAL_ARGS=("$@")
@@ -104,11 +108,7 @@ run_docker() {
     echo "🚀 Running: $description"
     echo "📋 Script: $script_path"
     
-    # Export host user ID for Docker (UID might be readonly, so check first)
-    if [ -z "$UID" ] || [ "$UID" = "" ]; then
-        export UID=$(id -u)
-    fi
-    export GID=$(id -g)
+    # UID/GID already exported at script start
     
     # Load environment variables from local env file  
     source "$TESTING_DIR/local_env/.env.local"
@@ -120,6 +120,13 @@ run_docker() {
         -w "/home/ontology/workspace/testing" \
         cdm-ontologies \
         python "$script_path"
+    
+    # Fix permissions after run
+    docker run --rm \
+        -v "$TESTING_DIR:/workspace" \
+        --user root \
+        alpine:latest \
+        sh -c "chown -R $UID:$GID /workspace/results /workspace/data /workspace/logs 2>/dev/null || true"
 }
 
 # Function to run with custom working directory
@@ -131,11 +138,7 @@ run_docker_custom() {
     echo "🚀 Running: $description"
     echo "📋 Command: $command"
     
-    # Export host user ID for Docker (UID might be readonly, so check first)
-    if [ -z "$UID" ] || [ "$UID" = "" ]; then
-        export UID=$(id -u)
-    fi
-    export GID=$(id -g)
+    # UID/GID already exported at script start
     
     # Load environment variables from local env file  
     source "$TESTING_DIR/local_env/.env.local"

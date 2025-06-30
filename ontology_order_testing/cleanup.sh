@@ -4,6 +4,10 @@
 
 set -e
 
+# Auto-export UID/GID - no manual setup needed
+export UID=$(id -u) 2>/dev/null || export UID=$(id -u)
+export GID=$(id -g) 2>/dev/null || export GID=$(id -g)
+
 TESTING_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="$(dirname "$TESTING_DIR")"
 
