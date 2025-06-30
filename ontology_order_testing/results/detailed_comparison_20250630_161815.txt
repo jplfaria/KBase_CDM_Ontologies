@@ -1,0 +1,148 @@
+DETAILED ORDER COMPARISON REPORT
+================================================================================
+Generated: 2025-06-30 16:18:15
+
+================================================================================
+24-ONTOLOGY ENHANCED ANALYSIS - DETAILED FINDINGS
+================================================================================
+
+📊 PAIRWISE COMPARISONS
+------------------------------------------------------------
+
+🔍 Comparing: alphabetical_merge_only vs alphabetical_with_removes
+  File size difference: -195,538 bytes (-0.01%)
+  Count differences:
+    file_size_gb: 1.4720806879922748 → 1.4718985790386796 (-0.00018210895359516144)
+    total_axioms: 3,812,530 → 3,811,705 (-825)
+    total_classes: 32,668 → 32,664 (-4)
+
+🔍 Comparing: alphabetical_merge_only vs hierarchy_merge_only
+  File size difference: -49,624,459 bytes (-3.14%)
+  Count differences:
+    file_size_gb: 1.4720806879922748 → 1.4258643090724945 (-0.046216378919780254)
+    total_axioms: 3,812,530 → 3,634,095 (-178,435)
+    total_classes: 32,668 → 24,095 (-8,573)
+
+🔍 Comparing: alphabetical_merge_only vs hierarchy_with_removes
+  File size difference: -49,800,375 bytes (-3.15%)
+  Count differences:
+    file_size_gb: 1.4720806879922748 → 1.4257004745304585 (-0.04638021346181631)
+    total_axioms: 3,812,530 → 3,633,340 (-179,190)
+    total_classes: 32,668 → 24,094 (-8,574)
+
+🔍 Comparing: alphabetical_merge_only vs size_merge_only
+  File size difference: -49,633,722 bytes (-3.14%)
+  Count differences:
+    file_size_gb: 1.4720806879922748 → 1.4258556822314858 (-0.04622500576078892)
+    total_axioms: 3,812,530 → 3,634,095 (-178,435)
+    total_classes: 32,668 → 24,095 (-8,573)
+
+🔍 Comparing: alphabetical_merge_only vs size_with_removes
+  File size difference: -49,809,638 bytes (-3.15%)
+  Count differences:
+    file_size_gb: 1.4720806879922748 → 1.4256918476894498 (-0.046388840302824974)
+    total_axioms: 3,812,530 → 3,633,340 (-179,190)
+    total_classes: 32,668 → 24,094 (-8,574)
+
+🔍 Comparing: alphabetical_with_removes vs hierarchy_merge_only
+  File size difference: -49,428,921 bytes (-3.13%)
+  Count differences:
+    file_size_gb: 1.4718985790386796 → 1.4258643090724945 (-0.04603426996618509)
+    total_axioms: 3,811,705 → 3,634,095 (-177,610)
+    total_classes: 32,664 → 24,095 (-8,569)
+
+🔍 Comparing: alphabetical_with_removes vs hierarchy_with_removes
+  File size difference: -49,604,837 bytes (-3.14%)
+  Count differences:
+    file_size_gb: 1.4718985790386796 → 1.4257004745304585 (-0.04619810450822115)
+    total_axioms: 3,811,705 → 3,633,340 (-178,365)
+    total_classes: 32,664 → 24,094 (-8,570)
+
+🔍 Comparing: alphabetical_with_removes vs size_merge_only
+  File size difference: -49,438,184 bytes (-3.13%)
+  Count differences:
+    file_size_gb: 1.4718985790386796 → 1.4258556822314858 (-0.046042896807193756)
+    total_axioms: 3,811,705 → 3,634,095 (-177,610)
+    total_classes: 32,664 → 24,095 (-8,569)
+
+🔍 Comparing: alphabetical_with_removes vs size_with_removes
+  File size difference: -49,614,100 bytes (-3.14%)
+  Count differences:
+    file_size_gb: 1.4718985790386796 → 1.4256918476894498 (-0.04620673134922981)
+    total_axioms: 3,811,705 → 3,633,340 (-178,365)
+    total_classes: 32,664 → 24,094 (-8,570)
+
+🔍 Comparing: hierarchy_merge_only vs hierarchy_with_removes
+  File size difference: -175,916 bytes (-0.01%)
+  Count differences:
+    file_size_gb: 1.4258643090724945 → 1.4257004745304585 (-0.00016383454203605652)
+    total_axioms: 3,634,095 → 3,633,340 (-755)
+    total_classes: 24,095 → 24,094 (-1)
+
+🔍 Comparing: hierarchy_merge_only vs size_merge_only
+  File size difference: -9,263 bytes (-0.00%)
+  Count differences:
+    file_size_gb: 1.4258643090724945 → 1.4258556822314858 (-8.626841008663177e-06)
+
+🔍 Comparing: hierarchy_merge_only vs size_with_removes
+  File size difference: -185,179 bytes (-0.01%)
+  Count differences:
+    file_size_gb: 1.4258643090724945 → 1.4256918476894498 (-0.0001724613830447197)
+    total_axioms: 3,634,095 → 3,633,340 (-755)
+    total_classes: 24,095 → 24,094 (-1)
+
+🔍 Comparing: hierarchy_with_removes vs size_merge_only
+  File size difference: 166,653 bytes (+0.01%)
+  Count differences:
+    file_size_gb: 1.4257004745304585 → 1.4258556822314858 (+0.00015520770102739334)
+    total_axioms: 3,633,340 → 3,634,095 (+755)
+    total_classes: 24,094 → 24,095 (+1)
+
+🔍 Comparing: hierarchy_with_removes vs size_with_removes
+  File size difference: -9,263 bytes (-0.00%)
+  Count differences:
+    file_size_gb: 1.4257004745304585 → 1.4256918476894498 (-8.626841008663177e-06)
+
+🔍 Comparing: size_merge_only vs size_with_removes
+  File size difference: -175,916 bytes (-0.01%)
+  Count differences:
+    file_size_gb: 1.4258556822314858 → 1.4256918476894498 (-0.00016383454203605652)
+    total_axioms: 3,634,095 → 3,633,340 (-755)
+    total_classes: 24,095 → 24,094 (-1)
+
+🏷️  TERM ATTRIBUTION ANALYSIS
+------------------------------------------------------------
+
+Summary:
+  volatile_ontologies: []
+  stable_ontologies: ['ENVO', 'UBERON', 'GO', 'FOODON', 'CHEBI']
+  total_tested: 6
+
+================================================================================
+4-ONTOLOGY PERMUTATION TESTS - DETAILED FINDINGS
+================================================================================
+
+📈 EXTREME VALUES ANALYSIS
+------------------------------------------------------------
+
+Merge-only extremes:
+  Smallest: Permutation 10 - 766,157,046 bytes
+    Order: foodon-base.owl → go.owl → envo.owl → chebi.owl
+  Largest: Permutation 24 - 798,368,724 bytes
+    Order: envo.owl → go.owl → foodon-base.owl → chebi.owl
+  Difference: 32,211,678 bytes (4.20%)
+
+🔄 ORDER PATTERN ANALYSIS
+------------------------------------------------------------
+
+Impact of first ontology:
+  chebi.owl first: avg size = 795,739,472 bytes (6 permutations)
+  foodon-base.owl first: avg size = 766,157,524 bytes (6 permutations)
+  go.owl first: avg size = 795,739,058 bytes (6 permutations)
+  envo.owl first: avg size = 798,368,708 bytes (6 permutations)
+
+CHEBI position impact:
+  Position 1: avg size = 795,739,472 bytes
+  Position 2: avg size = 786,755,367 bytes
+  Position 3: avg size = 786,755,095 bytes
+  Position 4: avg size = 786,754,829 bytes

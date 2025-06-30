@@ -1,0 +1,86 @@
+ONTOLOGY ORDER TESTING - COMPREHENSIVE SUMMARY REPORT
+======================================================================
+Generated: 2025-06-30 16:17:36
+Testing Directory: /home/ontology/workspace/testing
+======================================================================
+📊 ENHANCED ANALYSIS SUMMARY (24 ONTOLOGIES)
+======================================================================
+
+🚀 Test Execution Summary:
+   Orders tested: alphabetical, hierarchy, size
+
+📋 ALPHABETICAL Order Results:
+   ✅ Merge-only: 1,580,634,603 bytes, 3812530 axioms
+   ✅ With removes: 1,580,439,065 bytes, 3811705 axioms
+
+📋 HIERARCHY Order Results:
+   ✅ Merge-only: 1,531,010,144 bytes, 3634095 axioms
+   ✅ With removes: 1,530,834,228 bytes, 3633340 axioms
+
+📋 SIZE Order Results:
+   ✅ Merge-only: 1,531,000,881 bytes, 3634095 axioms
+   ✅ With removes: 1,530,824,965 bytes, 3633340 axioms
+
+🔍 Analysis Results:
+   Terms with different definers: 0
+   Tests with differences: 0
+   Remove operations impact: True
+
+🎯 Key Findings:
+   • Remove operations impact varies with order
+   • No significant differences found between orders
+======================================================================
+🧪 PERMUTATION TEST SUMMARY (4 ONTOLOGIES)
+======================================================================
+
+📊 Test Overview:
+   Ontologies tested: chebi.owl, foodon-base.owl, go.owl, envo.owl
+   Total permutations: 24
+   Key CHEBI terms tracked: 8
+
+✅ Success Rates:
+   Merge-only: 24/24 (100.0%)
+   With removes: 24/24 (100.0%)
+
+🔍 Analysis Results:
+   Terms with order-dependent attribution: 0
+   Merge-only has variations: True
+   With-removes has variations: True
+   Remove operations vary by order: False
+
+🎯 Key Findings:
+   • Merge order affects final results even without remove operations
+
+📏 Merge-Only Variations:
+   File size range: 766,157,046 - 798,368,724 bytes
+   Axiom count range: 1,290,999 - 1,291,004
+   File size variation: 18 unique values
+   Axiom count variation: 2 unique values
+
+📏 With-Removes Variations:
+   File size range: 766,131,138 - 798,342,816 bytes
+   Axiom count range: 1,290,811 - 1,290,816
+   File size variation: 18 unique values
+   Axiom count variation: 2 unique values
+======================================================================
+🔬 COMPARATIVE ANALYSIS
+======================================================================
+
+📊 Test Scope Comparison:
+   Enhanced Analysis: 24 ontologies, 3 orders, 6 total tests
+   Permutation Tests: 4 ontologies, 24 orders, 48 total tests
+
+🎯 Consistency Analysis:
+   ✅ Both tests confirm merge order affects results
+   📝 Remove operations show order-dependent behavior
+
+💡 Recommendations:
+   • Order matters: Use consistent merge order in production
+   • Consider hierarchy-based ordering for stable results
+   • Document chosen order in pipeline configuration
+   • Remove operations amplify order effects
+   • Test remove operations with production data
+
+======================================================================
+🏁 END OF REPORT
+======================================================================

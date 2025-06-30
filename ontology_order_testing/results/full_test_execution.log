@@ -1,0 +1,1340 @@
+🔧 Order Testing Docker Runner
+📁 Testing directory: /home/jplfaria/KBase_CDM_Ontologies/ontology_order_testing
+📁 Repository directory: /home/jplfaria/KBase_CDM_Ontologies
+🎯 Running complete testing workflow...
+
+= analyze_annotations.py check_status.sh cleanup.sh compare_merges.py configs data docker-compose.override.yml docker_run_20250627_214535.log docker-run.sh enhanced_metrics.py enhanced_order_analysis.py FINDINGS.md fix_memory_monitoring.py generate_detailed_report.py generate_summary.py local_env logs NOHUP_USAGE.md ontologies_source_full.txt __pycache__ README.md results scripts test_enhanced_metrics.py test_imports.py test_merge_orders.py test_permutations_4onto.py validate_setup.py 60
+STEP 1: Download ontologies
+= analyze_annotations.py check_status.sh cleanup.sh compare_merges.py configs data docker-compose.override.yml docker_run_20250627_214535.log docker-run.sh enhanced_metrics.py enhanced_order_analysis.py FINDINGS.md fix_memory_monitoring.py generate_detailed_report.py generate_summary.py local_env logs NOHUP_USAGE.md ontologies_source_full.txt __pycache__ README.md results scripts test_enhanced_metrics.py test_imports.py test_merge_orders.py test_permutations_4onto.py validate_setup.py 60
+
+🚀 Running: Download all ontologies
+📋 Script: scripts/download_ontologies.py
+time="2025-06-27T21:45:35-05:00" level=warning msg="/home/jplfaria/KBase_CDM_Ontologies/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2025-06-27T21:45:35-05:00" level=warning msg="/home/jplfaria/KBase_CDM_Ontologies/ontology_order_testing/docker-compose.override.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+🔍 Ontology Order Testing - Full Dataset Download
+📁 Data directory: /home/ontology/workspace/testing/data
+📋 Source file: /home/ontology/workspace/testing/ontologies_source_full.txt
+\n📊 Found 24 ontologies to download:
+   1. bfo.owl
+   2. foodon.owl
+   3. iao.owl
+   4. omo.owl
+   5. po.owl
+   6. fao-base.owl
+   7. obi-base.owl
+   8. pato-base.owl
+   9. pco-base.owl
+  10. ro-base.owl
+  11. uberon-base.owl
+  12. envo.owl
+  13. go.owl
+  14. chebi.owl
+  15. uo.owl
+  16. taxrank.owl
+  17. so.owl
+  18. gtdb.owl
+  19. eccode.owl
+  20. pfam.owl
+  21. rhea.owl
+  22. credit.owl
+  23. ror.owl
+  24. interpro.owl
+\n🚀 Starting downloads...
+\n[1/24] Processing: http://purl.obolibrary.org/obo/bfo.owl
+  ⏭️  Already exists: bfo.owl (0.2 MB)
+\n[2/24] Processing: http://purl.obolibrary.org/obo/foodon.owl
+  ⏭️  Already exists: foodon.owl (40.2 MB)
+\n[3/24] Processing: http://purl.obolibrary.org/obo/iao.owl
+  ⏭️  Already exists: iao.owl (0.6 MB)
+\n[4/24] Processing: http://purl.obolibrary.org/obo/omo.owl
+  ⏭️  Already exists: omo.owl (0.1 MB)
+\n[5/24] Processing: http://purl.obolibrary.org/obo/po.owl
+  ⏭️  Already exists: po.owl (5.2 MB)
+\n[6/24] Processing: http://purl.obolibrary.org/obo/fao/fao-base.owl
+  ⏭️  Already exists: fao-base.owl (0.2 MB)
+\n[7/24] Processing: http://purl.obolibrary.org/obo/obi/obi-base.owl
+  ⏭️  Already exists: obi-base.owl (7.9 MB)
+\n[8/24] Processing: http://purl.obolibrary.org/obo/pato/pato-base.owl
+  ⏭️  Already exists: pato-base.owl (2.9 MB)
+\n[9/24] Processing: http://purl.obolibrary.org/obo/pco/pco-base.owl
+  ⏭️  Already exists: pco-base.owl (0.1 MB)
+\n[10/24] Processing: http://purl.obolibrary.org/obo/ro/ro-base.owl
+  ⏭️  Already exists: ro-base.owl (0.8 MB)
+\n[11/24] Processing: http://purl.obolibrary.org/obo/uberon/uberon-base.owl
+  ⏭️  Already exists: uberon-base.owl (55.1 MB)
+\n[12/24] Processing: https://purl.obolibrary.org/obo/envo.owl
+  ⏭️  Already exists: envo.owl (9.4 MB)
+\n[13/24] Processing: https://purl.obolibrary.org/obo/go.owl
+  ⏭️  Already exists: go.owl (121.4 MB)
+\n[14/24] Processing: https://purl.obolibrary.org/obo/chebi.owl
+  ⏭️  Already exists: chebi.owl (783.4 MB)
+\n[15/24] Processing: https://purl.obolibrary.org/obo/uo.owl
+  ⏭️  Already exists: uo.owl (0.5 MB)
+\n[16/24] Processing: https://purl.obolibrary.org/obo/taxrank.owl
+  ⏭️  Already exists: taxrank.owl (0.0 MB)
+\n[17/24] Processing: https://purl.obolibrary.org/obo/so.owl
+  ⏭️  Already exists: so.owl (3.8 MB)
+\n[18/24] Processing: https://github.com/biopragmatics/obo-db-ingest/blob/main/export/gtdb/gtdb.owl
+  📦 Converting GitHub URL to raw: https://raw.githubusercontent.com/biopragmatics/obo-db-ingest/main/export/gtdb/gtdb.owl
+  ⏭️  Already exists: gtdb.owl (74.1 MB)
+\n[19/24] Processing: https://w3id.org/biopragmatics/resources/eccode/eccode.owl.gz
+  ⏭️  Already exists: eccode.owl (106.0 MB)
+\n[20/24] Processing: https://w3id.org/biopragmatics/resources/pfam/pfam.owl
+  ⏭️  Already exists: pfam.owl (7.8 MB)
+\n[21/24] Processing: https://w3id.org/biopragmatics/resources/rhea/rhea.owl.gz
+  ⏭️  Already exists: rhea.owl (253.7 MB)
+\n[22/24] Processing: https://w3id.org/biopragmatics/resources/credit/credit.owl
+  ⏭️  Already exists: credit.owl (0.0 MB)
+\n[23/24] Processing: https://w3id.org/biopragmatics/resources/ror/ror.owl.gz
+  ⏭️  Already exists: ror.owl (110.5 MB)
+\n[24/24] Processing: https://w3id.org/biopragmatics/resources/interpro/interpro.owl
+  ⏭️  Already exists: interpro.owl (22.7 MB)
+\n============================================================
+📊 DOWNLOAD SUMMARY
+============================================================
+✅ Successful: 24
+❌ Failed: 0
+📁 Total files in data/: 29
+\n📋 Downloaded files:
+  chebi.owl                         783.4 MB
+  rhea.owl                          253.7 MB
+  go.owl                            121.4 MB
+  ror.owl                           110.5 MB
+  eccode.owl                        106.0 MB
+  gtdb.owl                           74.1 MB
+  uberon-base.owl                    55.1 MB
+  foodon.owl                         40.2 MB
+  foodon-base.owl                    28.5 MB
+  interpro.owl                       22.7 MB
+  envo.owl                            9.4 MB
+  obi-base.owl                        7.9 MB
+  pfam.owl                            7.8 MB
+  po.owl                              5.2 MB
+  po-base.owl                         5.1 MB
+  so.owl                              3.8 MB
+  pato-base.owl                       2.9 MB
+  ro-base.owl                         0.8 MB
+  iao.owl                             0.6 MB
+  uo.owl                              0.5 MB
+  iao-base.owl                        0.3 MB
+  fao-base.owl                        0.2 MB
+  bfo.owl                             0.2 MB
+  bfo-base.owl                        0.1 MB
+  omo.owl                             0.1 MB
+  pco-base.owl                        0.1 MB
+  taxrank.owl                         0.0 MB
+  omo-base.owl                        0.0 MB
+  credit.owl                          0.0 MB
+\n📁 Total dataset size: 1640.5 MB
+\n🎉 All 24 ontologies downloaded successfully!
+
+= analyze_annotations.py check_status.sh cleanup.sh compare_merges.py configs data docker-compose.override.yml docker_run_20250627_214535.log docker-run.sh enhanced_metrics.py enhanced_order_analysis.py FINDINGS.md fix_memory_monitoring.py generate_detailed_report.py generate_summary.py local_env logs NOHUP_USAGE.md ontologies_source_full.txt __pycache__ README.md results scripts test_enhanced_metrics.py test_imports.py test_merge_orders.py test_permutations_4onto.py validate_setup.py 60
+STEP 2: Create pseudo-base versions
+= analyze_annotations.py check_status.sh cleanup.sh compare_merges.py configs data docker-compose.override.yml docker_run_20250627_214535.log docker-run.sh enhanced_metrics.py enhanced_order_analysis.py FINDINGS.md fix_memory_monitoring.py generate_detailed_report.py generate_summary.py local_env logs NOHUP_USAGE.md ontologies_source_full.txt __pycache__ README.md results scripts test_enhanced_metrics.py test_imports.py test_merge_orders.py test_permutations_4onto.py validate_setup.py 60
+
+🚀 Running: Create pseudo-base versions
+📋 Script: scripts/create_pseudo_base_local.py
+time="2025-06-27T21:45:36-05:00" level=warning msg="/home/jplfaria/KBase_CDM_Ontologies/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2025-06-27T21:45:36-05:00" level=warning msg="/home/jplfaria/KBase_CDM_Ontologies/ontology_order_testing/docker-compose.override.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+🔧 Creating Pseudo-Base Versions
+📁 Data directory: /home/ontology/workspace/testing/data
+\n📋 Non-base ontologies to process:
+  • bfo.owl
+  • foodon.owl
+  • iao.owl
+  • omo.owl
+  • po.owl
+\n[1/5] Processing bfo.owl:
+   ⏭️  Base version already exists: bfo-base.owl (0.1 MB)
+\n[2/5] Processing foodon.owl:
+   ⏭️  Base version already exists: foodon-base.owl (28.5 MB)
+\n[3/5] Processing iao.owl:
+   ⏭️  Base version already exists: iao-base.owl (0.3 MB)
+\n[4/5] Processing omo.owl:
+   ⏭️  Base version already exists: omo-base.owl (0.0 MB)
+\n[5/5] Processing po.owl:
+   ⏭️  Base version already exists: po-base.owl (5.1 MB)
+\n============================================================
+🔧 PSEUDO-BASE CREATION SUMMARY
+============================================================
+✅ Successful: 5
+❌ Failed: 0
+\n📋 All ontology files in data/:
+  📘 uberon-base.owl                    55.1 MB
+  📘 foodon-base.owl                    28.5 MB
+  📘 obi-base.owl                        7.9 MB
+  📘 po-base.owl                         5.1 MB
+  📘 pato-base.owl                       2.9 MB
+  📘 ro-base.owl                         0.8 MB
+  📘 iao-base.owl                        0.3 MB
+  📘 fao-base.owl                        0.2 MB
+  📘 bfo-base.owl                        0.1 MB
+  📘 pco-base.owl                        0.1 MB
+  📘 omo-base.owl                        0.0 MB
+  📗 chebi.owl                         783.4 MB
+  📗 rhea.owl                          253.7 MB
+  📗 go.owl                            121.4 MB
+  📗 ror.owl                           110.5 MB
+  📗 eccode.owl                        106.0 MB
+  📗 gtdb.owl                           74.1 MB
+  📗 foodon.owl                         40.2 MB
+  📗 interpro.owl                       22.7 MB
+  📗 envo.owl                            9.4 MB
+  📗 pfam.owl                            7.8 MB
+  📗 po.owl                              5.2 MB
+  📗 so.owl                              3.8 MB
+  📗 iao.owl                             0.6 MB
+  📗 uo.owl                              0.5 MB
+  📗 bfo.owl                             0.2 MB
+  📗 omo.owl                             0.1 MB
+  📗 taxrank.owl                         0.0 MB
+  📗 credit.owl                          0.0 MB
+\n📊 Dataset statistics:
+  📘 Base versions: 11
+  📗 Non-base versions: 18
+  📁 Total size: 1640.5 MB
+\n🎉 All 5 pseudo-base versions created successfully!
+
+= analyze_annotations.py check_status.sh cleanup.sh compare_merges.py configs data docker-compose.override.yml docker_run_20250627_214535.log docker-run.sh enhanced_metrics.py enhanced_order_analysis.py FINDINGS.md fix_memory_monitoring.py generate_detailed_report.py generate_summary.py local_env logs NOHUP_USAGE.md ontologies_source_full.txt __pycache__ README.md results scripts test_enhanced_metrics.py test_imports.py test_merge_orders.py test_permutations_4onto.py validate_setup.py 60
+STEP 3: Enhanced analysis (24 ontologies)
+= analyze_annotations.py check_status.sh cleanup.sh compare_merges.py configs data docker-compose.override.yml docker_run_20250627_214535.log docker-run.sh enhanced_metrics.py enhanced_order_analysis.py FINDINGS.md fix_memory_monitoring.py generate_detailed_report.py generate_summary.py local_env logs NOHUP_USAGE.md ontologies_source_full.txt __pycache__ README.md results scripts test_enhanced_metrics.py test_imports.py test_merge_orders.py test_permutations_4onto.py validate_setup.py 60
+
+🚀 Running: Enhanced 24-ontology analysis
+📋 Script: enhanced_order_analysis.py
+time="2025-06-27T21:45:36-05:00" level=warning msg="/home/jplfaria/KBase_CDM_Ontologies/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2025-06-27T21:45:36-05:00" level=warning msg="/home/jplfaria/KBase_CDM_Ontologies/ontology_order_testing/docker-compose.override.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+🔍 Enhanced Order Analysis - 24 Ontologies
+============================================================
+📊 Testing with 24 ontologies
+
+🧪 Running alphabetical merge test (removes=off)...
+  🚀 Running ROBOT merge...
+  ✅ Success: CDM_merged_alphabetical_merge_only.owl
+  📊 Collecting detailed metrics...
+    📏 File size: 1.47GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⏱️  ROBOT measure timed out after 30 minutes
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 600s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (32,668 entities)
+    📊 Pattern total_classes: 32,668
+    📊 Estimated total axioms: 3,812,530
+
+🧪 Running alphabetical merge test (removes=on)...
+  🚀 Running ROBOT merge...
+  ✅ Success: CDM_merged_alphabetical_with_removes.owl
+  📊 Collecting detailed metrics...
+    📏 File size: 1.47GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⏱️  ROBOT measure timed out after 30 minutes
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 600s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (32,664 entities)
+    📊 Pattern total_classes: 32,664
+    📊 Estimated total axioms: 3,811,705
+
+🧪 Running hierarchy merge test (removes=off)...
+  🚀 Running ROBOT merge...
+  ✅ Success: CDM_merged_hierarchy_merge_only.owl
+  📊 Collecting detailed metrics...
+    📏 File size: 1.43GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⏱️  ROBOT measure timed out after 30 minutes
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 600s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (24,095 entities)
+    📊 Pattern total_classes: 24,095
+    📊 Estimated total axioms: 3,634,095
+
+🧪 Running hierarchy merge test (removes=on)...
+  🚀 Running ROBOT merge...
+  ✅ Success: CDM_merged_hierarchy_with_removes.owl
+  📊 Collecting detailed metrics...
+    📏 File size: 1.43GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⏱️  ROBOT measure timed out after 30 minutes
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 600s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (24,094 entities)
+    📊 Pattern total_classes: 24,094
+    📊 Estimated total axioms: 3,633,340
+
+🧪 Running size merge test (removes=off)...
+  🚀 Running ROBOT merge...
+  ✅ Success: CDM_merged_size_merge_only.owl
+  📊 Collecting detailed metrics...
+    📏 File size: 1.43GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⏱️  ROBOT measure timed out after 30 minutes
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 600s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (24,095 entities)
+    📊 Pattern total_classes: 24,095
+    📊 Estimated total axioms: 3,634,095
+
+🧪 Running size merge test (removes=on)...
+  🚀 Running ROBOT merge...
+  ✅ Success: CDM_merged_size_with_removes.owl
+  📊 Collecting detailed metrics...
+    📏 File size: 1.43GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⏱️  ROBOT measure timed out after 30 minutes
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 600s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (24,094 entities)
+    📊 Pattern total_classes: 24,094
+    📊 Estimated total axioms: 3,633,340
+
+📋 Results saved to: /home/ontology/workspace/testing/results/enhanced_analysis_results.json
+
+============================================================
+🏁 ENHANCED ANALYSIS SUMMARY
+============================================================
+Terms with different definers: 0
+Tests with differences: 0
+Remove operations impact: True
+
+Key findings:
+  • Remove operations impact varies with order
+  • No significant differences found between orders
+
+= analyze_annotations.py check_status.sh cleanup.sh compare_merges.py configs data docker-compose.override.yml docker_run_20250627_214535.log docker-run.sh enhanced_metrics.py enhanced_order_analysis.py FINDINGS.md fix_memory_monitoring.py generate_detailed_report.py generate_summary.py local_env logs NOHUP_USAGE.md ontologies_source_full.txt __pycache__ README.md results scripts test_enhanced_metrics.py test_imports.py test_merge_orders.py test_permutations_4onto.py validate_setup.py 60
+STEP 4: Permutation tests (4 ontologies)
+= analyze_annotations.py check_status.sh cleanup.sh compare_merges.py configs data docker-compose.override.yml docker_run_20250627_214535.log docker-run.sh enhanced_metrics.py enhanced_order_analysis.py FINDINGS.md fix_memory_monitoring.py generate_detailed_report.py generate_summary.py local_env logs NOHUP_USAGE.md ontologies_source_full.txt __pycache__ README.md results scripts test_enhanced_metrics.py test_imports.py test_merge_orders.py test_permutations_4onto.py validate_setup.py 60
+
+🚀 Running: 4-ontology permutation tests
+📋 Script: test_permutations_4onto.py
+time="2025-06-28T01:22:52-05:00" level=warning msg="/home/jplfaria/KBase_CDM_Ontologies/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2025-06-28T01:22:52-05:00" level=warning msg="/home/jplfaria/KBase_CDM_Ontologies/ontology_order_testing/docker-compose.override.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+🧪 4-Ontology Permutation Testing
+==================================================
+📊 Testing ontologies: ['chebi.owl', 'foodon-base.owl', 'go.owl', 'envo.owl']
+🔢 Total permutations: 24
+✅ All 4 test ontologies found
+
+🚀 Running permutation tests...
+
+📋 Permutation  1/24: chebi.owl → foodon-base.owl → go.owl → envo.owl
+  🔄 Testing merge-only...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 379s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,291,004
+    ✅ Success: 795,739,961 bytes, 1291004 axioms
+  🔄 Testing merge+removes...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 379s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,816
+    ✅ Success: 795,714,053 bytes, 1290816 axioms
+
+📋 Permutation  2/24: chebi.owl → foodon-base.owl → envo.owl → go.owl
+  🔄 Testing merge-only...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 379s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,291,004
+    ✅ Success: 795,740,059 bytes, 1291004 axioms
+  🔄 Testing merge+removes...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 379s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,816
+    ✅ Success: 795,714,151 bytes, 1290816 axioms
+
+📋 Permutation  3/24: chebi.owl → go.owl → foodon-base.owl → envo.owl
+  🔄 Testing merge-only...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 379s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,291,004
+    ✅ Success: 795,739,933 bytes, 1291004 axioms
+  🔄 Testing merge+removes...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 379s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,816
+    ✅ Success: 795,714,025 bytes, 1290816 axioms
+
+📋 Permutation  4/24: chebi.owl → go.owl → envo.owl → foodon-base.owl
+  🔄 Testing merge-only...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 379s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,291,004
+    ✅ Success: 795,738,885 bytes, 1291004 axioms
+  🔄 Testing merge+removes...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 379s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,816
+    ✅ Success: 795,712,977 bytes, 1290816 axioms
+
+📋 Permutation  5/24: chebi.owl → envo.owl → foodon-base.owl → go.owl
+  🔄 Testing merge-only...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 379s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,291,004
+    ✅ Success: 795,738,997 bytes, 1291004 axioms
+  🔄 Testing merge+removes...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 379s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,816
+    ✅ Success: 795,713,089 bytes, 1290816 axioms
+
+📋 Permutation  6/24: chebi.owl → envo.owl → go.owl → foodon-base.owl
+  🔄 Testing merge-only...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 379s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,291,004
+    ✅ Success: 795,738,997 bytes, 1291004 axioms
+  🔄 Testing merge+removes...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 379s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,816
+    ✅ Success: 795,713,089 bytes, 1290816 axioms
+
+📋 Permutation  7/24: foodon-base.owl → chebi.owl → go.owl → envo.owl
+  🔄 Testing merge-only...
+    📏 File size: 0.71GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 365s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,999
+    ✅ Success: 766,157,902 bytes, 1290999 axioms
+  🔄 Testing merge+removes...
+    📏 File size: 0.71GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 365s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,811
+    ✅ Success: 766,131,994 bytes, 1290811 axioms
+
+📋 Permutation  8/24: foodon-base.owl → chebi.owl → envo.owl → go.owl
+  🔄 Testing merge-only...
+    📏 File size: 0.71GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 365s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,999
+    ✅ Success: 766,158,000 bytes, 1290999 axioms
+  🔄 Testing merge+removes...
+    📏 File size: 0.71GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 365s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,811
+    ✅ Success: 766,132,092 bytes, 1290811 axioms
+
+📋 Permutation  9/24: foodon-base.owl → go.owl → chebi.owl → envo.owl
+  🔄 Testing merge-only...
+    📏 File size: 0.71GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 365s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,999
+    ✅ Success: 766,157,875 bytes, 1290999 axioms
+  🔄 Testing merge+removes...
+    📏 File size: 0.71GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 365s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,811
+    ✅ Success: 766,131,967 bytes, 1290811 axioms
+
+📋 Permutation 10/24: foodon-base.owl → go.owl → envo.owl → chebi.owl
+  🔄 Testing merge-only...
+    📏 File size: 0.71GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 365s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,999
+    ✅ Success: 766,157,046 bytes, 1290999 axioms
+  🔄 Testing merge+removes...
+    📏 File size: 0.71GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 365s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,811
+    ✅ Success: 766,131,138 bytes, 1290811 axioms
+
+📋 Permutation 11/24: foodon-base.owl → envo.owl → chebi.owl → go.owl
+  🔄 Testing merge-only...
+    📏 File size: 0.71GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 365s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,999
+    ✅ Success: 766,157,162 bytes, 1290999 axioms
+  🔄 Testing merge+removes...
+    📏 File size: 0.71GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 365s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,811
+    ✅ Success: 766,131,254 bytes, 1290811 axioms
+
+📋 Permutation 12/24: foodon-base.owl → envo.owl → go.owl → chebi.owl
+  🔄 Testing merge-only...
+    📏 File size: 0.71GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 365s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,999
+    ✅ Success: 766,157,162 bytes, 1290999 axioms
+  🔄 Testing merge+removes...
+    📏 File size: 0.71GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 365s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,811
+    ✅ Success: 766,131,254 bytes, 1290811 axioms
+
+📋 Permutation 13/24: go.owl → chebi.owl → foodon-base.owl → envo.owl
+  🔄 Testing merge-only...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 379s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,999
+    ✅ Success: 795,739,981 bytes, 1290999 axioms
+  🔄 Testing merge+removes...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 379s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,811
+    ✅ Success: 795,714,073 bytes, 1290811 axioms
+
+📋 Permutation 14/24: go.owl → chebi.owl → envo.owl → foodon-base.owl
+  🔄 Testing merge-only...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 379s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,999
+    ✅ Success: 795,738,933 bytes, 1290999 axioms
+  🔄 Testing merge+removes...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 379s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,811
+    ✅ Success: 795,713,025 bytes, 1290811 axioms
+
+📋 Permutation 15/24: go.owl → foodon-base.owl → chebi.owl → envo.owl
+  🔄 Testing merge-only...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 379s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,999
+    ✅ Success: 795,740,020 bytes, 1290999 axioms
+  🔄 Testing merge+removes...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 379s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,811
+    ✅ Success: 795,714,112 bytes, 1290811 axioms
+
+📋 Permutation 16/24: go.owl → foodon-base.owl → envo.owl → chebi.owl
+  🔄 Testing merge-only...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 379s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,999
+    ✅ Success: 795,739,191 bytes, 1290999 axioms
+  🔄 Testing merge+removes...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 379s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,811
+    ✅ Success: 795,713,283 bytes, 1290811 axioms
+
+📋 Permutation 17/24: go.owl → envo.owl → chebi.owl → foodon-base.owl
+  🔄 Testing merge-only...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 379s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,999
+    ✅ Success: 795,738,096 bytes, 1290999 axioms
+  🔄 Testing merge+removes...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 379s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,811
+    ✅ Success: 795,712,188 bytes, 1290811 axioms
+
+📋 Permutation 18/24: go.owl → envo.owl → foodon-base.owl → chebi.owl
+  🔄 Testing merge-only...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 379s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,999
+    ✅ Success: 795,738,127 bytes, 1290999 axioms
+  🔄 Testing merge+removes...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 379s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,811
+    ✅ Success: 795,712,219 bytes, 1290811 axioms
+
+📋 Permutation 19/24: envo.owl → chebi.owl → foodon-base.owl → go.owl
+  🔄 Testing merge-only...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 380s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,291,004
+    ✅ Success: 798,368,693 bytes, 1291004 axioms
+  🔄 Testing merge+removes...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 380s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,816
+    ✅ Success: 798,342,785 bytes, 1290816 axioms
+
+📋 Permutation 20/24: envo.owl → chebi.owl → go.owl → foodon-base.owl
+  🔄 Testing merge-only...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 380s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,291,004
+    ✅ Success: 798,368,693 bytes, 1291004 axioms
+  🔄 Testing merge+removes...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 380s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,816
+    ✅ Success: 798,342,785 bytes, 1290816 axioms
+
+📋 Permutation 21/24: envo.owl → foodon-base.owl → chebi.owl → go.owl
+  🔄 Testing merge-only...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 380s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,291,004
+    ✅ Success: 798,368,724 bytes, 1291004 axioms
+  🔄 Testing merge+removes...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 380s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,816
+    ✅ Success: 798,342,816 bytes, 1290816 axioms
+
+📋 Permutation 22/24: envo.owl → foodon-base.owl → go.owl → chebi.owl
+  🔄 Testing merge-only...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 380s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,291,004
+    ✅ Success: 798,368,724 bytes, 1291004 axioms
+  🔄 Testing merge+removes...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 380s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,816
+    ✅ Success: 798,342,816 bytes, 1290816 axioms
+
+📋 Permutation 23/24: envo.owl → go.owl → chebi.owl → foodon-base.owl
+  🔄 Testing merge-only...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 380s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,291,004
+    ✅ Success: 798,368,693 bytes, 1291004 axioms
+  🔄 Testing merge+removes...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 380s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,816
+    ✅ Success: 798,342,785 bytes, 1290816 axioms
+
+📋 Permutation 24/24: envo.owl → go.owl → foodon-base.owl → chebi.owl
+  🔄 Testing merge-only...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 380s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,291,004
+    ✅ Success: 798,368,724 bytes, 1291004 axioms
+  🔄 Testing merge+removes...
+    📏 File size: 0.74GB - selecting appropriate method
+    🤖 ROBOT measure: -Xmx128g memory
+    ⚠️  ROBOT measure exception: invalid literal for int() with base 10: 'date 1\tmap_value'
+    🔄 ROBOT measure failed, trying SPARQL fallbacks...
+    🔍 SPARQL queries with 380s timeout
+    ⚪ SPARQL total_classes: 0 (may indicate query issues)
+    ⚪ SPARQL object_properties: 0 (may indicate query issues)
+    ⚪ SPARQL data_properties: 0 (may indicate query issues)
+    ⚪ SPARQL annotation_properties: 0 (may indicate query issues)
+    ⚪ SPARQL individuals: 0 (may indicate query issues)
+    🔄 SPARQL failed, trying pattern-based counting...
+    🔍 Pattern-based counting (most robust method)
+    📊 Best strategy: xml_tags (17,876 entities)
+    📊 Pattern total_classes: 17,876
+    📊 Estimated total axioms: 1,290,816
+    ✅ Success: 798,342,816 bytes, 1290816 axioms
+
+📋 Results saved to: /home/ontology/workspace/testing/results/permutation_test_results.json
+
+==================================================
+🏁 PERMUTATION TESTING SUMMARY
+==================================================
+Successful tests (merge-only): 24/24
+Successful tests (with-removes): 24/24
+Terms with order-dependent attribution: 0
+Remove operations vary by order: False
+
+Key findings:
+  • Merge order affects final results even without remove operations
+
+= analyze_annotations.py check_status.sh cleanup.sh compare_merges.py configs data docker-compose.override.yml docker_run_20250627_214535.log docker-run.sh enhanced_metrics.py enhanced_order_analysis.py FINDINGS.md fix_memory_monitoring.py generate_detailed_report.py generate_summary.py local_env logs NOHUP_USAGE.md ontologies_source_full.txt __pycache__ README.md results scripts test_enhanced_metrics.py test_imports.py test_merge_orders.py test_permutations_4onto.py validate_setup.py 60
+STEP 5: Generate summary report
+= analyze_annotations.py check_status.sh cleanup.sh compare_merges.py configs data docker-compose.override.yml docker_run_20250627_214535.log docker-run.sh enhanced_metrics.py enhanced_order_analysis.py FINDINGS.md fix_memory_monitoring.py generate_detailed_report.py generate_summary.py local_env logs NOHUP_USAGE.md ontologies_source_full.txt __pycache__ README.md results scripts test_enhanced_metrics.py test_imports.py test_merge_orders.py test_permutations_4onto.py validate_setup.py 60
+
+🚀 Running: Generate summary report
+📋 Script: generate_summary.py
+time="2025-06-28T13:18:18-05:00" level=warning msg="/home/jplfaria/KBase_CDM_Ontologies/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2025-06-28T13:18:18-05:00" level=warning msg="/home/jplfaria/KBase_CDM_Ontologies/ontology_order_testing/docker-compose.override.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+📋 Generating Order Testing Summary Report...
+✅ Loaded enhanced analysis: /home/ontology/workspace/testing/results/enhanced_analysis_results.json
+✅ Loaded permutation tests: /home/ontology/workspace/testing/results/permutation_test_results.json
+
+ONTOLOGY ORDER TESTING - COMPREHENSIVE SUMMARY REPORT
+======================================================================
+Generated: 2025-06-28 18:18:19
+Testing Directory: /home/ontology/workspace/testing
+======================================================================
+📊 ENHANCED ANALYSIS SUMMARY (24 ONTOLOGIES)
+======================================================================
+
+🚀 Test Execution Summary:
+   Orders tested: alphabetical, hierarchy, size
+
+📋 ALPHABETICAL Order Results:
+   ✅ Merge-only: 1,580,634,603 bytes, 3812530 axioms
+   ✅ With removes: 1,580,439,065 bytes, 3811705 axioms
+
+📋 HIERARCHY Order Results:
+   ✅ Merge-only: 1,531,010,144 bytes, 3634095 axioms
+   ✅ With removes: 1,530,834,228 bytes, 3633340 axioms
+
+📋 SIZE Order Results:
+   ✅ Merge-only: 1,531,000,881 bytes, 3634095 axioms
+   ✅ With removes: 1,530,824,965 bytes, 3633340 axioms
+
+🔍 Analysis Results:
+   Terms with different definers: 0
+   Tests with differences: 0
+   Remove operations impact: True
+
+🎯 Key Findings:
+   • Remove operations impact varies with order
+   • No significant differences found between orders
+======================================================================
+🧪 PERMUTATION TEST SUMMARY (4 ONTOLOGIES)
+======================================================================
+
+📊 Test Overview:
+   Ontologies tested: chebi.owl, foodon-base.owl, go.owl, envo.owl
+   Total permutations: 24
+   Key CHEBI terms tracked: 8
+
+✅ Success Rates:
+   Merge-only: 24/24 (100.0%)
+   With removes: 24/24 (100.0%)
+
+🔍 Analysis Results:
+   Terms with order-dependent attribution: 0
+   Merge-only has variations: True
+   With-removes has variations: True
+   Remove operations vary by order: False
+
+🎯 Key Findings:
+   • Merge order affects final results even without remove operations
+
+📏 Merge-Only Variations:
+   File size range: 766,157,046 - 798,368,724 bytes
+   Axiom count range: 1,290,999 - 1,291,004
+   File size variation: 18 unique values
+   Axiom count variation: 2 unique values
+
+📏 With-Removes Variations:
+   File size range: 766,131,138 - 798,342,816 bytes
+   Axiom count range: 1,290,811 - 1,290,816
+   File size variation: 18 unique values
+   Axiom count variation: 2 unique values
+======================================================================
+🔬 COMPARATIVE ANALYSIS
+======================================================================
+
+📊 Test Scope Comparison:
+   Enhanced Analysis: 24 ontologies, 3 orders, 6 total tests
+   Permutation Tests: 4 ontologies, 24 orders, 48 total tests
+
+🎯 Consistency Analysis:
+   ✅ Both tests confirm merge order affects results
+   📝 Remove operations show order-dependent behavior
+
+💡 Recommendations:
+   • Order matters: Use consistent merge order in production
+   • Consider hierarchy-based ordering for stable results
+   • Document chosen order in pipeline configuration
+   • Remove operations amplify order effects
+   • Test remove operations with production data
+
+======================================================================
+🏁 END OF REPORT
+======================================================================
+
+📋 Summary report saved to: /home/ontology/workspace/testing/results/order_testing_summary_20250628_181819.txt
+
+🎉 Complete testing workflow finished!
+📋 Check results/ directory for outputs
+
+✅ Task completed successfully!

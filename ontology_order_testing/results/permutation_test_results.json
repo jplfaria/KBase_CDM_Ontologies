@@ -1,0 +1,2161 @@
+{
+  "merge_only": {
+    "1": {
+      "success": true,
+      "permutation": 1,
+      "order": [
+        "chebi.owl",
+        "foodon-base.owl",
+        "go.owl",
+        "envo.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_01_merge_only.owl",
+      "file_size": 795739961,
+      "axiom_count": 1291004,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_01_merge_only.owl",
+        "file_size": 795739961,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1291004,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7410905892029405
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 748.0521152019501
+      },
+      "include_removes": false
+    },
+    "2": {
+      "success": true,
+      "permutation": 2,
+      "order": [
+        "chebi.owl",
+        "foodon-base.owl",
+        "envo.owl",
+        "go.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_02_merge_only.owl",
+      "file_size": 795740059,
+      "axiom_count": 1291004,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_02_merge_only.owl",
+        "file_size": 795740059,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1291004,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7410906804725528
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 738.9321916103363
+      },
+      "include_removes": false
+    },
+    "3": {
+      "success": true,
+      "permutation": 3,
+      "order": [
+        "chebi.owl",
+        "go.owl",
+        "foodon-base.owl",
+        "envo.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_03_merge_only.owl",
+      "file_size": 795739933,
+      "axiom_count": 1291004,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_03_merge_only.owl",
+        "file_size": 795739933,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1291004,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7410905631259084
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 776.9226305484772
+      },
+      "include_removes": false
+    },
+    "4": {
+      "success": true,
+      "permutation": 4,
+      "order": [
+        "chebi.owl",
+        "go.owl",
+        "envo.owl",
+        "foodon-base.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_04_merge_only.owl",
+      "file_size": 795738885,
+      "axiom_count": 1291004,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_04_merge_only.owl",
+        "file_size": 795738885,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1291004,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7410895870998502
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 796.1180758476257
+      },
+      "include_removes": false
+    },
+    "5": {
+      "success": true,
+      "permutation": 5,
+      "order": [
+        "chebi.owl",
+        "envo.owl",
+        "foodon-base.owl",
+        "go.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_05_merge_only.owl",
+      "file_size": 795738997,
+      "axiom_count": 1291004,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_05_merge_only.owl",
+        "file_size": 795738997,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1291004,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7410896914079785
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 792.4156818389893
+      },
+      "include_removes": false
+    },
+    "6": {
+      "success": true,
+      "permutation": 6,
+      "order": [
+        "chebi.owl",
+        "envo.owl",
+        "go.owl",
+        "foodon-base.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_06_merge_only.owl",
+      "file_size": 795738997,
+      "axiom_count": 1291004,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_06_merge_only.owl",
+        "file_size": 795738997,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1291004,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7410896914079785
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 729.8269047737122
+      },
+      "include_removes": false
+    },
+    "7": {
+      "success": true,
+      "permutation": 7,
+      "order": [
+        "foodon-base.owl",
+        "chebi.owl",
+        "go.owl",
+        "envo.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_07_merge_only.owl",
+      "file_size": 766157902,
+      "axiom_count": 1290999,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_07_merge_only.owl",
+        "file_size": 766157902,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290999,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7135401498526335
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 755.6149663925171
+      },
+      "include_removes": false
+    },
+    "8": {
+      "success": true,
+      "permutation": 8,
+      "order": [
+        "foodon-base.owl",
+        "chebi.owl",
+        "envo.owl",
+        "go.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_08_merge_only.owl",
+      "file_size": 766158000,
+      "axiom_count": 1290999,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_08_merge_only.owl",
+        "file_size": 766158000,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290999,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7135402411222458
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 750.448813199997
+      },
+      "include_removes": false
+    },
+    "9": {
+      "success": true,
+      "permutation": 9,
+      "order": [
+        "foodon-base.owl",
+        "go.owl",
+        "chebi.owl",
+        "envo.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_09_merge_only.owl",
+      "file_size": 766157875,
+      "axiom_count": 1290999,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_09_merge_only.owl",
+        "file_size": 766157875,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290999,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.713540124706924
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 745.090172290802
+      },
+      "include_removes": false
+    },
+    "10": {
+      "success": true,
+      "permutation": 10,
+      "order": [
+        "foodon-base.owl",
+        "go.owl",
+        "envo.owl",
+        "chebi.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_10_merge_only.owl",
+      "file_size": 766157046,
+      "axiom_count": 1290999,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_10_merge_only.owl",
+        "file_size": 766157046,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290999,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7135393526405096
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 768.2803966999054
+      },
+      "include_removes": false
+    },
+    "11": {
+      "success": true,
+      "permutation": 11,
+      "order": [
+        "foodon-base.owl",
+        "envo.owl",
+        "chebi.owl",
+        "go.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_11_merge_only.owl",
+      "file_size": 766157162,
+      "axiom_count": 1290999,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_11_merge_only.owl",
+        "file_size": 766157162,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290999,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7135394606739283
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 727.2702834606171
+      },
+      "include_removes": false
+    },
+    "12": {
+      "success": true,
+      "permutation": 12,
+      "order": [
+        "foodon-base.owl",
+        "envo.owl",
+        "go.owl",
+        "chebi.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_12_merge_only.owl",
+      "file_size": 766157162,
+      "axiom_count": 1290999,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_12_merge_only.owl",
+        "file_size": 766157162,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290999,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7135394606739283
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 737.4786176681519
+      },
+      "include_removes": false
+    },
+    "13": {
+      "success": true,
+      "permutation": 13,
+      "order": [
+        "go.owl",
+        "chebi.owl",
+        "foodon-base.owl",
+        "envo.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_13_merge_only.owl",
+      "file_size": 795739981,
+      "axiom_count": 1290999,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_13_merge_only.owl",
+        "file_size": 795739981,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290999,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.741090607829392
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 700.8443956375122
+      },
+      "include_removes": false
+    },
+    "14": {
+      "success": true,
+      "permutation": 14,
+      "order": [
+        "go.owl",
+        "chebi.owl",
+        "envo.owl",
+        "foodon-base.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_14_merge_only.owl",
+      "file_size": 795738933,
+      "axiom_count": 1290999,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_14_merge_only.owl",
+        "file_size": 795738933,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290999,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7410896318033338
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 774.4992988109589
+      },
+      "include_removes": false
+    },
+    "15": {
+      "success": true,
+      "permutation": 15,
+      "order": [
+        "go.owl",
+        "foodon-base.owl",
+        "chebi.owl",
+        "envo.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_15_merge_only.owl",
+      "file_size": 795740020,
+      "axiom_count": 1290999,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_15_merge_only.owl",
+        "file_size": 795740020,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290999,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7410906441509724
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 711.9067749977112
+      },
+      "include_removes": false
+    },
+    "16": {
+      "success": true,
+      "permutation": 16,
+      "order": [
+        "go.owl",
+        "foodon-base.owl",
+        "envo.owl",
+        "chebi.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_16_merge_only.owl",
+      "file_size": 795739191,
+      "axiom_count": 1290999,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_16_merge_only.owl",
+        "file_size": 795739191,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290999,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.741089872084558
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 741.3651170730591
+      },
+      "include_removes": false
+    },
+    "17": {
+      "success": true,
+      "permutation": 17,
+      "order": [
+        "go.owl",
+        "envo.owl",
+        "chebi.owl",
+        "foodon-base.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_17_merge_only.owl",
+      "file_size": 795738096,
+      "axiom_count": 1290999,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_17_merge_only.owl",
+        "file_size": 795738096,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290999,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7410888522863388
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 732.9312174320221
+      },
+      "include_removes": false
+    },
+    "18": {
+      "success": true,
+      "permutation": 18,
+      "order": [
+        "go.owl",
+        "envo.owl",
+        "foodon-base.owl",
+        "chebi.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_18_merge_only.owl",
+      "file_size": 795738127,
+      "axiom_count": 1290999,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_18_merge_only.owl",
+        "file_size": 795738127,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290999,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7410888811573386
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 715.7120931148529
+      },
+      "include_removes": false
+    },
+    "19": {
+      "success": true,
+      "permutation": 19,
+      "order": [
+        "envo.owl",
+        "chebi.owl",
+        "foodon-base.owl",
+        "go.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_19_merge_only.owl",
+      "file_size": 798368693,
+      "axiom_count": 1291004,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_19_merge_only.owl",
+        "file_size": 798368693,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1291004,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7435387866571546
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 736.7241442203522
+      },
+      "include_removes": false
+    },
+    "20": {
+      "success": true,
+      "permutation": 20,
+      "order": [
+        "envo.owl",
+        "chebi.owl",
+        "go.owl",
+        "foodon-base.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_20_merge_only.owl",
+      "file_size": 798368693,
+      "axiom_count": 1291004,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_20_merge_only.owl",
+        "file_size": 798368693,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1291004,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7435387866571546
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 765.6165375709534
+      },
+      "include_removes": false
+    },
+    "21": {
+      "success": true,
+      "permutation": 21,
+      "order": [
+        "envo.owl",
+        "foodon-base.owl",
+        "chebi.owl",
+        "go.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_21_merge_only.owl",
+      "file_size": 798368724,
+      "axiom_count": 1291004,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_21_merge_only.owl",
+        "file_size": 798368724,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1291004,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7435388155281544
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 792.0807394981384
+      },
+      "include_removes": false
+    },
+    "22": {
+      "success": true,
+      "permutation": 22,
+      "order": [
+        "envo.owl",
+        "foodon-base.owl",
+        "go.owl",
+        "chebi.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_22_merge_only.owl",
+      "file_size": 798368724,
+      "axiom_count": 1291004,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_22_merge_only.owl",
+        "file_size": 798368724,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1291004,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7435388155281544
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 811.7196493148804
+      },
+      "include_removes": false
+    },
+    "23": {
+      "success": true,
+      "permutation": 23,
+      "order": [
+        "envo.owl",
+        "go.owl",
+        "chebi.owl",
+        "foodon-base.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_23_merge_only.owl",
+      "file_size": 798368693,
+      "axiom_count": 1291004,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_23_merge_only.owl",
+        "file_size": 798368693,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1291004,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7435387866571546
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 731.9779920578003
+      },
+      "include_removes": false
+    },
+    "24": {
+      "success": true,
+      "permutation": 24,
+      "order": [
+        "envo.owl",
+        "go.owl",
+        "foodon-base.owl",
+        "chebi.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_24_merge_only.owl",
+      "file_size": 798368724,
+      "axiom_count": 1291004,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_24_merge_only.owl",
+        "file_size": 798368724,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1291004,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7435388155281544
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 713.975795507431
+      },
+      "include_removes": false
+    }
+  },
+  "with_removes": {
+    "1": {
+      "success": true,
+      "permutation": 1,
+      "order": [
+        "chebi.owl",
+        "foodon-base.owl",
+        "go.owl",
+        "envo.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_01_with_removes.owl",
+      "file_size": 795714053,
+      "axiom_count": 1290816,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_01_with_removes.owl",
+        "file_size": 795714053,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290816,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7410664604976773
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 761.5315713882446
+      },
+      "include_removes": true
+    },
+    "2": {
+      "success": true,
+      "permutation": 2,
+      "order": [
+        "chebi.owl",
+        "foodon-base.owl",
+        "envo.owl",
+        "go.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_02_with_removes.owl",
+      "file_size": 795714151,
+      "axiom_count": 1290816,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_02_with_removes.owl",
+        "file_size": 795714151,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290816,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7410665517672896
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 744.4212455749512
+      },
+      "include_removes": true
+    },
+    "3": {
+      "success": true,
+      "permutation": 3,
+      "order": [
+        "chebi.owl",
+        "go.owl",
+        "foodon-base.owl",
+        "envo.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_03_with_removes.owl",
+      "file_size": 795714025,
+      "axiom_count": 1290816,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_03_with_removes.owl",
+        "file_size": 795714025,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290816,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7410664344206452
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 734.8803079128265
+      },
+      "include_removes": true
+    },
+    "4": {
+      "success": true,
+      "permutation": 4,
+      "order": [
+        "chebi.owl",
+        "go.owl",
+        "envo.owl",
+        "foodon-base.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_04_with_removes.owl",
+      "file_size": 795712977,
+      "axiom_count": 1290816,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_04_with_removes.owl",
+        "file_size": 795712977,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290816,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.741065458394587
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 719.733460187912
+      },
+      "include_removes": true
+    },
+    "5": {
+      "success": true,
+      "permutation": 5,
+      "order": [
+        "chebi.owl",
+        "envo.owl",
+        "foodon-base.owl",
+        "go.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_05_with_removes.owl",
+      "file_size": 795713089,
+      "axiom_count": 1290816,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_05_with_removes.owl",
+        "file_size": 795713089,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290816,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7410655627027154
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 713.2278678417206
+      },
+      "include_removes": true
+    },
+    "6": {
+      "success": true,
+      "permutation": 6,
+      "order": [
+        "chebi.owl",
+        "envo.owl",
+        "go.owl",
+        "foodon-base.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_06_with_removes.owl",
+      "file_size": 795713089,
+      "axiom_count": 1290816,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_06_with_removes.owl",
+        "file_size": 795713089,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290816,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7410655627027154
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 739.6873984336853
+      },
+      "include_removes": true
+    },
+    "7": {
+      "success": true,
+      "permutation": 7,
+      "order": [
+        "foodon-base.owl",
+        "chebi.owl",
+        "go.owl",
+        "envo.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_07_with_removes.owl",
+      "file_size": 766131994,
+      "axiom_count": 1290811,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_07_with_removes.owl",
+        "file_size": 766131994,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290811,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7135160211473703
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 757.909924030304
+      },
+      "include_removes": true
+    },
+    "8": {
+      "success": true,
+      "permutation": 8,
+      "order": [
+        "foodon-base.owl",
+        "chebi.owl",
+        "envo.owl",
+        "go.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_08_with_removes.owl",
+      "file_size": 766132092,
+      "axiom_count": 1290811,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_08_with_removes.owl",
+        "file_size": 766132092,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290811,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7135161124169827
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 717.7750594615936
+      },
+      "include_removes": true
+    },
+    "9": {
+      "success": true,
+      "permutation": 9,
+      "order": [
+        "foodon-base.owl",
+        "go.owl",
+        "chebi.owl",
+        "envo.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_09_with_removes.owl",
+      "file_size": 766131967,
+      "axiom_count": 1290811,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_09_with_removes.owl",
+        "file_size": 766131967,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290811,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7135159960016608
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 715.0229833126068
+      },
+      "include_removes": true
+    },
+    "10": {
+      "success": true,
+      "permutation": 10,
+      "order": [
+        "foodon-base.owl",
+        "go.owl",
+        "envo.owl",
+        "chebi.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_10_with_removes.owl",
+      "file_size": 766131138,
+      "axiom_count": 1290811,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_10_with_removes.owl",
+        "file_size": 766131138,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290811,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7135152239352465
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 754.0696952342987
+      },
+      "include_removes": true
+    },
+    "11": {
+      "success": true,
+      "permutation": 11,
+      "order": [
+        "foodon-base.owl",
+        "envo.owl",
+        "chebi.owl",
+        "go.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_11_with_removes.owl",
+      "file_size": 766131254,
+      "axiom_count": 1290811,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_11_with_removes.owl",
+        "file_size": 766131254,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290811,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7135153319686651
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 746.7588081359863
+      },
+      "include_removes": true
+    },
+    "12": {
+      "success": true,
+      "permutation": 12,
+      "order": [
+        "foodon-base.owl",
+        "envo.owl",
+        "go.owl",
+        "chebi.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_12_with_removes.owl",
+      "file_size": 766131254,
+      "axiom_count": 1290811,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_12_with_removes.owl",
+        "file_size": 766131254,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290811,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7135153319686651
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 793.8706908226013
+      },
+      "include_removes": true
+    },
+    "13": {
+      "success": true,
+      "permutation": 13,
+      "order": [
+        "go.owl",
+        "chebi.owl",
+        "foodon-base.owl",
+        "envo.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_13_with_removes.owl",
+      "file_size": 795714073,
+      "axiom_count": 1290811,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_13_with_removes.owl",
+        "file_size": 795714073,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290811,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7410664791241288
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 735.5833699703217
+      },
+      "include_removes": true
+    },
+    "14": {
+      "success": true,
+      "permutation": 14,
+      "order": [
+        "go.owl",
+        "chebi.owl",
+        "envo.owl",
+        "foodon-base.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_14_with_removes.owl",
+      "file_size": 795713025,
+      "axiom_count": 1290811,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_14_with_removes.owl",
+        "file_size": 795713025,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290811,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7410655030980706
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 703.2552309036255
+      },
+      "include_removes": true
+    },
+    "15": {
+      "success": true,
+      "permutation": 15,
+      "order": [
+        "go.owl",
+        "foodon-base.owl",
+        "chebi.owl",
+        "envo.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_15_with_removes.owl",
+      "file_size": 795714112,
+      "axiom_count": 1290811,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_15_with_removes.owl",
+        "file_size": 795714112,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290811,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7410665154457092
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 741.2742488384247
+      },
+      "include_removes": true
+    },
+    "16": {
+      "success": true,
+      "permutation": 16,
+      "order": [
+        "go.owl",
+        "foodon-base.owl",
+        "envo.owl",
+        "chebi.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_16_with_removes.owl",
+      "file_size": 795713283,
+      "axiom_count": 1290811,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_16_with_removes.owl",
+        "file_size": 795713283,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290811,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7410657433792949
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 754.5901160240173
+      },
+      "include_removes": true
+    },
+    "17": {
+      "success": true,
+      "permutation": 17,
+      "order": [
+        "go.owl",
+        "envo.owl",
+        "chebi.owl",
+        "foodon-base.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_17_with_removes.owl",
+      "file_size": 795712188,
+      "axiom_count": 1290811,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_17_with_removes.owl",
+        "file_size": 795712188,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290811,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7410647235810757
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 755.6014235019684
+      },
+      "include_removes": true
+    },
+    "18": {
+      "success": true,
+      "permutation": 18,
+      "order": [
+        "go.owl",
+        "envo.owl",
+        "foodon-base.owl",
+        "chebi.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_18_with_removes.owl",
+      "file_size": 795712219,
+      "axiom_count": 1290811,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_18_with_removes.owl",
+        "file_size": 795712219,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290811,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7410647524520755
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 802.9085640907288
+      },
+      "include_removes": true
+    },
+    "19": {
+      "success": true,
+      "permutation": 19,
+      "order": [
+        "envo.owl",
+        "chebi.owl",
+        "foodon-base.owl",
+        "go.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_19_with_removes.owl",
+      "file_size": 798342785,
+      "axiom_count": 1290816,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_19_with_removes.owl",
+        "file_size": 798342785,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290816,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7435146579518914
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 755.8340346813202
+      },
+      "include_removes": true
+    },
+    "20": {
+      "success": true,
+      "permutation": 20,
+      "order": [
+        "envo.owl",
+        "chebi.owl",
+        "go.owl",
+        "foodon-base.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_20_with_removes.owl",
+      "file_size": 798342785,
+      "axiom_count": 1290816,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_20_with_removes.owl",
+        "file_size": 798342785,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290816,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7435146579518914
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 760.0631260871887
+      },
+      "include_removes": true
+    },
+    "21": {
+      "success": true,
+      "permutation": 21,
+      "order": [
+        "envo.owl",
+        "foodon-base.owl",
+        "chebi.owl",
+        "go.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_21_with_removes.owl",
+      "file_size": 798342816,
+      "axiom_count": 1290816,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_21_with_removes.owl",
+        "file_size": 798342816,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290816,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7435146868228912
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 753.3123195171356
+      },
+      "include_removes": true
+    },
+    "22": {
+      "success": true,
+      "permutation": 22,
+      "order": [
+        "envo.owl",
+        "foodon-base.owl",
+        "go.owl",
+        "chebi.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_22_with_removes.owl",
+      "file_size": 798342816,
+      "axiom_count": 1290816,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_22_with_removes.owl",
+        "file_size": 798342816,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290816,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7435146868228912
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 699.7983803749084
+      },
+      "include_removes": true
+    },
+    "23": {
+      "success": true,
+      "permutation": 23,
+      "order": [
+        "envo.owl",
+        "go.owl",
+        "chebi.owl",
+        "foodon-base.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_23_with_removes.owl",
+      "file_size": 798342785,
+      "axiom_count": 1290816,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_23_with_removes.owl",
+        "file_size": 798342785,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290816,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7435146579518914
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 728.9857258796692
+      },
+      "include_removes": true
+    },
+    "24": {
+      "success": true,
+      "permutation": 24,
+      "order": [
+        "envo.owl",
+        "go.owl",
+        "foodon-base.owl",
+        "chebi.owl"
+      ],
+      "output_file": "/home/ontology/workspace/testing/results/permutation_tests/perm_24_with_removes.owl",
+      "file_size": 798342816,
+      "axiom_count": 1290816,
+      "class_count": 17876,
+      "key_term_definers": {},
+      "enhanced_metrics": {
+        "file_path": "/home/ontology/workspace/testing/results/permutation_tests/perm_24_with_removes.owl",
+        "file_size": 798342816,
+        "basic_counts": {
+          "total_classes": 17876,
+          "total_axioms": 1290816,
+          "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+          "analysis_method": "pattern_matching",
+          "file_size_gb": 0.7435146868228912
+        },
+        "axiom_breakdown": {
+          "subclass_axioms": 0,
+          "equivalent_class_axioms": 0,
+          "disjoint_class_axioms": 0,
+          "annotation_assertions": 0
+        },
+        "annotation_properties": {},
+        "defined_by_analysis": {},
+        "collection_time": 752.5267884731293
+      },
+      "include_removes": true
+    }
+  },
+  "metadata": {
+    "test_ontologies": [
+      "chebi.owl",
+      "foodon-base.owl",
+      "go.owl",
+      "envo.owl"
+    ],
+    "key_terms_tested": {
+      "CHEBI:24431": "chemical entity",
+      "CHEBI:15377": "water",
+      "CHEBI:16236": "ethanol",
+      "CHEBI:17234": "glucose",
+      "CHEBI:15422": "ATP",
+      "CHEBI:36080": "protein",
+      "CHEBI:33697": "ribonucleic acid",
+      "CHEBI:16541": "protein polypeptide chain"
+    },
+    "total_permutations": 24
+  },
+  "analysis": {
+    "merge_only_analysis": {
+      "total_permutations": 24,
+      "file_size_range": {
+        "min": 766157046,
+        "max": 798368724,
+        "unique_values": 18
+      },
+      "axiom_count_range": {
+        "min": 1290999,
+        "max": 1291004,
+        "unique_values": 2
+      },
+      "class_count_range": {
+        "min": 17876,
+        "max": 17876,
+        "unique_values": 1
+      },
+      "has_variations": true
+    },
+    "with_removes_analysis": {
+      "total_permutations": 24,
+      "file_size_range": {
+        "min": 766131138,
+        "max": 798342816,
+        "unique_values": 18
+      },
+      "axiom_count_range": {
+        "min": 1290811,
+        "max": 1290816,
+        "unique_values": 2
+      },
+      "class_count_range": {
+        "min": 17876,
+        "max": 17876,
+        "unique_values": 1
+      },
+      "has_variations": true
+    },
+    "remove_operation_impact": {
+      "1": {
+        "permutation": 1,
+        "order": [
+          "chebi.owl",
+          "foodon-base.owl",
+          "go.owl",
+          "envo.owl"
+        ],
+        "file_size_diff": -25908,
+        "axiom_count_diff": -188,
+        "class_count_diff": 0
+      },
+      "2": {
+        "permutation": 2,
+        "order": [
+          "chebi.owl",
+          "foodon-base.owl",
+          "envo.owl",
+          "go.owl"
+        ],
+        "file_size_diff": -25908,
+        "axiom_count_diff": -188,
+        "class_count_diff": 0
+      },
+      "3": {
+        "permutation": 3,
+        "order": [
+          "chebi.owl",
+          "go.owl",
+          "foodon-base.owl",
+          "envo.owl"
+        ],
+        "file_size_diff": -25908,
+        "axiom_count_diff": -188,
+        "class_count_diff": 0
+      },
+      "4": {
+        "permutation": 4,
+        "order": [
+          "chebi.owl",
+          "go.owl",
+          "envo.owl",
+          "foodon-base.owl"
+        ],
+        "file_size_diff": -25908,
+        "axiom_count_diff": -188,
+        "class_count_diff": 0
+      },
+      "5": {
+        "permutation": 5,
+        "order": [
+          "chebi.owl",
+          "envo.owl",
+          "foodon-base.owl",
+          "go.owl"
+        ],
+        "file_size_diff": -25908,
+        "axiom_count_diff": -188,
+        "class_count_diff": 0
+      },
+      "6": {
+        "permutation": 6,
+        "order": [
+          "chebi.owl",
+          "envo.owl",
+          "go.owl",
+          "foodon-base.owl"
+        ],
+        "file_size_diff": -25908,
+        "axiom_count_diff": -188,
+        "class_count_diff": 0
+      },
+      "7": {
+        "permutation": 7,
+        "order": [
+          "foodon-base.owl",
+          "chebi.owl",
+          "go.owl",
+          "envo.owl"
+        ],
+        "file_size_diff": -25908,
+        "axiom_count_diff": -188,
+        "class_count_diff": 0
+      },
+      "8": {
+        "permutation": 8,
+        "order": [
+          "foodon-base.owl",
+          "chebi.owl",
+          "envo.owl",
+          "go.owl"
+        ],
+        "file_size_diff": -25908,
+        "axiom_count_diff": -188,
+        "class_count_diff": 0
+      },
+      "9": {
+        "permutation": 9,
+        "order": [
+          "foodon-base.owl",
+          "go.owl",
+          "chebi.owl",
+          "envo.owl"
+        ],
+        "file_size_diff": -25908,
+        "axiom_count_diff": -188,
+        "class_count_diff": 0
+      },
+      "10": {
+        "permutation": 10,
+        "order": [
+          "foodon-base.owl",
+          "go.owl",
+          "envo.owl",
+          "chebi.owl"
+        ],
+        "file_size_diff": -25908,
+        "axiom_count_diff": -188,
+        "class_count_diff": 0
+      },
+      "11": {
+        "permutation": 11,
+        "order": [
+          "foodon-base.owl",
+          "envo.owl",
+          "chebi.owl",
+          "go.owl"
+        ],
+        "file_size_diff": -25908,
+        "axiom_count_diff": -188,
+        "class_count_diff": 0
+      },
+      "12": {
+        "permutation": 12,
+        "order": [
+          "foodon-base.owl",
+          "envo.owl",
+          "go.owl",
+          "chebi.owl"
+        ],
+        "file_size_diff": -25908,
+        "axiom_count_diff": -188,
+        "class_count_diff": 0
+      },
+      "13": {
+        "permutation": 13,
+        "order": [
+          "go.owl",
+          "chebi.owl",
+          "foodon-base.owl",
+          "envo.owl"
+        ],
+        "file_size_diff": -25908,
+        "axiom_count_diff": -188,
+        "class_count_diff": 0
+      },
+      "14": {
+        "permutation": 14,
+        "order": [
+          "go.owl",
+          "chebi.owl",
+          "envo.owl",
+          "foodon-base.owl"
+        ],
+        "file_size_diff": -25908,
+        "axiom_count_diff": -188,
+        "class_count_diff": 0
+      },
+      "15": {
+        "permutation": 15,
+        "order": [
+          "go.owl",
+          "foodon-base.owl",
+          "chebi.owl",
+          "envo.owl"
+        ],
+        "file_size_diff": -25908,
+        "axiom_count_diff": -188,
+        "class_count_diff": 0
+      },
+      "16": {
+        "permutation": 16,
+        "order": [
+          "go.owl",
+          "foodon-base.owl",
+          "envo.owl",
+          "chebi.owl"
+        ],
+        "file_size_diff": -25908,
+        "axiom_count_diff": -188,
+        "class_count_diff": 0
+      },
+      "17": {
+        "permutation": 17,
+        "order": [
+          "go.owl",
+          "envo.owl",
+          "chebi.owl",
+          "foodon-base.owl"
+        ],
+        "file_size_diff": -25908,
+        "axiom_count_diff": -188,
+        "class_count_diff": 0
+      },
+      "18": {
+        "permutation": 18,
+        "order": [
+          "go.owl",
+          "envo.owl",
+          "foodon-base.owl",
+          "chebi.owl"
+        ],
+        "file_size_diff": -25908,
+        "axiom_count_diff": -188,
+        "class_count_diff": 0
+      },
+      "19": {
+        "permutation": 19,
+        "order": [
+          "envo.owl",
+          "chebi.owl",
+          "foodon-base.owl",
+          "go.owl"
+        ],
+        "file_size_diff": -25908,
+        "axiom_count_diff": -188,
+        "class_count_diff": 0
+      },
+      "20": {
+        "permutation": 20,
+        "order": [
+          "envo.owl",
+          "chebi.owl",
+          "go.owl",
+          "foodon-base.owl"
+        ],
+        "file_size_diff": -25908,
+        "axiom_count_diff": -188,
+        "class_count_diff": 0
+      },
+      "21": {
+        "permutation": 21,
+        "order": [
+          "envo.owl",
+          "foodon-base.owl",
+          "chebi.owl",
+          "go.owl"
+        ],
+        "file_size_diff": -25908,
+        "axiom_count_diff": -188,
+        "class_count_diff": 0
+      },
+      "22": {
+        "permutation": 22,
+        "order": [
+          "envo.owl",
+          "foodon-base.owl",
+          "go.owl",
+          "chebi.owl"
+        ],
+        "file_size_diff": -25908,
+        "axiom_count_diff": -188,
+        "class_count_diff": 0
+      },
+      "23": {
+        "permutation": 23,
+        "order": [
+          "envo.owl",
+          "go.owl",
+          "chebi.owl",
+          "foodon-base.owl"
+        ],
+        "file_size_diff": -25908,
+        "axiom_count_diff": -188,
+        "class_count_diff": 0
+      },
+      "24": {
+        "permutation": 24,
+        "order": [
+          "envo.owl",
+          "go.owl",
+          "foodon-base.owl",
+          "chebi.owl"
+        ],
+        "file_size_diff": -25908,
+        "axiom_count_diff": -188,
+        "class_count_diff": 0
+      }
+    },
+    "term_attribution_analysis": {
+      "CHEBI:24431": {
+        "label": "chemical entity",
+        "definers_merge_only": {},
+        "definers_with_removes": {},
+        "varies_with_order": false,
+        "unique_definers_merge": [],
+        "unique_definers_removes": []
+      },
+      "CHEBI:15377": {
+        "label": "water",
+        "definers_merge_only": {},
+        "definers_with_removes": {},
+        "varies_with_order": false,
+        "unique_definers_merge": [],
+        "unique_definers_removes": []
+      },
+      "CHEBI:16236": {
+        "label": "ethanol",
+        "definers_merge_only": {},
+        "definers_with_removes": {},
+        "varies_with_order": false,
+        "unique_definers_merge": [],
+        "unique_definers_removes": []
+      },
+      "CHEBI:17234": {
+        "label": "glucose",
+        "definers_merge_only": {},
+        "definers_with_removes": {},
+        "varies_with_order": false,
+        "unique_definers_merge": [],
+        "unique_definers_removes": []
+      },
+      "CHEBI:15422": {
+        "label": "ATP",
+        "definers_merge_only": {},
+        "definers_with_removes": {},
+        "varies_with_order": false,
+        "unique_definers_merge": [],
+        "unique_definers_removes": []
+      },
+      "CHEBI:36080": {
+        "label": "protein",
+        "definers_merge_only": {},
+        "definers_with_removes": {},
+        "varies_with_order": false,
+        "unique_definers_merge": [],
+        "unique_definers_removes": []
+      },
+      "CHEBI:33697": {
+        "label": "ribonucleic acid",
+        "definers_merge_only": {},
+        "definers_with_removes": {},
+        "varies_with_order": false,
+        "unique_definers_merge": [],
+        "unique_definers_removes": []
+      },
+      "CHEBI:16541": {
+        "label": "protein polypeptide chain",
+        "definers_merge_only": {},
+        "definers_with_removes": {},
+        "varies_with_order": false,
+        "unique_definers_merge": [],
+        "unique_definers_removes": []
+      }
+    },
+    "summary": {
+      "total_permutations_tested": 24,
+      "successful_merge_only": 24,
+      "successful_with_removes": 24,
+      "merge_only_has_variations": true,
+      "with_removes_has_variations": true,
+      "terms_with_order_dependent_attribution": 0,
+      "remove_operations_vary_by_order": false,
+      "key_findings": [
+        "Merge order affects final results even without remove operations"
+      ]
+    }
+  }
+}

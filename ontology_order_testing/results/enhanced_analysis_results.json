@@ -1,0 +1,866 @@
+{
+  "results": {
+    "alphabetical": {
+      "merge_only": {
+        "success": true,
+        "output_file": "/home/ontology/workspace/testing/results/CDM_merged_alphabetical_merge_only.owl",
+        "file_size": 1580634603,
+        "axiom_count": 3812530,
+        "class_count": 32668,
+        "enhanced_metrics": {
+          "file_path": "/home/ontology/workspace/testing/results/CDM_merged_alphabetical_merge_only.owl",
+          "file_size": 1580634603,
+          "basic_counts": {
+            "total_classes": 32668,
+            "total_axioms": 3812530,
+            "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+            "analysis_method": "pattern_matching",
+            "file_size_gb": 1.4720806879922748
+          },
+          "axiom_breakdown": {
+            "subclass_axioms": 0,
+            "equivalent_class_axioms": 0,
+            "disjoint_class_axioms": 0,
+            "annotation_assertions": 0
+          },
+          "annotation_properties": {},
+          "defined_by_analysis": {},
+          "collection_time": 1859.7728381156921
+        },
+        "command": [
+          "robot",
+          "merge",
+          "--annotate-defined-by",
+          "true",
+          "--input",
+          "/home/ontology/workspace/testing/data/bfo.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/chebi.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/credit.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/eccode.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/envo.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/fao-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/foodon.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/go.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/gtdb.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/iao.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/interpro.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/obi-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/omo.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/pato-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/pco-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/pfam.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/po.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/rhea.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/ro-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/ror.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/so.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/taxrank.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/uberon-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/uo.owl",
+          "--output",
+          "/home/ontology/workspace/testing/results/CDM_merged_alphabetical_merge_only.owl"
+        ],
+        "key_term_definers": {}
+      },
+      "with_removes": {
+        "success": true,
+        "output_file": "/home/ontology/workspace/testing/results/CDM_merged_alphabetical_with_removes.owl",
+        "file_size": 1580439065,
+        "axiom_count": 3811705,
+        "class_count": 32664,
+        "enhanced_metrics": {
+          "file_path": "/home/ontology/workspace/testing/results/CDM_merged_alphabetical_with_removes.owl",
+          "file_size": 1580439065,
+          "basic_counts": {
+            "total_classes": 32664,
+            "total_axioms": 3811705,
+            "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+            "analysis_method": "pattern_matching",
+            "file_size_gb": 1.4718985790386796
+          },
+          "axiom_breakdown": {
+            "subclass_axioms": 0,
+            "equivalent_class_axioms": 0,
+            "disjoint_class_axioms": 0,
+            "annotation_assertions": 0
+          },
+          "annotation_properties": {},
+          "defined_by_analysis": {},
+          "collection_time": 1850.8623495101929
+        },
+        "command": [
+          "robot",
+          "merge",
+          "--annotate-defined-by",
+          "true",
+          "--input",
+          "/home/ontology/workspace/testing/data/bfo.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/chebi.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/credit.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/eccode.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/envo.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/fao-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/foodon.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/go.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/gtdb.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/iao.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/interpro.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/obi-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/omo.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/pato-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/pco-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/pfam.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/po.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/rhea.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/ro-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/ror.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/so.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/taxrank.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/uberon-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/uo.owl",
+          "remove",
+          "--axioms",
+          "disjoint",
+          "--trim",
+          "true",
+          "--preserve-structure",
+          "false",
+          "remove",
+          "--term",
+          "owl:Nothing",
+          "--trim",
+          "true",
+          "--preserve-structure",
+          "false",
+          "--output",
+          "/home/ontology/workspace/testing/results/CDM_merged_alphabetical_with_removes.owl"
+        ],
+        "key_term_definers": {}
+      }
+    },
+    "hierarchy": {
+      "merge_only": {
+        "success": true,
+        "output_file": "/home/ontology/workspace/testing/results/CDM_merged_hierarchy_merge_only.owl",
+        "file_size": 1531010144,
+        "axiom_count": 3634095,
+        "class_count": 24095,
+        "enhanced_metrics": {
+          "file_path": "/home/ontology/workspace/testing/results/CDM_merged_hierarchy_merge_only.owl",
+          "file_size": 1531010144,
+          "basic_counts": {
+            "total_classes": 24095,
+            "total_axioms": 3634095,
+            "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+            "analysis_method": "pattern_matching",
+            "file_size_gb": 1.4258643090724945
+          },
+          "axiom_breakdown": {
+            "subclass_axioms": 0,
+            "equivalent_class_axioms": 0,
+            "disjoint_class_axioms": 0,
+            "annotation_assertions": 0
+          },
+          "annotation_properties": {},
+          "defined_by_analysis": {},
+          "collection_time": 1850.8234384059906
+        },
+        "command": [
+          "robot",
+          "merge",
+          "--annotate-defined-by",
+          "true",
+          "--input",
+          "/home/ontology/workspace/testing/data/ro-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/pato-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/uberon-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/pco-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/obi-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/fao-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/go.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/chebi.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/envo.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/so.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/uo.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/taxrank.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/eccode.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/rhea.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/pfam.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/interpro.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/gtdb.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/ror.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/credit.owl",
+          "--output",
+          "/home/ontology/workspace/testing/results/CDM_merged_hierarchy_merge_only.owl"
+        ],
+        "key_term_definers": {}
+      },
+      "with_removes": {
+        "success": true,
+        "output_file": "/home/ontology/workspace/testing/results/CDM_merged_hierarchy_with_removes.owl",
+        "file_size": 1530834228,
+        "axiom_count": 3633340,
+        "class_count": 24094,
+        "enhanced_metrics": {
+          "file_path": "/home/ontology/workspace/testing/results/CDM_merged_hierarchy_with_removes.owl",
+          "file_size": 1530834228,
+          "basic_counts": {
+            "total_classes": 24094,
+            "total_axioms": 3633340,
+            "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+            "analysis_method": "pattern_matching",
+            "file_size_gb": 1.4257004745304585
+          },
+          "axiom_breakdown": {
+            "subclass_axioms": 0,
+            "equivalent_class_axioms": 0,
+            "disjoint_class_axioms": 0,
+            "annotation_assertions": 0
+          },
+          "annotation_properties": {},
+          "defined_by_analysis": {},
+          "collection_time": 1849.779468536377
+        },
+        "command": [
+          "robot",
+          "merge",
+          "--annotate-defined-by",
+          "true",
+          "--input",
+          "/home/ontology/workspace/testing/data/ro-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/pato-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/uberon-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/pco-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/obi-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/fao-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/go.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/chebi.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/envo.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/so.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/uo.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/taxrank.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/eccode.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/rhea.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/pfam.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/interpro.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/gtdb.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/ror.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/credit.owl",
+          "remove",
+          "--axioms",
+          "disjoint",
+          "--trim",
+          "true",
+          "--preserve-structure",
+          "false",
+          "remove",
+          "--term",
+          "owl:Nothing",
+          "--trim",
+          "true",
+          "--preserve-structure",
+          "false",
+          "--output",
+          "/home/ontology/workspace/testing/results/CDM_merged_hierarchy_with_removes.owl"
+        ],
+        "key_term_definers": {}
+      }
+    },
+    "size": {
+      "merge_only": {
+        "success": true,
+        "output_file": "/home/ontology/workspace/testing/results/CDM_merged_size_merge_only.owl",
+        "file_size": 1531000881,
+        "axiom_count": 3634095,
+        "class_count": 24095,
+        "enhanced_metrics": {
+          "file_path": "/home/ontology/workspace/testing/results/CDM_merged_size_merge_only.owl",
+          "file_size": 1531000881,
+          "basic_counts": {
+            "total_classes": 24095,
+            "total_axioms": 3634095,
+            "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+            "analysis_method": "pattern_matching",
+            "file_size_gb": 1.4258556822314858
+          },
+          "axiom_breakdown": {
+            "subclass_axioms": 0,
+            "equivalent_class_axioms": 0,
+            "disjoint_class_axioms": 0,
+            "annotation_assertions": 0
+          },
+          "annotation_properties": {},
+          "defined_by_analysis": {},
+          "collection_time": 1852.9487924575806
+        },
+        "command": [
+          "robot",
+          "merge",
+          "--annotate-defined-by",
+          "true",
+          "--input",
+          "/home/ontology/workspace/testing/data/go.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/chebi.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/uberon-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/obi-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/envo.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/interpro.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/pato-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/pfam.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/rhea.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/so.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/ro-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/gtdb.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/ror.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/uo.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/fao-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/pco-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/taxrank.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/eccode.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/credit.owl",
+          "--output",
+          "/home/ontology/workspace/testing/results/CDM_merged_size_merge_only.owl"
+        ],
+        "key_term_definers": {}
+      },
+      "with_removes": {
+        "success": true,
+        "output_file": "/home/ontology/workspace/testing/results/CDM_merged_size_with_removes.owl",
+        "file_size": 1530824965,
+        "axiom_count": 3633340,
+        "class_count": 24094,
+        "enhanced_metrics": {
+          "file_path": "/home/ontology/workspace/testing/results/CDM_merged_size_with_removes.owl",
+          "file_size": 1530824965,
+          "basic_counts": {
+            "total_classes": 24094,
+            "total_axioms": 3633340,
+            "estimation_note": "Comprehensive axiom estimation from patterns and file analysis",
+            "analysis_method": "pattern_matching",
+            "file_size_gb": 1.4256918476894498
+          },
+          "axiom_breakdown": {
+            "subclass_axioms": 0,
+            "equivalent_class_axioms": 0,
+            "disjoint_class_axioms": 0,
+            "annotation_assertions": 0
+          },
+          "annotation_properties": {},
+          "defined_by_analysis": {},
+          "collection_time": 1852.6623346805573
+        },
+        "command": [
+          "robot",
+          "merge",
+          "--annotate-defined-by",
+          "true",
+          "--input",
+          "/home/ontology/workspace/testing/data/go.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/chebi.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/uberon-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/obi-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/envo.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/interpro.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/pato-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/pfam.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/rhea.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/so.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/ro-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/gtdb.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/ror.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/uo.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/fao-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/pco-base.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/taxrank.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/eccode.owl",
+          "--input",
+          "/home/ontology/workspace/testing/data/credit.owl",
+          "remove",
+          "--axioms",
+          "disjoint",
+          "--trim",
+          "true",
+          "--preserve-structure",
+          "false",
+          "remove",
+          "--term",
+          "owl:Nothing",
+          "--trim",
+          "true",
+          "--preserve-structure",
+          "false",
+          "--output",
+          "/home/ontology/workspace/testing/results/CDM_merged_size_with_removes.owl"
+        ],
+        "key_term_definers": {}
+      }
+    }
+  },
+  "analysis": {
+    "order_differences": {
+      "alphabetical_vs_hierarchy": {
+        "file_size_diff": -49624459,
+        "axiom_count_diff": -178435,
+        "class_count_diff": -8573,
+        "different_definers": {},
+        "definer_differences_count": 0
+      },
+      "alphabetical_vs_size": {
+        "file_size_diff": -49633722,
+        "axiom_count_diff": -178435,
+        "class_count_diff": -8573,
+        "different_definers": {},
+        "definer_differences_count": 0
+      },
+      "hierarchy_vs_size": {
+        "file_size_diff": -9263,
+        "axiom_count_diff": 0,
+        "class_count_diff": 0,
+        "different_definers": {},
+        "definer_differences_count": 0
+      }
+    },
+    "remove_operation_impact": {
+      "alphabetical": {
+        "file_size_diff": -195538,
+        "axiom_count_diff": -825,
+        "class_count_diff": -4,
+        "different_definers": {},
+        "definer_differences_count": 0
+      },
+      "hierarchy": {
+        "file_size_diff": -175916,
+        "axiom_count_diff": -755,
+        "class_count_diff": -1,
+        "different_definers": {},
+        "definer_differences_count": 0
+      },
+      "size": {
+        "file_size_diff": -175916,
+        "axiom_count_diff": -755,
+        "class_count_diff": -1,
+        "different_definers": {},
+        "definer_differences_count": 0
+      }
+    },
+    "key_term_attribution_differences": {
+      "BFO:0000001": {
+        "label": "entity",
+        "category": "upper_level",
+        "definers_across_tests": {},
+        "has_differences": false,
+        "unique_definers": []
+      },
+      "BFO:0000002": {
+        "label": "continuant",
+        "category": "upper_level",
+        "definers_across_tests": {},
+        "has_differences": false,
+        "unique_definers": []
+      },
+      "BFO:0000003": {
+        "label": "occurrent",
+        "category": "upper_level",
+        "definers_across_tests": {},
+        "has_differences": false,
+        "unique_definers": []
+      },
+      "RO:0000056": {
+        "label": "participates in",
+        "category": "upper_level",
+        "definers_across_tests": {},
+        "has_differences": false,
+        "unique_definers": []
+      },
+      "RO:0002333": {
+        "label": "enabled by",
+        "category": "upper_level",
+        "definers_across_tests": {},
+        "has_differences": false,
+        "unique_definers": []
+      },
+      "IAO:0000030": {
+        "label": "information content entity",
+        "category": "upper_level",
+        "definers_across_tests": {},
+        "has_differences": false,
+        "unique_definers": []
+      },
+      "CHEBI:24431": {
+        "label": "chemical entity",
+        "category": "chemical",
+        "definers_across_tests": {},
+        "has_differences": false,
+        "unique_definers": []
+      },
+      "CHEBI:15377": {
+        "label": "water",
+        "category": "chemical",
+        "definers_across_tests": {},
+        "has_differences": false,
+        "unique_definers": []
+      },
+      "CHEBI:16236": {
+        "label": "ethanol",
+        "category": "chemical",
+        "definers_across_tests": {},
+        "has_differences": false,
+        "unique_definers": []
+      },
+      "CHEBI:17234": {
+        "label": "glucose",
+        "category": "chemical",
+        "definers_across_tests": {},
+        "has_differences": false,
+        "unique_definers": []
+      },
+      "CHEBI:15422": {
+        "label": "ATP",
+        "category": "chemical",
+        "definers_across_tests": {},
+        "has_differences": false,
+        "unique_definers": []
+      },
+      "UBERON:0000061": {
+        "label": "anatomical structure",
+        "category": "anatomical",
+        "definers_across_tests": {},
+        "has_differences": false,
+        "unique_definers": []
+      },
+      "UBERON:0001062": {
+        "label": "anatomical entity",
+        "category": "anatomical",
+        "definers_across_tests": {},
+        "has_differences": false,
+        "unique_definers": []
+      },
+      "UBERON:0000479": {
+        "label": "tissue",
+        "category": "anatomical",
+        "definers_across_tests": {},
+        "has_differences": false,
+        "unique_definers": []
+      },
+      "PO:0009005": {
+        "label": "root",
+        "category": "anatomical",
+        "definers_across_tests": {},
+        "has_differences": false,
+        "unique_definers": []
+      },
+      "CL:0000000": {
+        "label": "cell",
+        "category": "anatomical",
+        "definers_across_tests": {},
+        "has_differences": false,
+        "unique_definers": []
+      },
+      "GO:0008150": {
+        "label": "biological_process",
+        "category": "process",
+        "definers_across_tests": {},
+        "has_differences": false,
+        "unique_definers": []
+      },
+      "GO:0003674": {
+        "label": "molecular_function",
+        "category": "process",
+        "definers_across_tests": {},
+        "has_differences": false,
+        "unique_definers": []
+      },
+      "GO:0005575": {
+        "label": "cellular_component",
+        "category": "process",
+        "definers_across_tests": {},
+        "has_differences": false,
+        "unique_definers": []
+      },
+      "ENVO:01000254": {
+        "label": "environmental system",
+        "category": "process",
+        "definers_across_tests": {},
+        "has_differences": false,
+        "unique_definers": []
+      },
+      "PATO:0000001": {
+        "label": "quality",
+        "category": "process",
+        "definers_across_tests": {},
+        "has_differences": false,
+        "unique_definers": []
+      },
+      "SO:0000704": {
+        "label": "gene",
+        "category": "molecular",
+        "definers_across_tests": {},
+        "has_differences": false,
+        "unique_definers": []
+      },
+      "SO:0000234": {
+        "label": "mRNA",
+        "category": "molecular",
+        "definers_across_tests": {},
+        "has_differences": false,
+        "unique_definers": []
+      },
+      "SO:0000110": {
+        "label": "sequence_feature",
+        "category": "molecular",
+        "definers_across_tests": {},
+        "has_differences": false,
+        "unique_definers": []
+      }
+    },
+    "summary": {
+      "orders_tested": [],
+      "tests_with_differences": 0,
+      "terms_with_different_definers": 0,
+      "remove_operations_impact": true,
+      "key_findings": [
+        "Remove operations impact varies with order",
+        "No significant differences found between orders"
+      ]
+    }
+  },
+  "key_terms_tested": {
+    "BFO:0000001": {
+      "label": "entity",
+      "category": "upper_level",
+      "iri": "http://purl.obolibrary.org/obo/BFO_0000001"
+    },
+    "BFO:0000002": {
+      "label": "continuant",
+      "category": "upper_level",
+      "iri": "http://purl.obolibrary.org/obo/BFO_0000002"
+    },
+    "BFO:0000003": {
+      "label": "occurrent",
+      "category": "upper_level",
+      "iri": "http://purl.obolibrary.org/obo/BFO_0000003"
+    },
+    "RO:0000056": {
+      "label": "participates in",
+      "category": "upper_level",
+      "iri": "http://purl.obolibrary.org/obo/RO_0000056"
+    },
+    "RO:0002333": {
+      "label": "enabled by",
+      "category": "upper_level",
+      "iri": "http://purl.obolibrary.org/obo/RO_0002333"
+    },
+    "IAO:0000030": {
+      "label": "information content entity",
+      "category": "upper_level",
+      "iri": "http://purl.obolibrary.org/obo/IAO_0000030"
+    },
+    "CHEBI:24431": {
+      "label": "chemical entity",
+      "category": "chemical",
+      "iri": "http://purl.obolibrary.org/obo/CHEBI_24431"
+    },
+    "CHEBI:15377": {
+      "label": "water",
+      "category": "chemical",
+      "iri": "http://purl.obolibrary.org/obo/CHEBI_15377"
+    },
+    "CHEBI:16236": {
+      "label": "ethanol",
+      "category": "chemical",
+      "iri": "http://purl.obolibrary.org/obo/CHEBI_16236"
+    },
+    "CHEBI:17234": {
+      "label": "glucose",
+      "category": "chemical",
+      "iri": "http://purl.obolibrary.org/obo/CHEBI_17234"
+    },
+    "CHEBI:15422": {
+      "label": "ATP",
+      "category": "chemical",
+      "iri": "http://purl.obolibrary.org/obo/CHEBI_15422"
+    },
+    "UBERON:0000061": {
+      "label": "anatomical structure",
+      "category": "anatomical",
+      "iri": "http://purl.obolibrary.org/obo/UBERON_0000061"
+    },
+    "UBERON:0001062": {
+      "label": "anatomical entity",
+      "category": "anatomical",
+      "iri": "http://purl.obolibrary.org/obo/UBERON_0001062"
+    },
+    "UBERON:0000479": {
+      "label": "tissue",
+      "category": "anatomical",
+      "iri": "http://purl.obolibrary.org/obo/UBERON_0000479"
+    },
+    "PO:0009005": {
+      "label": "root",
+      "category": "anatomical",
+      "iri": "http://purl.obolibrary.org/obo/PO_0009005"
+    },
+    "CL:0000000": {
+      "label": "cell",
+      "category": "anatomical",
+      "iri": "http://purl.obolibrary.org/obo/CL_0000000"
+    },
+    "GO:0008150": {
+      "label": "biological_process",
+      "category": "process",
+      "iri": "http://purl.obolibrary.org/obo/GO_0008150"
+    },
+    "GO:0003674": {
+      "label": "molecular_function",
+      "category": "process",
+      "iri": "http://purl.obolibrary.org/obo/GO_0003674"
+    },
+    "GO:0005575": {
+      "label": "cellular_component",
+      "category": "process",
+      "iri": "http://purl.obolibrary.org/obo/GO_0005575"
+    },
+    "ENVO:01000254": {
+      "label": "environmental system",
+      "category": "process",
+      "iri": "http://purl.obolibrary.org/obo/ENVO_01000254"
+    },
+    "PATO:0000001": {
+      "label": "quality",
+      "category": "process",
+      "iri": "http://purl.obolibrary.org/obo/PATO_0000001"
+    },
+    "SO:0000704": {
+      "label": "gene",
+      "category": "molecular",
+      "iri": "http://purl.obolibrary.org/obo/SO_0000704"
+    },
+    "SO:0000234": {
+      "label": "mRNA",
+      "category": "molecular",
+      "iri": "http://purl.obolibrary.org/obo/SO_0000234"
+    },
+    "SO:0000110": {
+      "label": "sequence_feature",
+      "category": "molecular",
+      "iri": "http://purl.obolibrary.org/obo/SO_0000110"
+    }
+  }
+}
