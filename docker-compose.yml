@@ -12,6 +12,8 @@ services:
       - ${ENV_FILE:-.env}
     environment:
       - PYTHONUNBUFFERED=1
+      - HOST_UID=${UID:-1000}
+      - HOST_GID=${GID:-1000}
     volumes:
       # Mount the entire workspace
       - ./:/home/ontology/workspace
@@ -43,6 +45,9 @@ services:
     user: "${UID:-1000}:${GID:-1000}"  # Match host user UID:GID to avoid permission issues
     env_file:
       - ${ENV_FILE:-.env}
+    environment:
+      - HOST_UID=${UID:-1000}
+      - HOST_GID=${GID:-1000}
     ports:
       - "8888:8888"
     volumes:
