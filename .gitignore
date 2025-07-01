@@ -9,6 +9,9 @@ outputs/
 # Claude guidance file (user-specific)
 CLAUDE.md
 
+# Original scripts directory (archived)
+og_scripts/
+
 # Large ontology files
 ontology_versions/backups/*.owl
 *.owl
@@ -65,6 +68,8 @@ wheels/
 
 # Logs (but keep important logs like download_history.log)
 logs/*.log
+logs/nohup_cdm_prod.out
+logs/nohup_cdm_test.out
 !logs/.gitkeep
 *.log
 !ontology_versions*/download_history.log

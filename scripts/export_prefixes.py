@@ -27,21 +27,11 @@ def export_all_prefixes(
         # Ensure output directory exists
         os.makedirs(output_dir, exist_ok=True)
         
-        # Construct path to robot executable
-        robot_path = os.path.join(
-            os.path.dirname(repo_path),
-            'install_stuff',
-            'robot',
-            'robot'
-        )
-        
-        # Verify robot exists
-        if not os.path.exists(robot_path):
-            raise FileNotFoundError(f"ROBOT executable not found at: {robot_path}")
-        
-        # Add robot to PATH
-        robot_dir = os.path.dirname(robot_path)
-        os.environ['PATH'] = f"{robot_dir}:{os.environ['PATH']}"
+        # Find ROBOT executable in PATH
+        import shutil
+        robot_path = shutil.which('robot')
+        if not robot_path:
+            raise FileNotFoundError("ROBOT executable not found. Please ensure ROBOT is installed and in your PATH.")
         
         print(f"Using ROBOT at: {robot_path}")
         print(f"Looking for ontology files in: {input_dir}")

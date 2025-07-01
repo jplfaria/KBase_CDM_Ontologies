@@ -5,13 +5,18 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        USER_ID: ${UID:-1000}
+        GROUP_ID: ${GID:-1000}
     image: kbase-cdm-ontologies:latest
     container_name: cdm-ontologies-pipeline
-    user: "502:20"  # Match host user UID:GID to avoid permission issues
+    # User is now set dynamically in Dockerfile, not needed here
     env_file:
       - ${ENV_FILE:-.env}
     environment:
       - PYTHONUNBUFFERED=1
+      - HOST_UID=${UID:-1000}
+      - HOST_GID=${GID:-1000}
     volumes:
       # Mount the entire workspace
       - ./:/home/ontology/workspace
@@ -38,9 +43,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        USER_ID: ${UID:-1000}
+        GROUP_ID: ${GID:-1000}
     image: kbase-cdm-ontologies:latest
     container_name: cdm-ontologies-notebook
-    user: "502:20"  # Match host user UID:GID to avoid permission issues
+    # User is now set dynamically in Dockerfile, not needed here
     env_file:
       - ${ENV_FILE:-.env}
     ports:

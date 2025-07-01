@@ -1,10 +1,10 @@
 [
   {
-    "timestamp": "2025-06-25T22:35:04.504606",
+    "timestamp": "2025-06-26T04:40:15.608991",
     "total_memory_gb": 5.78,
-    "available_memory_gb": 4.15,
-    "used_memory_gb": 0.91,
-    "memory_percent": 28.2,
+    "available_memory_gb": 4.12,
+    "used_memory_gb": 0.93,
+    "memory_percent": 28.8,
     "swap_total_gb": 0.0,
     "swap_used_gb": 0.0,
     "swap_percent": 0.0,
@@ -13,24 +13,16 @@
     "tool_name": "SemsQL_make"
   },
   {
-    "timestamp": "2025-06-25T22:35:19.522552",
+    "timestamp": "2025-06-26T04:40:30.620113",
     "total_memory_gb": 5.78,
-    "available_memory_gb": 2.54,
-    "used_memory_gb": 2.53,
-    "memory_percent": 56.1,
+    "available_memory_gb": 4.08,
+    "used_memory_gb": 0.97,
+    "memory_percent": 29.5,
     "swap_total_gb": 0.0,
     "swap_used_gb": 0.0,
     "swap_percent": 0.0,
-    "java_processes": [
-      {
-        "pid": 128,
-        "type": "relation-graph",
-        "memory_mb": 1641.43,
-        "memory_gb": 1.6,
-        "cmdline_snippet": "java -cp /home/ontology/tools/relation-graph/lib/org.geneontology.relation-graph-cli-2.3.2.jar:/home..."
-      }
-    ],
-    "total_java_memory_gb": 1.6,
+    "java_processes": [],
+    "total_java_memory_gb": 0,
     "tool_name": "SemsQL_make"
   }
 ]

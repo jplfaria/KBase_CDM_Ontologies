@@ -25,14 +25,9 @@ def decompress_if_needed(file_path: str) -> str:
 
 def get_robot_path(repo_path: str) -> str:
     """Get the full path to the ROBOT executable."""
-    robot_path = os.path.join(
-        os.path.dirname(repo_path),
-        'install_stuff',
-        'robot',
-        'robot'
-    )
-    if not os.path.exists(robot_path):
-        raise FileNotFoundError(f"ROBOT executable not found at: {robot_path}")
+    robot_path = shutil.which('robot')
+    if not robot_path:
+        raise FileNotFoundError("ROBOT executable not found. Please ensure ROBOT is installed and in your PATH.")
     return robot_path
 
 def extract_prefix_from_iri(iri: str) -> Tuple[str, str]:

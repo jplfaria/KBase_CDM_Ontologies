@@ -1,5 +1,12 @@
 # Makefile for CDM Ontologies Workflow
 
+# Set shell to bash for consistent behavior
+SHELL := /bin/bash
+
+# Auto-export UID/GID for Docker - no manual setup needed
+export UID := $(shell id -u)
+export GID := $(shell id -g)
+
 # Configuration
 PYTHON := python3
 REPO_PATH := $(shell pwd)
@@ -136,18 +143,67 @@ test-workflow: setup
 # Docker targets
 .PHONY: docker-build
 docker-build:
-	@echo "Building Docker image..."
-	@docker build -t kbase-cdm-ontologies:latest .
+	@echo "Building Docker image with UID=$(UID) GID=$(GID)..."
+	@docker build --build-arg USER_ID=$(UID) --build-arg GROUP_ID=$(GID) -t kbase-cdm-ontologies:latest .
 
 .PHONY: docker-run-production
 docker-run-production: docker-build
 	@echo "Running pipeline with production dataset..."
-	@ENV_FILE=.env docker-compose run --rm cdm-ontologies
+	@ENV_FILE=.env UID=$(UID) GID=$(GID) docker compose run --rm cdm-ontologies
+	@echo "Fixing any permission issues..."
+	@docker run --rm -v "$(PWD):/workspace" --user root alpine:latest sh -c "chown -R $(UID):$(GID) /workspace/outputs /workspace/ontology_data_owl /workspace/logs 2>/dev/null || true"
+
+.PHONY: docker-run-prod
+docker-run-prod: docker-build
+	@echo "Running pipeline with production dataset (30+ ontologies)..."
+	@ENV_FILE=.env UID=$(UID) GID=$(GID) docker compose run --rm cdm-ontologies
+	@echo "Fixing any permission issues..."
+	@docker run --rm -v "$(PWD):/workspace" --user root alpine:latest sh -c "chown -R $(UID):$(GID) /workspace/outputs /workspace/ontology_data_owl /workspace/logs 2>/dev/null || true"
+
+.PHONY: docker-run-prod-nohup
+docker-run-prod-nohup: docker-build
+	@echo "Starting production pipeline in background with nohup..."
+	@mkdir -p logs
+	@nohup bash -c 'ENV_FILE=.env UID=$(UID) GID=$(GID) docker compose run --rm cdm-ontologies && \
+	docker run --rm -v "$(PWD):/workspace" --user root alpine:latest sh -c "chown -R $(UID):$(GID) /workspace/outputs /workspace/ontology_data_owl /workspace/logs 2>/dev/null || true"' \
+	> logs/nohup_cdm_prod.out 2>&1 &
+	@echo "Production pipeline started in background. PID: $$!"
+	@echo "Monitor progress with: make docker-prod-status"
+	@echo "Or check the log file: tail -f logs/nohup_cdm_prod.out"
+
+.PHONY: docker-prod-status
+docker-prod-status:
+	@if [ -f logs/nohup_cdm_prod.out ]; then \
+		tail -f logs/nohup_cdm_prod.out; \
+	else \
+		echo "No production run log found. Start with: make docker-run-prod-nohup"; \
+	fi
 
 .PHONY: docker-test
 docker-test: docker-build
 	@echo "Running pipeline with test dataset in Docker..."
-	@ENV_FILE=.env.test docker-compose run --rm cdm-ontologies make test-workflow
+	@ENV_FILE=.env.test UID=$(UID) GID=$(GID) docker compose run --rm cdm-ontologies make test-workflow
+	@echo "Fixing any permission issues..."
+	@docker run --rm -v "$(PWD):/workspace" --user root alpine:latest sh -c "chown -R $(UID):$(GID) /workspace/outputs_test /workspace/ontology_data_owl_test /workspace/logs 2>/dev/null || true"
+
+.PHONY: docker-test-nohup
+docker-test-nohup: docker-build
+	@echo "Starting test pipeline in background with nohup..."
+	@mkdir -p logs
+	@nohup bash -c 'ENV_FILE=.env.test UID=$(UID) GID=$(GID) docker compose run --rm cdm-ontologies make test-workflow && \
+	docker run --rm -v "$(PWD):/workspace" --user root alpine:latest sh -c "chown -R $(UID):$(GID) /workspace/outputs_test /workspace/ontology_data_owl_test /workspace/logs 2>/dev/null || true"' \
+	> logs/nohup_cdm_test.out 2>&1 &
+	@echo "Test pipeline started in background. PID: $$!"
+	@echo "Monitor progress with: make docker-test-status"
+	@echo "Or check the log file: tail -f logs/nohup_cdm_test.out"
+
+.PHONY: docker-test-status
+docker-test-status:
+	@if [ -f logs/nohup_cdm_test.out ]; then \
+		tail -f logs/nohup_cdm_test.out; \
+	else \
+		echo "No test run log found. Start with: make docker-test-nohup"; \
+	fi
 
 # Help target
 .PHONY: help
@@ -184,6 +240,11 @@ help:
 	@echo "  make docker-build       - Build Docker image"
 	@echo "  make docker-run-production - Run with production dataset in Docker"
 	@echo "  make docker-test        - Run with test dataset in Docker"
+	@echo "  make docker-test-nohup  - Run test in background with nohup"
+	@echo "  make docker-test-status - Monitor test run progress"
+	@echo "  make docker-run-prod    - Run with production dataset (30+ ontologies)"
+	@echo "  make docker-run-prod-nohup - Run production in background with nohup"
+	@echo "  make docker-prod-status - Monitor production run progress"
 	@echo ""
 	@echo "Environment variables:"
 	@echo "  ENV_FILE=.env      - Use production dataset configuration (default)"

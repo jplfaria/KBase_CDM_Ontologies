@@ -73,7 +73,7 @@ def create_semantic_sql_db(
                 capture_output=True,
                 text=True,
                 env=env,
-                timeout=3600  # 1 hour timeout
+                timeout=86400  # 24 hour timeout for large datasets
             )
         
         if result.stdout:

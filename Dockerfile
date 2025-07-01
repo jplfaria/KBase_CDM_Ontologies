@@ -1,6 +1,10 @@
 # Multi-stage Dockerfile for KBase CDM Ontologies Pipeline
 FROM ubuntu:22.04 AS base
 
+# Accept build arguments for dynamic user creation
+ARG USER_ID=1000
+ARG GROUP_ID=1000
+
 # Prevent interactive prompts
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -34,9 +38,11 @@ RUN apt-get update && apt-get install -y \
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.10 1 && \
     update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
 
-# Create non-root user with matching host UID to avoid permission issues
-RUN useradd -u 502 -m -s /bin/bash ontology && \
-    mkdir -p /home/ontology/tools /home/ontology/workspace
+# Create non-root user with dynamic UID/GID matching the host system
+RUN groupadd -g ${GROUP_ID} ontology || true && \
+    useradd -u ${USER_ID} -g ${GROUP_ID} -m -s /bin/bash ontology || true && \
+    mkdir -p /home/ontology/tools /home/ontology/workspace && \
+    chown -R ${USER_ID}:${GROUP_ID} /home/ontology || true
 
 # Install ROBOT (latest version)
 ENV ROBOT_VERSION=1.9.8
@@ -66,12 +72,19 @@ ENV _JAVA_OPTIONS="-Xmx8g"
 COPY requirements.txt /tmp/requirements.txt
 RUN pip install --no-cache-dir -r /tmp/requirements.txt && rm /tmp/requirements.txt
 
-# Switch to non-root user
-USER ontology
+# Copy permission fix script
+COPY --chmod=755 fix-permissions.sh /usr/local/bin/fix-permissions.sh
+
+# Switch to dynamic user
+USER ${USER_ID}:${GROUP_ID}
 WORKDIR /home/ontology/workspace
 
-# Copy the application code
-COPY --chown=ontology:ontology . .
+# Copy the application code with proper ownership
+COPY --chown=${USER_ID}:${GROUP_ID} . .
+
+# Set environment for permission fixes
+ENV HOST_UID=${USER_ID}
+ENV HOST_GID=${GROUP_ID}
 
 # Note: Output directories are created by host mount and script logic
 

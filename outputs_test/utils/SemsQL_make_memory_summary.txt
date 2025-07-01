@@ -1,11 +1,11 @@
 Memory Usage Summary for SemsQL_make
 ==================================================
 
-Start Time: 2025-06-25T22:35:04.504506
-End Time: 2025-06-25T22:35:34.538141
+Start Time: 2025-06-26T04:40:15.608894
+End Time: 2025-06-26T04:40:45.621226
 Duration: 0.50 minutes
 Return Code: 0
-Peak System Memory: 2.53 GB
-Final System Memory: 2.53 GB
-Max Java Memory: 1.60 GB
+Peak System Memory: 0.97 GB
+Final System Memory: 0.97 GB
+Max Java Memory: 0.00 GB
 Monitoring Data Points: 2

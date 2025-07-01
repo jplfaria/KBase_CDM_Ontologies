@@ -37,28 +37,11 @@ def merge_ontologies(
         print(f"📁 Input directory: {input_dir}")
         print(f"📁 Output directory: {output_dir}")
         
-        # Try to find ROBOT executable
-        robot_path = None
-        
-        # First try the old hardcoded path for backwards compatibility
-        old_robot_path = os.path.join(
-            os.path.dirname(repo_path),
-            'install_stuff',
-            'robot',
-            'robot'
-        )
-        
-        if os.path.exists(old_robot_path):
-            robot_path = old_robot_path
-            # Add robot to PATH
-            robot_dir = os.path.dirname(robot_path)
-            os.environ['PATH'] = f"{robot_dir}:{os.environ['PATH']}"
-        else:
-            # Check if robot is already in PATH (e.g., in Docker container)
-            import shutil
-            robot_path = shutil.which('robot')
-            if not robot_path:
-                raise FileNotFoundError("ROBOT executable not found. Please ensure ROBOT is installed and in your PATH.")
+        # Find ROBOT executable in PATH
+        import shutil
+        robot_path = shutil.which('robot')
+        if not robot_path:
+            raise FileNotFoundError("ROBOT executable not found. Please ensure ROBOT is installed and in your PATH.")
         
         print(f"Using ROBOT at: {robot_path}")
         print(f"Looking for ontology files in: {input_dir}")
