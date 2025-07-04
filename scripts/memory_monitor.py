@@ -71,7 +71,7 @@ def get_java_processes_memory():
     
     return java_processes
 
-def monitor_tool_execution(tool_name, command, log_dir, interval=15):
+def monitor_tool_execution(tool_name, command, log_dir, interval=60):
     """Monitor memory usage during tool execution."""
     log_file = os.path.join(log_dir, f"{tool_name}_memory_log.json")
     summary_file = os.path.join(log_dir, f"{tool_name}_memory_summary.txt")
@@ -131,32 +131,23 @@ def monitor_tool_execution(tool_name, command, log_dir, interval=15):
             }
             memory_data.append(data_point)
             
-            # Enhanced logging format
-            system_percent = round(mem_info['memory_percent'], 1)
-            task_percent = round((task_memory / mem_info['total_memory_gb']) * 100, 1) if mem_info['total_memory_gb'] > 0 else 0
+            # Log only significant changes or every 10 minutes
+            current_time = datetime.now()
+            time_since_start = (current_time - start_time).total_seconds()
             
-            logging.info(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Memory Monitor:")
-            logging.info(f"  System Total: {mem_info['used_memory_gb']:.2f}GB used ({system_percent}%), "
-                        f"{mem_info['available_memory_gb']:.2f}GB available")
-            logging.info(f"  ")
-            logging.info(f"  Process Breakdown:")
-            if task_process:
-                logging.info(f"    - {task_process['type']} (PID {task_process['pid']}): "
-                            f"{task_memory:.2f}GB ({task_percent}% of system)")
-            if user_java_memory > task_memory:
-                other_user_memory = user_java_memory - task_memory
-                logging.info(f"    - Other user Java processes: {other_user_memory:.2f}GB")
-            if other_java_memory > 0:
-                logging.info(f"    - Other users' Java processes: {other_java_memory:.2f}GB")
+            # Log every 10 minutes or when memory changes significantly (>5GB)
+            should_log = (len(memory_data) == 1 or  # First data point
+                         time_since_start % 600 < interval or  # Every 10 minutes
+                         abs(task_memory - memory_data[-2].get('task_memory_gb', 0)) > 5.0 if len(memory_data) > 1 else False)  # Significant change
             
-            non_java_memory = mem_info['used_memory_gb'] - total_java_memory
-            if non_java_memory > 0:
-                non_java_percent = round((non_java_memory / mem_info['total_memory_gb']) * 100, 1)
-                logging.info(f"    - Non-Java processes: {non_java_memory:.2f}GB ({non_java_percent}% of system)")
-            
-            logging.info(f"  ")
-            logging.info(f"  Current Task: {tool_name}")
-            logging.info(f"  Task Memory: {task_memory:.2f}GB")
+            if should_log:
+                system_percent = round(mem_info['memory_percent'], 1)
+                task_percent = round((task_memory / mem_info['total_memory_gb']) * 100, 1) if mem_info['total_memory_gb'] > 0 else 0
+                
+                logging.info(f"[{current_time.strftime('%Y-%m-%d %H:%M:%S')}] {tool_name}: "
+                            f"Task={task_memory:.1f}GB ({task_percent:.1f}%), "
+                            f"System={mem_info['used_memory_gb']:.1f}GB ({system_percent}%), "
+                            f"Available={mem_info['available_memory_gb']:.1f}GB")
             
             time.sleep(interval)
         
@@ -271,7 +262,7 @@ if __name__ == "__main__":
     tool_name = sys.argv[1]
     command = sys.argv[2]
     repo_path = sys.argv[3]
-    interval = int(sys.argv[4]) if len(sys.argv) > 4 else 15
+    interval = int(sys.argv[4]) if len(sys.argv) > 4 else 60
     
     utils_dir = create_utils_directory(repo_path)
     return_code, summary = monitor_tool_execution(tool_name, command, utils_dir, interval)
