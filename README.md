@@ -22,6 +22,7 @@ This pipeline processes biological ontologies from sources like OBO Foundry, Gen
 - Comprehensive version tracking with SHA256 checksums
 - Docker-based deployment with all dependencies included
 - Timestamped output folders preserve results from each run
+- Detailed run summaries capture all workflow activities and metrics
 
 ## Quick Start
 
@@ -81,6 +82,85 @@ The pipeline consists of 7 sequential steps:
 5. **Create Semantic SQL Database** - Converts to queryable SQLite format
 6. **Extract Tables to TSV** - Exports database tables to TSV format
 7. **Create Parquet Files** - Compresses data to efficient Parquet format
+
+## Run Summary Feature
+
+Every pipeline run generates a comprehensive summary report that captures all important information about the workflow execution. This feature provides visibility into what happened during processing without reviewing full logs.
+
+### Summary Contents
+
+The run summary includes:
+- **Execution Details**: Run ID, timestamps, duration, and final status
+- **System Resources**: Memory and disk usage throughout the run
+- **Ontology Downloads**: New downloads, updates, skipped files, and failures
+- **Version Changes**: Files updated with old/new checksums and backup details
+- **Pipeline Steps**: Timing and status for each of the 7 workflow steps
+- **Processing Results**: Database statistics, file counts, compression ratios
+- **Output Files**: All generated files with sizes and locations
+- **Issues Encountered**: Warnings and errors during processing
+
+### Output Formats
+
+Each run generates two summary files in the output directory:
+- `run_summary_YYYYMMDD_HHMMSS.txt` - Human-readable text format
+- `run_summary_YYYYMMDD_HHMMSS.json` - Machine-readable JSON for programmatic access
+
+### Example Summary
+
+```
+CDM Ontologies Pipeline Run Summary
+======================================================================
+Run ID: run_20250707_154322
+Start Time: 2025-07-07 15:43:22
+End Time: 2025-07-07 15:43:44
+Duration: 22s
+Status: SUCCESS
+Mode: TEST
+
+System Resources:
+- Initial Memory: 21.3GB available / 64.0GB total
+- Peak Memory Usage: 8.5GB (13.3% of system)
+- Initial Disk: 1103.2GB available
+- Final Disk: 1102.1GB available
+- Disk Used: 1.1GB
+
+Ontology Downloads:
+- Total Ontologies Processed: 6
+- New Downloads: 2
+  • ro-base.owl (2.1MB)
+  • pato-base.owl (8.3MB)
+- Updated: 1
+  • envo.owl (15.2MB)
+- Skipped (Up-to-date): 3
+- Failed Downloads: 0
+
+Pipeline Steps:
+✓ Step 1: Analyze Core Ontologies (5s)
+✓ Step 2: Analyze Non-Core Ontologies (3s)
+✓ Step 3: Create Pseudo Base Ontologies (2s)
+✓ Step 4: Merge Ontologies (7s)
+✓ Step 5: Create Semantic SQL Database (3s)
+✓ Step 6: Extract SQL Tables to TSV (1s)
+✓ Step 7: Create Parquet Files (1s)
+
+Processing Results:
+- total_ontologies_to_merge: 6
+- database_size_gb: 0.08
+- database_tables: 17
+- database_total_rows: 435,892
+- tsv_tables_exported: 17
+- tsv_total_size_gb: 0.12
+- parquet_files_created: 17
+- parquet_total_size_gb: 0.01
+- compression_ratio: 91.7%
+- space_saved_gb: 0.11
+
+Output Files:
+- merged_ontology: CDM_merged_ontologies.owl (0.01GB)
+- semantic_sql_db: CDM_merged_ontologies.db (0.08GB)
+- tsv_tables: tsv_tables/ (0.12GB)
+- parquet_files: parquet_files/ (0.01GB)
+```
 
 ## KBase CDM Initial Release Ontologies
 
@@ -206,6 +286,8 @@ outputs_test/                               # Test run results (example included
 │   ├── core_ontologies_analysis.json      # Step 1: Core analysis results
 │   ├── non_core_ontologies_analysis.json  # Step 2: Non-core analysis
 │   ├── core_onto_unique_external_*.tsv    # External term mappings
+│   ├── run_summary_20250704_001300.txt    # Human-readable run summary
+│   ├── run_summary_20250704_001300.json   # Machine-readable run summary
 │   ├── tsv_tables/                         # Step 6: Database exports (17 files)
 │   │   ├── entailed_edge.tsv              # 430K+ relationships
 │   │   ├── statements.tsv                 # 162K+ RDF statements  
@@ -228,6 +310,8 @@ outputs/                                   # Production results (git-ignored)
 ├── run_YYYYMMDD_HHMMSS/                 # Timestamped run folder
 │   ├── CDM_merged_ontologies.owl         # Complete 32 ontology merge
 │   ├── CDM_merged_ontologies.db          # Full production database (10GB+)
+│   ├── run_summary_YYYYMMDD_HHMMSS.txt  # Human-readable run summary
+│   ├── run_summary_YYYYMMDD_HHMMSS.json # Machine-readable run summary
 │   ├── tsv_tables/                       # All database tables
 │   ├── parquet_files/                    # Compressed data exports
 │   └── utils/                            # Production monitoring logs
