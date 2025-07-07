@@ -23,6 +23,7 @@ from create_semantic_sql_db import create_semantic_sql_db
 from extract_sql_tables_to_tsv import extract_sql_tables_to_tsv
 from create_parquet_files import create_parquet_files
 from resource_check import check_system_resources
+from run_summary import get_summary
 
 
 def setup_logging(verbose=False):
@@ -107,14 +108,24 @@ def run_all(args):
     
     print(f"📁 All outputs will be saved to: {run_output_dir}")
     
+    # Get summary instance if available
+    summary = get_summary()
+    
     # Step 1: Analyze Core Ontologies
     timestamp_print("Step 1: Analyzing Core Ontologies...")
+    if summary:
+        summary.start_step("Analyze Core Ontologies", 1)
     try:
         analyze_core_ontologies(str(repo_path))
         timestamp_print("Step 1: Completed analyzing core ontologies")
+        if summary:
+            summary.end_step("Analyze Core Ontologies", "SUCCESS")
     except Exception as e:
         logging.error(f"Failed to analyze core ontologies: {e}")
         timestamp_print(f"Step 1: Failed - {e}")
+        if summary:
+            summary.end_step("Analyze Core Ontologies", "FAILED")
+            summary.add_error(str(e))
         if not args.continue_on_error:
             return 1
     
@@ -124,71 +135,113 @@ def run_all(args):
         timestamp_print("Step 2: Skipping Non-Core Ontology Analysis (SKIP_NON_CORE_ANALYSIS=true)")
     else:
         timestamp_print("Step 2: Analyzing Non-Core Ontologies...")
+        if summary:
+            summary.start_step("Analyze Non-Core Ontologies", 2)
         try:
             analyze_non_core_ontologies(str(repo_path))
             timestamp_print("Step 2: Completed analyzing non-core ontologies")
+            if summary:
+                summary.end_step("Analyze Non-Core Ontologies", "SUCCESS")
         except Exception as e:
             logging.error(f"Failed to analyze non-core ontologies: {e}")
             timestamp_print(f"Step 2: Failed - {e}")
+            if summary:
+                summary.end_step("Analyze Non-Core Ontologies", "FAILED")
+                summary.add_error(str(e))
             if not args.continue_on_error:
                 return 1
     
     # Step 3: Create Pseudo Base Ontologies
     timestamp_print("Step 3: Creating Pseudo Base Ontologies...")
+    if summary:
+        summary.start_step("Create Pseudo Base Ontologies", 3)
     try:
         create_pseudo_base_ontologies(str(repo_path))
         timestamp_print("Step 3: Completed creating pseudo base ontologies")
+        if summary:
+            summary.end_step("Create Pseudo Base Ontologies", "SUCCESS")
     except Exception as e:
         logging.error(f"Failed to create pseudo base ontologies: {e}")
         timestamp_print(f"Step 3: Failed - {e}")
+        if summary:
+            summary.end_step("Create Pseudo Base Ontologies", "FAILED")
+            summary.add_error(str(e))
         if not args.continue_on_error:
             return 1
     
     # Step 4: Merge Ontologies
     timestamp_print("Step 4: Merging Ontologies...")
+    if summary:
+        summary.start_step("Merge Ontologies", 4)
     try:
         if not merge_ontologies(str(repo_path)):
             raise Exception("Ontology merge failed")
         timestamp_print("Step 4: Completed merging ontologies")
+        if summary:
+            summary.end_step("Merge Ontologies", "SUCCESS")
     except Exception as e:
         logging.error(f"Failed to merge ontologies: {e}")
         timestamp_print(f"Step 4: Failed - {e}")
+        if summary:
+            summary.end_step("Merge Ontologies", "FAILED")
+            summary.add_error(str(e))
         if not args.continue_on_error:
             return 1
     
     # Step 5: Create Semantic SQL Database
     timestamp_print("Step 5: Creating Semantic SQL Database...")
+    if summary:
+        summary.start_step("Create Semantic SQL Database", 5)
     try:
         if not create_semantic_sql_db(str(repo_path)):
             raise Exception("Database creation failed")
         timestamp_print("Step 5: Completed creating semantic SQL database")
+        if summary:
+            summary.end_step("Create Semantic SQL Database", "SUCCESS")
     except Exception as e:
         logging.error(f"Failed to create database: {e}")
         timestamp_print(f"Step 5: Failed - {e}")
+        if summary:
+            summary.end_step("Create Semantic SQL Database", "FAILED")
+            summary.add_error(str(e))
         if not args.continue_on_error:
             return 1
     
     # Step 6: Extract SQL Tables to TSV
     timestamp_print("Step 6: Extracting SQL Tables to TSV...")
+    if summary:
+        summary.start_step("Extract SQL Tables to TSV", 6)
     try:
         if not extract_sql_tables_to_tsv(str(repo_path)):
             raise Exception("TSV extraction failed")
         timestamp_print("Step 6: Completed extracting SQL tables to TSV")
+        if summary:
+            summary.end_step("Extract SQL Tables to TSV", "SUCCESS")
     except Exception as e:
         logging.error(f"Failed to extract tables: {e}")
         timestamp_print(f"Step 6: Failed - {e}")
+        if summary:
+            summary.end_step("Extract SQL Tables to TSV", "FAILED")
+            summary.add_error(str(e))
         if not args.continue_on_error:
             return 1
     
     # Step 7: Create Parquet Files
     timestamp_print("Step 7: Creating Parquet Files...")
+    if summary:
+        summary.start_step("Create Parquet Files", 7)
     try:
         if not create_parquet_files(str(repo_path)):
             raise Exception("Parquet creation failed")
         timestamp_print("Step 7: Completed creating parquet files")
+        if summary:
+            summary.end_step("Create Parquet Files", "SUCCESS")
     except Exception as e:
         logging.error(f"Failed to create parquet files: {e}")
         timestamp_print(f"Step 7: Failed - {e}")
+        if summary:
+            summary.end_step("Create Parquet Files", "FAILED")
+            summary.add_error(str(e))
         if not args.continue_on_error:
             return 1
     

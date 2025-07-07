@@ -5,6 +5,7 @@ import traceback
 import shutil
 from pathlib import Path
 from enhanced_download import get_output_directories, is_test_mode
+from run_summary import get_summary
 
 def create_semantic_sql_db(
     repo_path: str,
@@ -96,6 +97,12 @@ def create_semantic_sql_db(
             print(f"📊 Database file: {db_filename}")
             print(f"📏 Database size: {db_size:,} bytes ({db_size / (1024*1024):.1f} MB)")
             
+            # Update summary if available
+            summary = get_summary()
+            if summary:
+                summary.add_output_file('semantic_sql_db', os.path.join(outputs_dir, db_filename), db_size)
+                summary.add_processing_result('database_size_gb', round(db_size / (1024**3), 2))
+            
             # Try to connect and show basic info
             try:
                 import sqlite3
@@ -107,13 +114,28 @@ def create_semantic_sql_db(
                 tables = [row[0] for row in cursor.fetchall()]
                 
                 print(f"📋 Database contains {len(tables)} tables:")
+                
+                # Update summary with table count
+                if summary:
+                    summary.add_processing_result('database_tables', len(tables))
+                
+                total_rows = 0
                 for table in tables[:10]:  # Show first 10 tables
                     cursor.execute(f"SELECT COUNT(*) FROM {table}")
                     count = cursor.fetchone()[0]
+                    total_rows += count
                     print(f"   - {table}: {count:,} rows")
                 
                 if len(tables) > 10:
                     print(f"   ... and {len(tables) - 10} more tables")
+                    # Count rows in remaining tables for summary
+                    for table in tables[10:]:
+                        cursor.execute(f"SELECT COUNT(*) FROM {table}")
+                        count = cursor.fetchone()[0]
+                        total_rows += count
+                
+                if summary:
+                    summary.add_processing_result('database_total_rows', total_rows)
                 
                 conn.close()
                 

@@ -8,6 +8,7 @@ import json
 import hashlib
 import shutil
 from datetime import datetime
+from run_summary import get_summary
 from pathlib import Path
 
 
@@ -54,6 +55,12 @@ def backup_old_version(filepath, checksum, version_dir):
     if not os.path.exists(backup_path):
         shutil.copy2(filepath, backup_path)
         print(f"📦 Backed up old version: {backup_name}")
+        
+        # Update summary if available
+        summary = get_summary()
+        if summary:
+            backup_size = os.path.getsize(backup_path)
+            summary.add_backup(backup_size)
 
 
 def log_download_attempt(version_dir, filename, status, checksum, url=None, error=None):

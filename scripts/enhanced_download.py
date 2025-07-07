@@ -13,6 +13,7 @@ from version_tracker import (
     should_download, get_file_checksum, backup_old_version,
     log_download_attempt, update_version_info, load_version_info
 )
+from run_summary import get_summary
 
 
 def get_output_directories(repo_path, test_mode=False):
@@ -183,6 +184,13 @@ def download_ontology_with_versioning(url, output_path, repo_path, force_downloa
                 log_download_attempt(version_dir, filename, "skipped", current_checksum, url)
                 # Update last_checked timestamp
                 update_version_info(version_file, filename, url, current_checksum, current_checksum, check_only=True)
+                
+                # Update summary if available
+                summary = get_summary()
+                if summary:
+                    file_size = os.path.getsize(output_path) if os.path.exists(output_path) else 0
+                    summary.add_ontology_download(filename, "skipped", file_size)
+                
                 return True, "skipped", f"File up to date: {filename} ({reason})"
         
         # Get current checksum if file exists
@@ -232,16 +240,38 @@ def download_ontology_with_versioning(url, output_path, repo_path, force_downloa
         status = "updated" if old_checksum else "new"
         log_download_attempt(version_dir, filename, status, new_checksum, url)
         
+        # Update summary if available
+        summary = get_summary()
+        if summary:
+            file_size = os.path.getsize(output_path) if os.path.exists(output_path) else 0
+            summary.add_ontology_download(filename, status, file_size, old_checksum, new_checksum)
+            if old_checksum and new_checksum != old_checksum:
+                summary.add_version_change(filename, old_checksum, new_checksum)
+        
         return True, status, f"Successfully downloaded: {filename}"
         
     except requests.exceptions.RequestException as e:
         error_msg = f"Network error downloading {filename}: {str(e)}"
         log_download_attempt(version_dir, filename, "error", None, url, str(e))
+        
+        # Update summary if available
+        summary = get_summary()
+        if summary:
+            summary.add_ontology_download(filename, "failed")
+            summary.add_error(error_msg)
+        
         return False, "error", error_msg
         
     except Exception as e:
         error_msg = f"Unexpected error downloading {filename}: {str(e)}"
         log_download_attempt(version_dir, filename, "error", None, url, str(e))
+        
+        # Update summary if available
+        summary = get_summary()
+        if summary:
+            summary.add_ontology_download(filename, "failed")
+            summary.add_error(error_msg)
+        
         return False, "error", error_msg
 
 

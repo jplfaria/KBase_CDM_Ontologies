@@ -4,6 +4,7 @@ import pandas as pd
 import traceback
 from pathlib import Path
 from enhanced_download import get_output_directories, is_test_mode
+from run_summary import get_summary
 
 def create_parquet_files(repo_path: str) -> bool:
     """
@@ -48,6 +49,11 @@ def create_parquet_files(repo_path: str) -> bool:
         
         print(f"\n📋 Found {len(table_names)} tables to export:")
         
+        # Update summary if available
+        summary = get_summary()
+        if summary:
+            summary.add_processing_result('parquet_tables_to_export', len(table_names))
+        
         total_files = 0
         total_size = 0
         
@@ -83,6 +89,12 @@ def create_parquet_files(repo_path: str) -> bool:
         print(f"📏 Total size: {total_size:,} bytes ({total_size / (1024*1024):.1f} MB)")
         print(f"📂 Files saved in: {parquet_dir}")
         
+        # Update summary with parquet output info
+        if summary:
+            summary.add_output_file('parquet_files', parquet_dir, total_size)
+            summary.add_processing_result('parquet_files_created', total_files)
+            summary.add_processing_result('parquet_total_size_gb', round(total_size / (1024**3), 2))
+        
         # Show compression comparison if TSV directory exists
         tsv_dir = os.path.join(outputs_dir, 'tsv_tables')
         if os.path.exists(tsv_dir):
@@ -97,6 +109,11 @@ def create_parquet_files(repo_path: str) -> bool:
                 print(f"   TSV files: {tsv_size:,} bytes ({tsv_size / (1024*1024):.1f} MB)")
                 print(f"   Parquet files: {total_size:,} bytes ({total_size / (1024*1024):.1f} MB)")
                 print(f"   Space saved: {compression_ratio:.1f}% ({(tsv_size - total_size) / (1024*1024):.1f} MB)")
+                
+                # Add compression stats to summary
+                if summary:
+                    summary.add_processing_result('compression_ratio', f"{compression_ratio:.1f}%")
+                    summary.add_processing_result('space_saved_gb', round((tsv_size - total_size) / (1024**3), 2))
                 
             except Exception as comp_error:
                 print(f"📊 Could not calculate compression ratio: {str(comp_error)}")
