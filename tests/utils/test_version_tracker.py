@@ -120,7 +120,8 @@ class TestShouldDownload:
         }
         version_file.write_text(json.dumps(version_data))
         
-        should, reason = should_download(str(file_path), "http://example.org/test.owl", str(version_file))
+        # Disable remote checking for this test
+        should, reason = should_download(str(file_path), "http://example.org/test.owl", str(version_file), check_remote=False)
         
         assert should == False
         assert reason == "up_to_date"

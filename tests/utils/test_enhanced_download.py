@@ -163,6 +163,11 @@ class TestVersioning:
         mock_response = Mock()
         mock_response.content = b"test content"
         mock_response.raise_for_status = Mock()
+        mock_response.headers = {
+            'ETag': '"test-etag"',
+            'Content-Length': '12',
+            'Last-Modified': 'Mon, 01 Jan 2024 00:00:00 GMT'
+        }
         
         mock_get = Mock(return_value=mock_response)
         monkeypatch.setattr("requests.get", mock_get)
