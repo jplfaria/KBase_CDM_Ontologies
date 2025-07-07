@@ -4,8 +4,12 @@ kegg.reaction,http://www.kegg.jp/find/reaction/
 kegg.pathway,https://rest.kegg.jp/find/pathway/
 seed.compound,https://modelseed.org/biochem/compounds/
 seed.reaction,https://modelseed.org/biochem/reactions/
+seed.subsystem,http://purl.obolibrary.org/obo/seed.subsystem_
+seed.role,http://purl.obolibrary.org/obo/seed.role_
 metacyc.reaction,https://metacyc.org/reaction?orgid=META&id=
 metacyc.reaction,https://metacyc.org/compound?orgid=META&id=
 metacyc.pathway,http://purl.obolibrary.org/obo/metacyc.pathway/
 Reactome,https://reactome.org/content/detail/
 OMP,http://purl.obolibrary.org/obo/OMP_
+EC,https://www.ebi.ac.uk/intenz/query?cmd=SearchEC&ec=
+geonames,https://www.geonames.org/
