@@ -194,7 +194,7 @@ def analyze_core_ontologies(repo_path):
             filename = os.path.basename(entry)
             output_path = os.path.join(ontology_data_path, filename)
             
-            print(f"Downloading core ontology: {filename}")
+            print(f"Checking core ontology: {filename}")
             if not download_ontology(entry, output_path, repo_path):
                 print(f"⚠️  Failed to download {filename}, skipping analysis")
                 continue
@@ -272,7 +272,7 @@ def analyze_core_ontologies(repo_path):
             filename = os.path.basename(entry)
             output_path = os.path.join(non_base_dir, filename)
             
-            print(f"Downloading non-base ontology: {filename}")
+            print(f"Checking non-base ontology: {filename}")
             if not download_ontology(entry, output_path, repo_path):
                 print(f"⚠️  Failed to download {filename}, skipping analysis")
                 continue

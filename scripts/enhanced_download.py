@@ -78,6 +78,38 @@ def is_test_mode():
     return 'test' in source_file.lower()
 
 
+def check_remote_changes(url, version_info):
+    """Check if remote file has changed using HTTP HEAD request."""
+    try:
+        response = requests.head(url, timeout=10, allow_redirects=True)
+        response.raise_for_status()
+        
+        # Get remote metadata
+        remote_size = response.headers.get('Content-Length')
+        remote_etag = response.headers.get('ETag', '').strip('"')
+        remote_modified = response.headers.get('Last-Modified')
+        
+        # Compare with stored metadata
+        if version_info:
+            stored_etag = version_info.get('remote_etag')
+            stored_size = version_info.get('remote_size')
+            
+            # If we have ETag, use it for comparison
+            if remote_etag and stored_etag:
+                return remote_etag != stored_etag
+            
+            # Otherwise, check size if available
+            if remote_size and stored_size:
+                return str(remote_size) != str(stored_size)
+        
+        # If no metadata to compare, assume it might have changed
+        return True
+        
+    except requests.exceptions.RequestException:
+        # If HEAD fails, assume we need to check by downloading
+        return True
+
+
 def download_with_retry(url, max_retries=3, timeout=30):
     """Download with exponential backoff retry logic."""
     for attempt in range(max_retries):
@@ -146,8 +178,12 @@ def download_ontology_with_versioning(url, output_path, repo_path, force_downloa
         if not force_download:
             needs_download, reason = should_download(output_path, url, version_file)
             if not needs_download:
-                log_download_attempt(version_dir, filename, "skipped", None, url)
-                return True, "skipped", f"File up to date: {filename}"
+                # Get current checksum for logging
+                current_checksum = get_file_checksum(output_path) if os.path.exists(output_path) else None
+                log_download_attempt(version_dir, filename, "skipped", current_checksum, url)
+                # Update last_checked timestamp
+                update_version_info(version_file, filename, url, current_checksum, current_checksum, check_only=True)
+                return True, "skipped", f"File up to date: {filename} ({reason})"
         
         # Get current checksum if file exists
         old_checksum = None
@@ -158,6 +194,13 @@ def download_ontology_with_versioning(url, output_path, repo_path, force_downloa
         # Download with retry logic
         print(f"📥 Downloading {filename}...")
         response = download_with_retry(url)
+        
+        # Collect remote metadata
+        remote_metadata = {
+            'remote_etag': response.headers.get('ETag', '').strip('"'),
+            'remote_size': response.headers.get('Content-Length'),
+            'remote_modified': response.headers.get('Last-Modified')
+        }
         
         # Calculate new checksum
         new_checksum = get_file_checksum(response.content)
@@ -181,8 +224,9 @@ def download_ontology_with_versioning(url, output_path, repo_path, force_downloa
         else:
             handle_compressed_file(response, output_path, url)
         
-        # Update version tracking
-        update_version_info(version_file, filename, url, old_checksum, new_checksum)
+        # Update version tracking with remote metadata
+        update_version_info(version_file, filename, url, old_checksum, new_checksum, 
+                          remote_metadata=remote_metadata)
         
         # Log successful download
         status = "updated" if old_checksum else "new"
@@ -221,10 +265,18 @@ def download_ontology_safe(url, output_path, repo_path, force_download=False):
     )
     
     if success:
-        if status != "skipped":
+        if status == "skipped":
+            print(f"  ✓ Up-to-date: {filename}")
+        elif status == "no_change":
+            print(f"  ✓ No changes: {filename} (server version unchanged)")
+        elif status == "updated":
+            print(f"  ⟳ Updated: {filename}")
+        elif status == "new":
+            print(f"  ✅ Downloaded: {filename}")
+        else:
             print(f"   {message}")
     else:
-        print(f"❌ {message}")
+        print(f"  ❌ Failed: {filename} - {message}")
     
     return success
 
