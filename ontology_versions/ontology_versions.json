@@ -64,6 +64,18 @@
       }
     ]
   },
+  "rhea.owl": {
+    "checksum": "be24c68bfbe6b8308aca1eb895954957c257c38e82c0f9dd51e4708ceb2d6982",
+    "last_checked": "2025-07-10T10:44:40.686852",
+    "last_updated": "2025-07-10T10:44:40.686843",
+    "previous_checksum": null,
+    "remote_etag": "W/\"e125d6bd47c952c0361ee8ddee429e5f3c58dbf3ea5fd9fc2ccfec02c4354cb5",
+    "remote_modified": null,
+    "remote_size": "7836195",
+    "size_bytes": 0,
+    "url": "https://w3id.org/biopragmatics/resources/rhea/rhea.owl.gz",
+    "version_history": []
+  },
   "ro-base.owl": {
     "checksum": "cba7d8111c554a00244a8f42d397074a2ad093cc659652c61497313a9611ed4a",
     "last_updated": "2025-06-25T15:55:51.758359",

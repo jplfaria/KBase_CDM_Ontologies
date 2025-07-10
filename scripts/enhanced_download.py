@@ -174,30 +174,38 @@ def download_ontology_with_versioning(url, output_path, repo_path, force_downloa
     
     filename = os.path.basename(output_path)
     
+    # For compressed files, we need to check the decompressed version
+    actual_output_path = output_path
+    actual_filename = filename
+    if url.endswith('.gz') and output_path.endswith('.gz'):
+        # The actual file that will exist is the decompressed version
+        actual_output_path = output_path[:-3]  # Remove .gz extension
+        actual_filename = filename[:-3]  # Remove .gz from filename too
+    
     try:
         # Check if download is needed (unless forced)
         if not force_download:
-            needs_download, reason = should_download(output_path, url, version_file)
+            needs_download, reason = should_download(actual_output_path, url, version_file)
             if not needs_download:
                 # Get current checksum for logging
-                current_checksum = get_file_checksum(output_path) if os.path.exists(output_path) else None
-                log_download_attempt(version_dir, filename, "skipped", current_checksum, url)
+                current_checksum = get_file_checksum(actual_output_path) if os.path.exists(actual_output_path) else None
+                log_download_attempt(version_dir, actual_filename, "skipped", current_checksum, url)
                 # Update last_checked timestamp
-                update_version_info(version_file, filename, url, current_checksum, current_checksum, check_only=True)
+                update_version_info(version_file, actual_filename, url, current_checksum, current_checksum, check_only=True)
                 
                 # Update summary if available
                 summary = get_summary()
                 if summary:
-                    file_size = os.path.getsize(output_path) if os.path.exists(output_path) else 0
+                    file_size = os.path.getsize(actual_output_path) if os.path.exists(actual_output_path) else 0
                     summary.add_ontology_download(filename, "skipped", file_size)
                 
                 return True, "skipped", f"File up to date: {filename} ({reason})"
         
         # Get current checksum if file exists
         old_checksum = None
-        if os.path.exists(output_path):
-            old_checksum = get_file_checksum(output_path)
-            backup_old_version(output_path, old_checksum, version_dir)
+        if os.path.exists(actual_output_path):
+            old_checksum = get_file_checksum(actual_output_path)
+            backup_old_version(actual_output_path, old_checksum, version_dir)
         
         # Download with retry logic
         print(f"📥 Downloading {filename}...")
@@ -233,17 +241,17 @@ def download_ontology_with_versioning(url, output_path, repo_path, force_downloa
             handle_compressed_file(response, output_path, url)
         
         # Update version tracking with remote metadata
-        update_version_info(version_file, filename, url, old_checksum, new_checksum, 
+        update_version_info(version_file, actual_filename, url, old_checksum, new_checksum, 
                           remote_metadata=remote_metadata)
         
         # Log successful download
         status = "updated" if old_checksum else "new"
-        log_download_attempt(version_dir, filename, status, new_checksum, url)
+        log_download_attempt(version_dir, actual_filename, status, new_checksum, url)
         
         # Update summary if available
         summary = get_summary()
         if summary:
-            file_size = os.path.getsize(output_path) if os.path.exists(output_path) else 0
+            file_size = os.path.getsize(actual_output_path) if os.path.exists(actual_output_path) else 0
             summary.add_ontology_download(filename, status, file_size, old_checksum, new_checksum)
             if old_checksum and new_checksum != old_checksum:
                 summary.add_version_change(filename, old_checksum, new_checksum)

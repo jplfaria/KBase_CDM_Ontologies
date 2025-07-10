@@ -9,3 +9,5 @@
 2025-06-25T15:55:58.797515 | envo.owl | no_change | c327bf33 | https://purl.obolibrary.org/obo/envo.owl
 2025-06-25T15:56:07.389206 | go.owl | updated | c73e50c9 | https://purl.obolibrary.org/obo/go.owl
 2025-06-25T15:57:45.104176 | ncbitaxon.owl | updated | 52388979 | https://purl.obolibrary.org/obo/ncbitaxon.owl
+2025-07-10T10:44:39.430677 | eccode.owl.gz | error | N/A | https://purl.biopragmatics.com/pyobo/eccode/eccode.owl.gz | ERROR: HTTPSConnectionPool(host='purl.biopragmatics.com', port=443): Max retries exceeded with url: /pyobo/eccode/eccode.owl.gz (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x104069f50>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known'))
+2025-07-10T10:44:40.687240 | rhea.owl | new | be24c68b | https://w3id.org/biopragmatics/resources/rhea/rhea.owl.gz
