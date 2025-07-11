@@ -58,21 +58,24 @@ class TestJavaProcesses:
                 'name': 'java',
                 'cmdline': ['java', '-jar', 'robot.jar', 'merge'],
                 'memory_info': Mock(rss=2 * 1024**3),  # 2GB
-                'username': 'testuser'
+                'username': 'testuser',
+                'exe': '/usr/bin/java'
             }),
             Mock(info={
                 'pid': 5678,
                 'name': 'java',
                 'cmdline': ['java', '-jar', 'relation-graph.jar'],
                 'memory_info': Mock(rss=1 * 1024**3),  # 1GB
-                'username': 'testuser'
+                'username': 'testuser',
+                'exe': '/usr/bin/java'
             }),
             Mock(info={
                 'pid': 9999,
                 'name': 'python',
                 'cmdline': ['python', 'script.py'],
                 'memory_info': Mock(rss=500 * 1024**2),  # 500MB
-                'username': 'testuser'
+                'username': 'testuser',
+                'exe': '/usr/bin/python'
             })
         ]
         
@@ -83,8 +86,8 @@ class TestJavaProcesses:
         # Should only return Java processes
         assert len(java_procs) == 2
         
-        # Check ROBOT process
-        robot_proc = next(p for p in java_procs if p['type'] == 'ROBOT')
+        # Check ROBOT process - now classified as ROBOT-merge
+        robot_proc = next(p for p in java_procs if p['type'] == 'ROBOT-merge')
         assert robot_proc['pid'] == 1234
         assert robot_proc['memory_gb'] == 2.0
         
@@ -102,7 +105,8 @@ class TestJavaProcesses:
                 'name': 'java',
                 'cmdline': None,  # This was causing the TypeError
                 'memory_info': Mock(rss=1024**3),
-                'username': 'testuser'
+                'username': 'testuser',
+                'exe': '/usr/bin/java'
             })
         ]
         

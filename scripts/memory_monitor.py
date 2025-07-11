@@ -40,26 +40,68 @@ def get_memory_info():
 def get_java_processes_memory():
     """Get memory usage of Java processes (ROBOT, relation-graph)."""
     java_processes = []
-    for proc in psutil.process_iter(['pid', 'name', 'cmdline', 'memory_info', 'username']):
+    for proc in psutil.process_iter(['pid', 'name', 'cmdline', 'memory_info', 'username', 'exe']):
         try:
-            if proc.info['name'] == 'java':
-                # Handle case where cmdline might be None
-                cmdline = ' '.join(proc.info['cmdline']) if proc.info['cmdline'] else ''
-                memory_mb = proc.info['memory_info'].rss / (1024**2)
-                username = proc.info.get('username', 'unknown')
+            info = proc.info
+            name = info.get('name', '').lower()
+            cmdline_list = info.get('cmdline', [])
+            cmdline = ' '.join(cmdline_list) if cmdline_list else ''
+            exe = info.get('exe', '') or ''
+            
+            # Multiple ways to detect Java processes
+            is_java = False
+            
+            # Method 1: Process name is exactly 'java'
+            if name == 'java':
+                is_java = True
+            # Method 2: Process name contains 'java'
+            elif 'java' in name:
+                is_java = True
+            # Method 3: Executable path contains java
+            elif 'java' in exe.lower() or 'jdk' in exe.lower() or 'jre' in exe.lower():
+                is_java = True
+            # Method 4: Command line patterns
+            elif cmdline and any(pattern in cmdline.lower() for pattern in 
+                               ['java ', 'java.exe', '/bin/java', 'robot.jar', 
+                                'semsql', 'relation-graph', 'semantic-sql']):
+                is_java = True
+            # Method 5: Check first argument in cmdline
+            elif cmdline_list and len(cmdline_list) > 0:
+                first_arg = cmdline_list[0].lower()
+                if 'java' in first_arg or first_arg.endswith('/java'):
+                    is_java = True
+            
+            if is_java:
+                memory_mb = info['memory_info'].rss / (1024**2)
+                username = info.get('username', 'unknown')
                 
+                # Determine process type from command line
                 process_type = 'unknown'
-                if 'robot.jar' in cmdline:
-                    process_type = 'ROBOT'
-                elif 'relation-graph' in cmdline:
+                cmdline_lower = cmdline.lower()
+                
+                # Check for specific tools first
+                if 'relation-graph' in cmdline_lower:
                     process_type = 'relation-graph'
-                elif 'semsql' in cmdline or 'semantic' in cmdline:
+                elif 'semsql' in cmdline_lower or 'semantic' in cmdline_lower:
                     process_type = 'SemanticSQL'
-                elif any(x in cmdline for x in ['CDM_merged', 'ontolog']):
+                elif 'robot.jar' in cmdline_lower or 'robot' in cmdline_lower:
+                    # Further classify ROBOT commands
+                    if 'merge' in cmdline_lower:
+                        process_type = 'ROBOT-merge'
+                    elif 'query' in cmdline_lower:
+                        process_type = 'ROBOT-query'
+                    elif 'reason' in cmdline_lower:
+                        process_type = 'ROBOT-reason'
+                    elif 'extract' in cmdline_lower:
+                        process_type = 'ROBOT-extract'
+                    else:
+                        process_type = 'ROBOT'
+                elif any(x in cmdline_lower for x in ['cdm_merged', 'ontolog', '.owl']):
                     process_type = 'ROBOT'  # Likely ROBOT working on ontologies
                 
                 java_processes.append({
-                    'pid': proc.info['pid'],
+                    'pid': info['pid'],
+                    'name': info.get('name', 'unknown'),
                     'type': process_type,
                     'memory_mb': round(memory_mb, 2),
                     'memory_gb': round(memory_mb / 1024, 2),
@@ -67,6 +109,9 @@ def get_java_processes_memory():
                     'cmdline_snippet': cmdline[:100] + '...' if len(cmdline) > 100 else cmdline
                 })
         except (psutil.NoSuchProcess, psutil.AccessDenied):
+            continue
+        except Exception as e:
+            logging.debug(f"Error processing process {proc.pid}: {e}")
             continue
     
     return java_processes
@@ -117,6 +162,18 @@ def monitor_tool_execution(tool_name, command, log_dir, interval=60):
             task_process = max(user_java_procs, key=lambda p: p['memory_gb']) if user_java_procs else None
             task_memory = task_process['memory_gb'] if task_process else 0
             
+            # If no Java processes found, log diagnostic info
+            if not java_procs and len(memory_data) == 0:
+                logging.debug(f"No Java processes found. Current user: {current_user}")
+                # Try to find any process related to our tools
+                for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
+                    try:
+                        cmdline = ' '.join(proc.info.get('cmdline', []))
+                        if any(tool in cmdline for tool in ['robot', 'semsql', 'relation-graph', tool_name]):
+                            logging.debug(f"Found related process: PID={proc.info['pid']}, name={proc.info['name']}, cmdline={cmdline[:100]}")
+                    except:
+                        pass
+            
             # Track peak memory
             peak_memory = max(peak_memory, task_memory)
             
@@ -147,10 +204,20 @@ def monitor_tool_execution(tool_name, command, log_dir, interval=60):
                 system_percent = round(mem_info['memory_percent'], 1)
                 task_percent = round((task_memory / mem_info['total_memory_gb']) * 100, 1) if mem_info['total_memory_gb'] > 0 else 0
                 
-                logging.info(f"[{current_time.strftime('%Y-%m-%d %H:%M:%S')}] {tool_name}: "
-                            f"Task={task_memory:.1f}GB ({task_percent:.1f}%), "
-                            f"System={mem_info['used_memory_gb']:.1f}GB ({system_percent}%), "
-                            f"Available={mem_info['available_memory_gb']:.1f}GB")
+                log_msg = f"[{current_time.strftime('%Y-%m-%d %H:%M:%S')}] {tool_name}: "
+                if task_memory > 0:
+                    log_msg += f"Task={task_memory:.1f}GB ({task_percent:.1f}%), "
+                else:
+                    log_msg += f"Java processes: {len(user_java_procs)}, "
+                log_msg += (f"System={mem_info['used_memory_gb']:.1f}GB ({system_percent}%), "
+                           f"Available={mem_info['available_memory_gb']:.1f}GB")
+                
+                # Add process details if we have them
+                if user_java_procs and should_log:
+                    for proc in user_java_procs[:3]:  # Show up to 3 processes
+                        log_msg += f"\n    {proc['type']}: {proc['memory_gb']:.1f}GB (PID: {proc['pid']})"
+                
+                logging.info(log_msg)
                 
                 # Update run summary with memory usage
                 summary = get_summary()
