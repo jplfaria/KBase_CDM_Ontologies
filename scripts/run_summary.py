@@ -33,6 +33,7 @@ class RunSummary:
         self.start_time = datetime.now()
         self.end_time = None
         self.status = "RUNNING"
+        self._last_reload = None
         
         # System resources at start
         memory = psutil.virtual_memory()
@@ -110,6 +111,9 @@ class RunSummary:
     def add_ontology_download(self, filename: str, status: str, size_bytes: int = 0, 
                             old_version: str = None, new_version: str = None):
         """Record an ontology download event."""
+        # Reload state to get latest updates from other processes
+        self._reload_if_needed()
+        
         self.ontology_stats['total_processed'] += 1
         
         download_info = {
@@ -372,10 +376,14 @@ class RunSummary:
                 'version_changes': self.version_changes,
                 'processing_results': self.processing_results,
                 'issues': self.issues,
-                'output_files': self.output_files
+                'output_files': self.output_files,
+                'last_modified': datetime.now().isoformat()
             }
-            with open(summary_path, 'w') as f:
+            # Write atomically to avoid corruption
+            temp_path = summary_path + '.tmp'
+            with open(temp_path, 'w') as f:
                 json.dump(state, f, indent=2, default=str)
+            os.replace(temp_path, summary_path)
     
     @classmethod
     def load_state(cls, summary_path: str) -> 'RunSummary':
@@ -396,8 +404,34 @@ class RunSummary:
         summary.processing_results = state['processing_results']
         summary.issues = state['issues']
         summary.output_files = state['output_files']
+        summary._last_reload = datetime.now()
         
         return summary
+    
+    def _reload_if_needed(self):
+        """Reload state from file if it has been modified by another process."""
+        summary_path = os.environ.get('RUN_SUMMARY_PATH')
+        if summary_path and os.path.exists(summary_path):
+            try:
+                # Check if file has been modified since last reload
+                file_mtime = datetime.fromtimestamp(os.path.getmtime(summary_path))
+                if not self._last_reload or file_mtime > self._last_reload:
+                    # Reload state
+                    with open(summary_path, 'r') as f:
+                        state = json.load(f)
+                    
+                    # Update our state with the loaded data
+                    self.system_info = state['system_info']
+                    self.steps = state['steps']
+                    self.ontology_stats = state['ontology_stats']
+                    self.version_changes = state['version_changes']
+                    self.processing_results = state['processing_results']
+                    self.issues = state['issues']
+                    self.output_files = state['output_files']
+                    self._last_reload = datetime.now()
+            except Exception:
+                # If reload fails, continue with current state
+                pass
 
 
 # Global instance for easy access
@@ -407,21 +441,19 @@ def get_summary() -> Optional[RunSummary]:
     """Get the current summary instance, loading from file if needed."""
     global _summary_instance
     
-    # If we already have an instance, return it
-    if _summary_instance:
-        return _summary_instance
-    
-    # Try to load from environment path
+    # Always try to load from file first to get latest state
     summary_path = os.environ.get('RUN_SUMMARY_PATH')
     if summary_path and os.path.exists(summary_path):
         try:
+            # Always reload to get latest state from other processes
             _summary_instance = RunSummary.load_state(summary_path)
             return _summary_instance
         except Exception:
-            # If loading fails, return None
+            # If loading fails, return existing instance or None
             pass
     
-    return None
+    # Return existing instance if no file available
+    return _summary_instance
 
 def init_summary(run_id: str, output_dir: str, mode: str = "PRODUCTION") -> RunSummary:
     """Initialize a new summary instance."""

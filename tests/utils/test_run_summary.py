@@ -277,9 +277,11 @@ class TestSummaryGlobalFunctions:
         assert summary is not None
         assert summary.run_id == run_id
         
-        # Get summary should return same instance
+        # Get summary should return instance with same data (may be reloaded from file)
         retrieved = get_summary()
-        assert retrieved is summary
+        assert retrieved is not None
+        assert retrieved.run_id == run_id
+        assert retrieved.output_dir == output_dir
     
     def test_get_summary_from_file(self, tmp_path, monkeypatch):
         """Test loading summary from environment path."""
@@ -315,3 +317,44 @@ class TestSummaryGlobalFunctions:
         
         result = get_summary()
         assert result is None
+    
+    def test_cross_process_synchronization(self, tmp_path):
+        """Test that summary updates from simulated other process are loaded."""
+        import run_summary
+        import json
+        
+        # Clear any existing instance
+        run_summary._summary_instance = None
+        
+        # Initialize summary
+        run_id = "test_cross_process"
+        output_dir = str(tmp_path)
+        summary = init_summary(run_id, output_dir, "TEST")
+        
+        # Verify initial state
+        assert summary.ontology_stats['total_processed'] == 0
+        
+        # Simulate another process updating the file
+        summary_path = os.environ.get('RUN_SUMMARY_PATH')
+        assert summary_path is not None
+        
+        # Load the current state
+        with open(summary_path, 'r') as f:
+            state = json.load(f)
+        
+        # Modify the state as if another process updated it
+        state['ontology_stats']['total_processed'] = 5
+        state['ontology_stats']['new_downloads'] = [
+            {'filename': 'other_process.owl', 'size_mb': 10.5, 'timestamp': '2025-01-01T12:00:00'}
+        ]
+        
+        # Write back the modified state
+        with open(summary_path, 'w') as f:
+            json.dump(state, f, indent=2)
+        
+        # Get summary should reload and see the updates
+        retrieved = get_summary()
+        assert retrieved is not None
+        assert retrieved.ontology_stats['total_processed'] == 5
+        assert len(retrieved.ontology_stats['new_downloads']) == 1
+        assert retrieved.ontology_stats['new_downloads'][0]['filename'] == 'other_process.owl'
