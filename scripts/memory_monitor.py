@@ -76,6 +76,9 @@ def monitor_tool_execution(tool_name, command, log_dir, interval=60):
     log_file = os.path.join(log_dir, f"{tool_name}_memory_log.json")
     summary_file = os.path.join(log_dir, f"{tool_name}_memory_summary.txt")
     
+    # Import run summary here to avoid circular import
+    from run_summary import get_summary
+    
     # Get current user for process filtering
     current_user = os.environ.get('USER', 'unknown')
     
@@ -148,6 +151,11 @@ def monitor_tool_execution(tool_name, command, log_dir, interval=60):
                             f"Task={task_memory:.1f}GB ({task_percent:.1f}%), "
                             f"System={mem_info['used_memory_gb']:.1f}GB ({system_percent}%), "
                             f"Available={mem_info['available_memory_gb']:.1f}GB")
+                
+                # Update run summary with memory usage
+                summary = get_summary()
+                if summary:
+                    summary.update_memory_usage(task_memory, task_percent)
             
             time.sleep(interval)
         
@@ -234,6 +242,11 @@ def monitor_tool_execution(tool_name, command, log_dir, interval=60):
         logging.info(f"\nTool {tool_name} completed with return code {return_code}")
         logging.info(f"Peak memory usage: {peak_task_memory:.2f} GB ({summary['peak_task_memory_percent']:.1f}% of system)")
         logging.info(f"Duration: {duration/60:.2f} minutes")
+        
+        # Update run summary with final peak memory
+        run_summary = get_summary()
+        if run_summary:
+            run_summary.update_memory_usage(peak_task_memory, summary['peak_task_memory_percent'])
         
         return return_code, summary
         

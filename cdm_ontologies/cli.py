@@ -116,10 +116,18 @@ def run_all(args):
     if summary:
         summary.start_step("Analyze Core Ontologies", 1)
     try:
-        analyze_core_ontologies(str(repo_path))
+        stats = analyze_core_ontologies(str(repo_path))
         timestamp_print("Step 1: Completed analyzing core ontologies")
         if summary:
-            summary.end_step("Analyze Core Ontologies", "SUCCESS")
+            details = {
+                'main_ontologies': stats.get('main_ontologies', 0) if stats else 0,
+                'non_base_ontologies': stats.get('non_base_ontologies', 0) if stats else 0,
+                'analyzed': stats.get('analyzed', 0) if stats else 0,
+                'downloaded': stats.get('downloaded', 0) if stats else 0,
+                'skipped': stats.get('skipped', 0) if stats else 0,
+                'failed': stats.get('failed', 0) if stats else 0
+            }
+            summary.end_step("Analyze Core Ontologies", "SUCCESS", details)
     except Exception as e:
         logging.error(f"Failed to analyze core ontologies: {e}")
         timestamp_print(f"Step 1: Failed - {e}")

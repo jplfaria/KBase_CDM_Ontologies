@@ -36,7 +36,8 @@ class RunSummary:
         
         # System resources at start
         memory = psutil.virtual_memory()
-        disk = psutil.disk_usage('/')
+        # Get disk usage for the output directory's mount point
+        disk = psutil.disk_usage(output_dir)
         
         self.system_info = {
             'initial_memory_available_gb': round(memory.available / (1024**3), 1),
@@ -105,6 +106,7 @@ class RunSummary:
                 self.steps[step_name]['details'] = details
         self.current_step = None
     
+    @auto_save
     def add_ontology_download(self, filename: str, status: str, size_bytes: int = 0, 
                             old_version: str = None, new_version: str = None):
         """Record an ontology download event."""
@@ -129,6 +131,7 @@ class RunSummary:
         elif status == 'remote_changed':
             self.ontology_stats['remote_changes_detected'].append(download_info)
     
+    @auto_save
     def add_version_change(self, filename: str, old_checksum: str, new_checksum: str):
         """Record a version change."""
         self.version_changes['files_updated'].append({
@@ -137,21 +140,25 @@ class RunSummary:
             'new_checksum': new_checksum[:8] if new_checksum else 'N/A'
         })
     
+    @auto_save
     def add_backup(self, size_bytes: int):
         """Record backup creation."""
         self.version_changes['backups_created'] += 1
         self.version_changes['backup_size_gb'] += size_bytes / (1024**3)
     
+    @auto_save
     def update_memory_usage(self, usage_gb: float, usage_percent: float):
         """Update peak memory usage if current is higher."""
         if usage_gb > self.system_info['peak_memory_usage_gb']:
             self.system_info['peak_memory_usage_gb'] = round(usage_gb, 1)
             self.system_info['peak_memory_percent'] = round(usage_percent, 1)
     
+    @auto_save
     def add_processing_result(self, key: str, value: Any):
         """Add a processing result metric."""
         self.processing_results[key] = value
     
+    @auto_save
     def add_output_file(self, name: str, path: str, size_bytes: int = 0):
         """Record an output file."""
         self.output_files[name] = {
@@ -159,6 +166,7 @@ class RunSummary:
             'size_gb': round(size_bytes / (1024**3), 2) if size_bytes else 0
         }
     
+    @auto_save
     def add_error(self, error_msg: str):
         """Add an error message."""
         self.issues['errors'].append({
@@ -167,6 +175,7 @@ class RunSummary:
             'step': self.current_step
         })
     
+    @auto_save
     def add_warning(self, warning_msg: str):
         """Add a warning message."""
         self.issues['warnings'].append({
@@ -175,6 +184,7 @@ class RunSummary:
             'step': self.current_step
         })
     
+    @auto_save
     def finalize(self, status: str = 'SUCCESS'):
         """Finalize the summary."""
         self.end_time = datetime.now()
@@ -182,7 +192,7 @@ class RunSummary:
         
         # Get final system resources
         memory = psutil.virtual_memory()
-        disk = psutil.disk_usage('/')
+        disk = psutil.disk_usage(self.output_dir)
         self.system_info['final_memory_available_gb'] = round(memory.available / (1024**3), 1)
         self.system_info['final_disk_available_gb'] = round(disk.free / (1024**3), 1)
     
@@ -346,6 +356,8 @@ class RunSummary:
         """Save current state to temporary file for inter-process communication."""
         summary_path = os.environ.get('RUN_SUMMARY_PATH')
         if summary_path:
+            # Ensure directory exists
+            os.makedirs(os.path.dirname(summary_path), exist_ok=True)
             state = {
                 'run_id': self.run_id,
                 'output_dir': self.output_dir,
@@ -418,5 +430,8 @@ def init_summary(run_id: str, output_dir: str, mode: str = "PRODUCTION") -> RunS
     
     # Save summary file path to environment for child processes
     os.environ['RUN_SUMMARY_PATH'] = os.path.join(output_dir, '.run_summary_temp.json')
+    
+    # Immediately save state so child processes can access it
+    _summary_instance.save_state()
     
     return _summary_instance

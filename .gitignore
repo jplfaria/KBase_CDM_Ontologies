@@ -26,6 +26,12 @@ og_scripts/
 # Archived test files from semsql_custom_prefixes
 semsql_custom_prefixes/archived/
 
+# Version tracking files (these change during runs)
+ontology_versions/ontology_versions.json
+ontology_versions/download_history.log
+ontology_versions_test/ontology_versions.json
+ontology_versions_test/download_history.log
+
 # Large ontology files
 ontology_versions/backups/*.owl
 ontology_versions_test/
@@ -89,7 +95,6 @@ logs/*
 # Global log exclusion (but allow specific ones above)
 *.log
 !logs/cdm_ontologies_test_20250704_001300.log
-!ontology_versions*/download_history.log
 
 # Cache directory
 .cache/
