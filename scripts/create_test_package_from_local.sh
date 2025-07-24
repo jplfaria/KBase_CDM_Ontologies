@@ -89,7 +89,8 @@ process_ontology() {
     
     # Create SemanticSQL database using Docker
     echo "  Creating SemanticSQL database..."
-    $DOCKER_CMD semsql make "/work/${name}.db" "/work/$owl_file" $PREFIXES_ARG
+    # semsql make expects input from stdin
+    $DOCKER_CMD sh -c "cd /work && cat $owl_file | semsql make ${name}.db"
     
     # Extract statements table
     echo "  Extracting statements table..."
