@@ -30,20 +30,52 @@ curl -L -o seed.owl "http://purl.obolibrary.org/obo/seed.owl" || {
     exit 1
 }
 
-# For modelseed.owl, let's use a known working source
-echo "Downloading modelseed.owl from test data..."
-# Try copying from test data if it exists locally
-if [ -f "$REPO_ROOT/ontology_data_owl_test/modelseed.owl" ]; then
-    echo "  Using local test file..."
-    cp "$REPO_ROOT/ontology_data_owl_test/modelseed.owl" .
-else
-    # Download from a specific commit where we know it exists
-    echo "  Downloading from GitHub..."
-    curl -L -o modelseed.owl "https://raw.githubusercontent.com/ModelSEED/ModelSEEDDatabase/9c5aee81e87d6d177913fa9596449f7dc50e7921/Biochemistry/modelseed_ontology.owl" || {
-        echo "ERROR: Failed to download modelseed.owl"
-        echo "You may need to manually place modelseed.owl in $WORK_DIR"
+# For modelseed.owl, we need to find a working source
+echo "Downloading modelseed.owl..."
+
+# Check multiple possible sources
+MODELSEED_URLS=(
+    "https://raw.githubusercontent.com/ModelSEED/ModelSEEDDatabase/main/Biochemistry/modelseed_ontology.owl"
+    "https://raw.githubusercontent.com/ModelSEED/ModelSEEDDatabase/master/Biochemistry/modelseed_ontology.owl"
+    "https://raw.githubusercontent.com/ModelSEED/ModelSEEDDatabase/develop/Biochemistry/modelseed_ontology.owl"
+    "https://github.com/ModelSEED/ModelSEEDDatabase/raw/main/Biochemistry/modelseed.owl"
+)
+
+DOWNLOADED=false
+for url in "${MODELSEED_URLS[@]}"; do
+    echo "  Trying: $url"
+    if curl -f -L -o modelseed_temp.owl "$url" 2>/dev/null; then
+        # Check if file is valid (more than 1KB)
+        if [ -s modelseed_temp.owl ] && [ $(stat -c%s modelseed_temp.owl 2>/dev/null || stat -f%z modelseed_temp.owl) -gt 1000 ]; then
+            mv modelseed_temp.owl modelseed.owl
+            echo "  ✓ Successfully downloaded from: $url"
+            DOWNLOADED=true
+            break
+        else
+            rm -f modelseed_temp.owl
+        fi
+    fi
+done
+
+if [ "$DOWNLOADED" = false ]; then
+    # Try local test file as last resort
+    if [ -f "$REPO_ROOT/ontology_data_owl_test/modelseed.owl" ]; then
+        echo "  Using local test file..."
+        cp "$REPO_ROOT/ontology_data_owl_test/modelseed.owl" .
+    else
+        echo "ERROR: Could not download modelseed.owl from any source"
+        echo ""
+        echo "Please manually download modelseed.owl and place it in:"
+        echo "  $WORK_DIR/modelseed.owl"
+        echo ""
+        echo "You can try finding it at:"
+        echo "  https://github.com/ModelSEED/ModelSEEDDatabase"
+        echo ""
+        echo "Or create a minimal test file for now:"
+        echo "  echo '<?xml version=\"1.0\"?>' > $WORK_DIR/modelseed.owl"
+        echo "  echo '<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"/>' >> $WORK_DIR/modelseed.owl"
         exit 1
-    }
+    fi
 fi
 
 # Check file sizes
@@ -84,7 +116,7 @@ process_ontology() {
     
     # Create SemanticSQL database using Docker
     echo "  Creating SemanticSQL database..."
-    $DOCKER_CMD semsql make "/work/${name}.db" -i "/work/$owl_file" $PREFIXES_ARG
+    $DOCKER_CMD semsql make "/work/${name}.db" "/work/$owl_file" $PREFIXES_ARG
     
     # Extract statements table
     echo "  Extracting statements table..."
