@@ -31,7 +31,6 @@ https://w3id.org/biopragmatics/resources/credit/credit.owl
 https://w3id.org/biopragmatics/resources/ror/ror.owl.gz
 https://w3id.org/biopragmatics/resources/interpro/interpro.owl
 #In-house Ontologies (manually added to ontologies_data_owl)
-seed
+https://github.com/ModelSEED/ModelSEEDTemplates/raw/template_ontology/templates/ontology/ontology/seed_unified.owl.gz
 metacyc
 kegg
-modelseed

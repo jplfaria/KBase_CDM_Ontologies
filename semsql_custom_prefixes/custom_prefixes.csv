@@ -13,3 +13,10 @@ Reactome,https://reactome.org/content/detail/
 OMP,http://purl.obolibrary.org/obo/OMP_
 EC,https://www.ebi.ac.uk/intenz/query?cmd=SearchEC&ec=
 geonames,https://www.geonames.org/
+seed.role,https://pubseed.theseed.org/RoleEditor.cgi?page=ShowRole&Role=
+seed.subsystem,https://pubseed.theseed.org/SubsysEditor.cgi?page=ShowSubsystem&subsystem=
+seed.complex,https://modelseed.org/biochem/complexes/
+https://modelseed.org/ontology/enables_reaction,enables_reaction
+https://modelseed.org/ontology/has_role,has_role
+https://modelseed.org/ontology/has_complex,has_complex
+https://modelseed.org/ontology/reaction_type,reaction_type
