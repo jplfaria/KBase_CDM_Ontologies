@@ -8,17 +8,17 @@ This guide covers all configuration options for the CDM Ontologies Pipeline, fro
 
 The pipeline uses environment files to manage different deployment scenarios:
 
-- **`.env`**: Production configuration (30+ ontologies, 1.5TB container)
+- **`.env`**: Production configuration (32 ontologies, 1.5TB container)
 - **`.env.test`**: Test configuration (6 ontologies, same memory settings)
 
 ### Configuration File Structure
 
 ```bash
-# Memory Management (Unified 1TB settings)
-ROBOT_JAVA_ARGS=-Xmx1024g -XX:MaxMetaspaceSize=8g -XX:+UseG1GC
-RELATION_GRAPH_JAVA_ARGS=-Xmx1024g -XX:MaxMetaspaceSize=8g -XX:+UseG1GC
-SEMSQL_MEMORY_LIMIT=1024g
-PYTHON_MEMORY_LIMIT=1024g
+# Memory Management (Unified 1.5TB settings)
+ROBOT_JAVA_ARGS=-Xmx1500g -XX:MaxMetaspaceSize=8g -XX:+UseG1GC
+RELATION_GRAPH_JAVA_ARGS=-Xmx1500g -XX:MaxMetaspaceSize=8g -XX:+UseG1GC
+SEMSQL_MEMORY_LIMIT=1500g
+PYTHON_MEMORY_LIMIT=1500g
 
 # Dataset Control
 DATASET_SIZE=test                                        # test or large

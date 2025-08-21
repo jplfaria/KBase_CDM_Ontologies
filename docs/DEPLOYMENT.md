@@ -15,9 +15,8 @@ This guide covers deploying the CDM Ontologies Pipeline in production environmen
 - Docker Engine 20.10+
 - Docker Compose v2.0+
 - Sufficient RAM based on dataset size:
-  - Test: 8GB minimum
-  - Small: 16GB minimum  
-  - Large: 1TB+ minimum
+  - Test: 1.5TB allocated (same as production)
+  - Production: 1.5TB+ allocated to container
 
 ### Quick Deployment
 
@@ -30,7 +29,10 @@ cd KBase_CDM_Ontologies
 make docker-build
 
 # Deploy with appropriate configuration
-make docker-run-large  # For production datasets
+make docker-run-prod  # For production datasets
+
+# Or run in background
+make docker-run-prod-nohup
 ```
 
 ### Custom Configuration
@@ -39,7 +41,7 @@ Create a custom environment file:
 
 ```bash
 # Copy and modify configuration
-cp .env.large .env.production
+cp .env .env.production
 
 # Edit for your environment
 nano .env.production
@@ -48,13 +50,15 @@ nano .env.production
 Key production settings:
 
 ```bash
-# Memory Configuration (adjust based on available RAM)
-ROBOT_JAVA_ARGS=-Xmx800g
-_JAVA_OPTIONS=-Xmx800g
+# Memory Configuration (1.5TB unified settings)
+ROBOT_JAVA_ARGS=-Xmx1500g -XX:MaxMetaspaceSize=8g -XX:+UseG1GC
+RELATION_GRAPH_JAVA_ARGS=-Xmx1500g -XX:MaxMetaspaceSize=8g -XX:+UseG1GC
+SEMSQL_MEMORY_LIMIT=1500g
+PYTHON_MEMORY_LIMIT=1500g
 
 # Dataset Configuration
 ONTOLOGIES_SOURCE_FILE=config/ontologies_source.txt
-DATASET_SIZE=large
+DATASET_SIZE=production
 
 # Performance Tuning
 PARALLEL_DOWNLOADS=20

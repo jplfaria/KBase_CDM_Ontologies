@@ -17,15 +17,21 @@ services:
       - PYTHONUNBUFFERED=1
       - HOST_UID=${UID:-1000}
       - HOST_GID=${GID:-1000}
+      - WORKFLOW_TIMESTAMP=${WORKFLOW_TIMESTAMP}
     volumes:
       # Mount the entire workspace
       - ./:/home/ontology/workspace
-      # Separate volume for outputs to avoid conflicts
-      - cdm-outputs:/home/ontology/workspace/outputs
-      # Cache directory for downloaded ontologies
-      - cdm-cache:/home/ontology/.cache
+      # Use bind mounts instead of named volumes to avoid permission issues
+      - ./outputs:/home/ontology/workspace/outputs
+      - ./.cache:/home/ontology/.cache
     working_dir: /home/ontology/workspace
-    command: make run-workflow
+    command: >
+      bash -c "
+        # Create all necessary directories
+        mkdir -p outputs ontology_data_owl/non-base-ontologies ontology_versions logs .cache &&
+        # Then run the workflow
+        make run-workflow
+      "
     # Ultra-high memory limits for 680GB+ peak dataset processing
     deploy:
       resources:
@@ -55,8 +61,8 @@ services:
       - "8888:8888"
     volumes:
       - ./:/home/ontology/workspace
-      - cdm-outputs:/home/ontology/workspace/outputs
-      - cdm-cache:/home/ontology/.cache
+      - ./outputs:/home/ontology/workspace/outputs
+      - ./.cache:/home/ontology/.cache
     working_dir: /home/ontology/workspace
     command: >
       bash -c "pip install --user notebook &&
@@ -66,6 +72,4 @@ services:
         limits:
           memory: 16G
 
-volumes:
-  cdm-outputs:
-  cdm-cache:
+# No named volumes - using bind mounts instead to avoid permission issues

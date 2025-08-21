@@ -32,6 +32,8 @@ RUN apt-get update && apt-get install -y \
     # Utilities
     vim \
     htop \
+    # For dynamic user switching
+    gosu \
     && rm -rf /var/lib/apt/lists/*
 
 # Set Python3 as default
@@ -65,28 +67,33 @@ RUN cargo install --git https://github.com/ontodev/rdftab.rs --root /home/ontolo
 
 # Set up environment paths
 ENV PATH="/home/ontology/tools/bin:/home/ontology/tools:/home/ontology/tools/relation-graph/bin:${PATH}"
-ENV ROBOT_JAVA_ARGS="-Xmx8g"
-ENV _JAVA_OPTIONS="-Xmx8g"
+# Memory settings are provided by .env file, not hardcoded here
 
 # Copy requirements and install Python dependencies globally as root
 COPY requirements.txt /tmp/requirements.txt
 RUN pip install --no-cache-dir -r /tmp/requirements.txt && rm /tmp/requirements.txt
 
-# Copy permission fix script
-COPY --chmod=755 fix-permissions.sh /usr/local/bin/fix-permissions.sh
+# Copy and append custom prefixes to SemsQL
+COPY semsql_custom_prefixes/custom_prefixes.csv /tmp/custom_prefixes.csv
+RUN python3 -c "import semsql; print(semsql.__file__.replace('__init__.py', 'builder/prefixes/prefixes.csv'))" > /tmp/semsql_prefix_path.txt && \
+    SEMSQL_PREFIX_PATH=$(cat /tmp/semsql_prefix_path.txt) && \
+    tail -n +2 /tmp/custom_prefixes.csv >> "${SEMSQL_PREFIX_PATH}" && \
+    echo "✅ Appended $(tail -n +2 /tmp/custom_prefixes.csv | wc -l) custom prefixes to SemsQL" && \
+    rm /tmp/custom_prefixes.csv /tmp/semsql_prefix_path.txt
 
-# Switch to dynamic user
-USER ${USER_ID}:${GROUP_ID}
-WORKDIR /home/ontology/workspace
+# Copy entrypoint script
+COPY --chmod=755 docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
 # Copy the application code with proper ownership
 COPY --chown=${USER_ID}:${GROUP_ID} . .
 
-# Set environment for permission fixes
-ENV HOST_UID=${USER_ID}
-ENV HOST_GID=${GROUP_ID}
+# Set working directory
+WORKDIR /home/ontology/workspace
 
 # Note: Output directories are created by host mount and script logic
+
+# Use entrypoint for dynamic user handling
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 
 # Default command
 CMD ["python", "-m", "cdm_ontologies", "--help"]

@@ -4,6 +4,7 @@ import subprocess
 from typing import Optional, List
 from pathlib import Path
 from enhanced_download import get_output_directories, is_test_mode
+from run_summary import get_summary
 
 def merge_ontologies(
     repo_path: str,
@@ -56,8 +57,11 @@ def merge_ontologies(
         # Create full output path
         output_file = os.path.join(output_dir, output_filename)
         
-        # Set Java memory arguments for ROBOT
-        os.environ['ROBOT_JAVA_ARGS'] = '-Xmx4000G -XX:+UseParallelGC'
+        # Set Java memory arguments for ROBOT if not already set
+        if 'ROBOT_JAVA_ARGS' not in os.environ:
+            os.environ['ROBOT_JAVA_ARGS'] = '-Xmx4000G -XX:+UseParallelGC'
+        
+        print(f"💾 ROBOT memory settings: {os.environ['ROBOT_JAVA_ARGS']}")
         
         # Get list of ontology files with full paths
         ontology_files = [
@@ -67,6 +71,12 @@ def merge_ontologies(
         ]
         
         print(f"Found {len(ontology_files)} ontology files:")
+        
+        # Update summary if available
+        summary = get_summary()
+        if summary:
+            summary.add_processing_result('total_ontologies_to_merge', len(ontology_files))
+        
         for f in ontology_files:
             print(f"  - {f}")
             # Verify each file exists and is readable
@@ -147,6 +157,14 @@ def merge_ontologies(
                 return_code = result.returncode
             
             print(f"Successfully merged ontologies into {output_file}")
+            
+            # Update summary with output file info
+            if summary:
+                if os.path.exists(output_file):
+                    file_size = os.path.getsize(output_file)
+                    summary.add_output_file('merged_ontology', output_file, file_size)
+                    summary.add_processing_result('merge_output_size_gb', round(file_size / (1024**3), 2))
+            
             return True
             
         except subprocess.CalledProcessError as e:

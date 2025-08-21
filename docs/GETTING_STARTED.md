@@ -36,8 +36,8 @@ make docker-build
 # Processes 6 example ontologies in ~5 minutes
 make docker-test
 
-# Run production pipeline (30+ ontologies)
-make docker-run-production
+# Run production pipeline (32 ontologies)
+make docker-run-prod
 ```
 
 The test run is **strongly recommended** as your first step. It demonstrates the complete 7-step pipeline using a small dataset and creates example outputs in `outputs_test/` that show exactly what to expect from the full production run.
@@ -59,7 +59,7 @@ make setup
 
 ### Step 1: Understanding the Test Environment
 
-The pipeline includes a curated test dataset with 9 ontologies:
+The pipeline includes a curated test dataset with 6 ontologies:
 
 ```bash
 # View the test ontologies
@@ -96,28 +96,34 @@ python scripts/version_manager.py status
 ```
 KBase_CDM_Ontologies/
 ├── ontology_data_owl_test/          # Downloaded test ontologies
-│   ├── bfo.owl                      # Basic Formal Ontology
-│   ├── iao.owl                      # Information Artifact Ontology
+│   ├── bfo-base.owl                 # Basic Formal Ontology
+│   ├── iao-base.owl                 # Information Artifact Ontology
+│   ├── non-base-ontologies/
+│   │   ├── envo.owl                 # Environmental Ontology
+│   │   └── credit.owl               # Contributor Role Taxonomy
 │   └── ...                          # Other test ontologies
 ├── outputs_test/                    # Pipeline outputs
-│   ├── core_ontologies_analysis.json    # Metadata catalog
-│   ├── core_onto_unique_external_*.tsv  # Dependency analysis
-│   └── merged_ontologies.owl            # Unified ontology file
+│   └── run_YYYYMMDD_HHMMSS/        # Timestamped run directory
+│       ├── core_ontologies_analysis.json    # Metadata catalog
+│       ├── CDM_merged_ontologies.owl        # Unified ontology file
+│       ├── CDM_merged_ontologies.db         # SQLite database
+│       ├── tsv_tables/              # Exported database tables
+│       └── parquet_files/           # Compressed data files
 ├── ontology_versions_test/          # Version tracking
 │   ├── ontology_versions.json       # Version registry
 │   ├── download_history.log         # Audit trail
 │   └── backups/                     # Previous versions
 └── logs/                            # Execution logs
-    └── cdm_ontologies.log
+    └── cdm_ontologies_test_YYYYMMDD_HHMMSS.log
 ```
 
 ### Key Output Files
 
 - **`core_ontologies_analysis.json`**: Metadata about downloaded ontologies
-- **`core_onto_unique_external_terms.tsv`**: External term dependencies
-- **`merged_ontologies.owl`**: Unified ontology in OWL format
-- **`merged_ontologies.db`**: SQLite database for queries
-- **`tsv_tables_*/`**: Exported data tables
+- **`CDM_merged_ontologies.owl`**: Unified ontology in OWL format (14.7MB for test)
+- **`CDM_merged_ontologies.db`**: SQLite database for queries (85.5MB for test)
+- **`tsv_tables/`**: Exported data tables (17 files)
+- **`parquet_files/`**: Compressed exports (89.6% compression)
 
 ## Version Tracking System
 
@@ -153,11 +159,14 @@ ENV_FILE=.env.small make run-workflow
 ### Large Dataset (Production)
 
 ```bash
-# Use large configuration (requires 1TB+ RAM)
-ENV_FILE=.env.large make run-workflow
+# Use production configuration (requires 1.5TB+ RAM)
+make docker-run-prod
 
-# Or with Docker
-make docker-run-large
+# Or run in background with nohup
+make docker-run-prod-nohup
+
+# Monitor progress
+make docker-prod-status
 ```
 
 ## Common Workflows

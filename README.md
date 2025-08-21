@@ -21,6 +21,8 @@ This pipeline processes biological ontologies from sources like OBO Foundry, Gen
 - Exports to multiple formats (OWL, SQLite, TSV, Parquet)
 - Comprehensive version tracking with SHA256 checksums
 - Docker-based deployment with all dependencies included
+- Timestamped output folders preserve results from each run
+- Detailed run summaries capture all workflow activities and metrics
 
 ## Quick Start
 
@@ -33,6 +35,7 @@ make docker-test
 
 # Run test in background with nohup (for long processes)
 make docker-test-nohup
+# Creates timestamped log: logs/nohup_cdm_test_YYYYMMDD_HHMMSS.out
 
 # Monitor progress of background test run
 make docker-test-status
@@ -46,6 +49,7 @@ make docker-run-prod
 
 # Run in background with nohup (for long-running processes)
 make docker-run-prod-nohup
+# Creates timestamped log: logs/nohup_cdm_prod_YYYYMMDD_HHMMSS.out
 
 # Monitor progress of background run
 make docker-prod-status
@@ -79,18 +83,99 @@ The pipeline consists of 7 sequential steps:
 6. **Extract Tables to TSV** - Exports database tables to TSV format
 7. **Create Parquet Files** - Compresses data to efficient Parquet format
 
+## Run Summary Feature
+
+Every pipeline run generates a comprehensive summary report that captures all important information about the workflow execution. This feature provides visibility into what happened during processing without reviewing full logs.
+
+### Summary Contents
+
+The run summary includes:
+- **Execution Details**: Run ID, timestamps, duration, and final status
+- **System Resources**: Memory and disk usage throughout the run
+- **Ontology Downloads**: New downloads, updates, skipped files, and failures
+- **Version Changes**: Files updated with old/new checksums and backup details
+- **Pipeline Steps**: Timing and status for each of the 7 workflow steps
+- **Processing Results**: Database statistics, file counts, compression ratios
+- **Output Files**: All generated files with sizes and locations
+- **Issues Encountered**: Warnings and errors during processing
+
+### Output Formats
+
+Each run generates two summary files in the output directory:
+- `run_summary_YYYYMMDD_HHMMSS.txt` - Human-readable text format
+- `run_summary_YYYYMMDD_HHMMSS.json` - Machine-readable JSON for programmatic access
+
+### Example Summary
+
+```
+CDM Ontologies Pipeline Run Summary
+======================================================================
+Run ID: run_20250707_154322
+Start Time: 2025-07-07 15:43:22
+End Time: 2025-07-07 15:43:44
+Duration: 22s
+Status: SUCCESS
+Mode: TEST
+
+System Resources:
+- Initial Memory: 21.3GB available / 64.0GB total
+- Peak Memory Usage: 8.5GB (13.3% of system)
+- Initial Disk: 1103.2GB available
+- Final Disk: 1102.1GB available
+- Disk Used: 1.1GB
+
+Ontology Downloads:
+- Total Ontologies Processed: 6
+- New Downloads: 2
+  • ro-base.owl (2.1MB)
+  • pato-base.owl (8.3MB)
+- Updated: 1
+  • envo.owl (15.2MB)
+- Skipped (Up-to-date): 3
+- Failed Downloads: 0
+
+Pipeline Steps:
+✓ Step 1: Analyze Core Ontologies (5s)
+✓ Step 2: Analyze Non-Core Ontologies (3s)
+✓ Step 3: Create Pseudo Base Ontologies (2s)
+✓ Step 4: Merge Ontologies (7s)
+✓ Step 5: Create Semantic SQL Database (3s)
+✓ Step 6: Extract SQL Tables to TSV (1s)
+✓ Step 7: Create Parquet Files (1s)
+
+Processing Results:
+- total_ontologies_to_merge: 6
+- database_size_gb: 0.08
+- database_tables: 17
+- database_total_rows: 435,892
+- tsv_tables_exported: 17
+- tsv_total_size_gb: 0.12
+- parquet_files_created: 17
+- parquet_total_size_gb: 0.01
+- compression_ratio: 91.7%
+- space_saved_gb: 0.11
+
+Output Files:
+- merged_ontology: CDM_merged_ontologies.owl (0.01GB)
+- semantic_sql_db: CDM_merged_ontologies.db (0.08GB)
+- tsv_tables: tsv_tables/ (0.12GB)
+- parquet_files: parquet_files/ (0.01GB)
+```
+
 ## KBase CDM Initial Release Ontologies
 
-The production dataset (`config/ontologies_source.txt`) includes 30+ ontologies across multiple categories:
+The production dataset (`config/ontologies_source.txt`) includes 32 ontologies across multiple categories:
 
 ### Core Closure Ontologies (Non-Base)
 - **BFO** (Basic Formal Ontology) - Foundational upper-level ontology
 - **FOODON** - Food ontology for agricultural and nutritional data
 - **IAO** (Information Artifact Ontology) - Information and data artifacts
 - **OMO** (OBO Metadata Ontology) - Metadata and annotation standards
+- **OMP** (Ontology of Microbial Phenotypes) - Microbial characteristics and behaviors
 - **PO** (Plant Ontology) - Plant anatomy and developmental stages
 
 ### Core Closure Ontologies (Base Versions)
+- **ECO-base** (Evidence and Conclusion Ontology) - Scientific evidence types
 - **FAO-base** - Food and Agriculture Organization terms
 - **OBI-base** (Ontology for Biomedical Investigations) - Experimental protocols
 - **PATO-base** (Phenotype and Trait Ontology) - Observable characteristics
@@ -147,7 +232,7 @@ The test dataset (`config/ontologies_source_test.txt`) provides a complete examp
 
 **Execution Time:** ~5 minutes (demonstrates full pipeline efficiency)
 
-### Production Dataset (30+ ontologies)
+### Production Dataset (31 ontologies)
 
 The production run follows the same 7-step process but with the complete KBase CDM ontology collection, creating a comprehensive biological knowledge base suitable for systems biology research.
 
@@ -156,49 +241,140 @@ The production run follows the same 7-step process but with the complete KBase C
 - **Output location:** `outputs/` (git-ignored, user-generated)
 - **Database size:** Expected 10GB+ with millions of integrated terms
 
+## Custom Prefixes
+
+The pipeline includes custom URI prefixes for biological databases that are not part of the standard SemsQL distribution. These prefixes are essential for properly handling URIs from KEGG, SEED, MetaCyc, and Reactome in the merged ontology.
+
+### Custom Prefix Configuration
+
+**Location:** `semsql_custom_prefixes/custom_prefixes.csv`
+
+**Included Prefixes:**
+- **KEGG** - Kyoto Encyclopedia reactions and pathways
+- **SEED** - Model SEED compounds and reactions  
+- **MetaCyc** - Metabolic pathways and reactions
+- **Reactome** - Biological pathway database
+
+### ⚠️ Important: Docker Rebuild Required
+
+**When modifying `custom_prefixes.csv`, you MUST rebuild the Docker container:**
+
+```bash
+# After editing custom_prefixes.csv
+make docker-build
+
+# Then run your pipeline
+make docker-run-prod
+```
+
+The custom prefixes are integrated during the Docker build process and appended to SemsQL's main prefix file. This ensures all generated databases include the proper namespace mappings for these biological resources.
+
 ## Output Structure
 
-### Test Outputs (Included as Examples)
+The pipeline creates timestamped output directories for each run, preserving results and enabling comparison across runs. The timestamp format is `YYYYMMDD_HHMMSS`.
+
+### Example Test Output (Included in Repository)
+
+This repository includes a complete example test run in `outputs_test/run_20250704_001300/` and corresponding logs in `logs/` to demonstrate the pipeline's output structure and expected results.
+
 ```
-outputs_test/                               # Complete test run results
-├── CDM_merged_ontologies.owl              # Merged ontology (all 6 ontologies)
-├── CDM_merged_ontologies.db               # SQLite database (85.5MB)
-├── CDM_merged_ontologies-relation-graph.tsv.gz  # Relationship graph
-├── core_ontologies_analysis.json         # Step 1: Core analysis results
-├── non_core_ontologies_analysis.json     # Step 2: Non-core analysis
-├── core_onto_unique_external_*.tsv       # External term mappings
-├── tsv_tables/                            # Step 6: Database exports (17 files)
-│   ├── entailed_edge.tsv                 # 430K+ relationships
-│   ├── statements.tsv                    # 162K+ RDF statements  
-│   ├── prefix.tsv                        # 1,207 namespace prefixes
-│   └── ... (14 more tables)
-├── parquet_files/                         # Step 7: Compressed exports (18 files)
-│   ├── entailed_edge.parquet             # Efficient relationship storage
-│   ├── statements.parquet                # Compressed RDF statements
-│   └── ... (16 more files, 89.6% compression)
-└── utils/                                 # Memory monitoring logs
-    ├── ROBOT_merge_memory_summary.txt    # ROBOT performance stats
-    ├── SemsQL_make_memory_summary.txt    # Database creation stats
-    └── ... (detailed monitoring files)
+outputs_test/                               # Test run results (example included)
+├── run_20250704_001300/                   # Example timestamped test run
+│   ├── CDM_merged_ontologies.owl          # Merged ontology (14.7MB)
+│   ├── CDM_merged_ontologies.db           # SQLite database (85.5MB)
+│   ├── CDM_merged_ontologies-relation-graph.tsv.gz  # Relationship graph
+│   ├── core_ontologies_analysis.json      # Step 1: Core analysis results
+│   ├── non_core_ontologies_analysis.json  # Step 2: Non-core analysis
+│   ├── core_onto_unique_external_*.tsv    # External term mappings
+│   ├── run_summary_20250704_001300.txt    # Human-readable run summary
+│   ├── run_summary_20250704_001300.json   # Machine-readable run summary
+│   ├── tsv_tables/                         # Step 6: Database exports (17 files)
+│   │   ├── entailed_edge.tsv              # 430K+ relationships
+│   │   ├── statements.tsv                 # 162K+ RDF statements  
+│   │   ├── prefix.tsv                     # 1,207 namespace prefixes
+│   │   └── ... (14 more tables)
+│   ├── parquet_files/                      # Step 7: Compressed exports (18 files)
+│   │   ├── entailed_edge.parquet          # Efficient relationship storage
+│   │   ├── statements.parquet             # Compressed RDF statements
+│   │   └── ... (16 more files, 89.6% compression)
+│   └── utils/                              # Memory monitoring logs
+│       ├── ROBOT_merge_memory_summary.txt # ROBOT performance stats
+│       ├── SemsQL_make_memory_summary.txt # Database creation stats
+│       └── ... (detailed monitoring files)
+└── latest/                                 # Symlink to most recent test run
 ```
 
 ### Production Outputs (User-Generated)
 ```
 outputs/                                   # Production results (git-ignored)
-├── CDM_merged_ontologies.owl             # Complete 30+ ontology merge
-├── CDM_merged_ontologies.db              # Full production database (10GB+)
-├── tsv_tables/                           # All database tables
-├── parquet_files/                        # Compressed data exports
-└── utils/                                # Production monitoring logs
+├── run_YYYYMMDD_HHMMSS/                 # Timestamped run folder
+│   ├── CDM_merged_ontologies.owl         # Complete 32 ontology merge
+│   ├── CDM_merged_ontologies.db          # Full production database (10GB+)
+│   ├── run_summary_YYYYMMDD_HHMMSS.txt  # Human-readable run summary
+│   ├── run_summary_YYYYMMDD_HHMMSS.json # Machine-readable run summary
+│   ├── tsv_tables/                       # All database tables
+│   ├── parquet_files/                    # Compressed data exports
+│   └── utils/                            # Production monitoring logs
+└── latest/                               # Symlink to most recent run
+```
 
-ontology_data_owl/                        # Downloaded and processed ontologies
-├── *.owl                                 # Individual ontology files
-└── non-base-ontologies/                  # Unprocessed versions
+### Logging System
+
+All pipeline runs generate comprehensive logs with timestamps matching the output directories:
+
+```
+logs/                                      # All pipeline logs
+├── cdm_ontologies_test_20250704_001300.log    # Example test workflow log
+├── nohup_cdm_test_20250704_001300.out        # Example nohup wrapper log
+├── cdm_ontologies_prod_YYYYMMDD_HHMMSS.log    # Production workflow logs
+└── nohup_cdm_prod_YYYYMMDD_HHMMSS.out        # Production nohup logs
+
+ontology_data_owl_test/                   # Example test ontologies (included)
+├── bfo-base.owl                          # Basic Formal Ontology
+├── iao-base.owl                          # Information Artifact Ontology
+├── ro-base.owl                           # Relations Ontology
+├── pato-base.owl                         # Phenotype and Trait Ontology
+└── non-base-ontologies/
+    ├── envo.owl                          # Environmental Ontology
+    └── credit.owl                        # Contributor Role Taxonomy
 
 ontology_versions/                        # Version tracking and backups
 ├── ontology_versions.json               # SHA256 checksums and metadata
 └── backups/                              # Previous versions
 ```
+
+## Project Files
+
+### Core Scripts
+- **`Makefile`** - Primary command interface for all operations
+- **`requirements.txt`** - Python dependencies
+
+### Docker Files
+- **`docker-compose.yml`** - Docker orchestration configuration
+- **`Dockerfile`** - Container build instructions with all dependencies
+- **`docker-entrypoint.sh`** - Dynamic user handling in containers
+
+### Configuration
+All configuration files are located in the `config/` directory:
+- **`ontologies_source.txt`** - List of production ontologies to process (31 ontologies)
+- **`ontologies_source_test.txt`** - Smaller list for testing (6 ontologies)
+- **`prefix_mapping.txt`** - URI prefix mappings for ontologies
+- **`.env`** - Production environment configuration (not in git)
+- **`.env.test`** - Test environment configuration (not in git)
+
+### Utility Scripts
+- **`clean_run.sh`** - Removes all outputs for a fresh pipeline run
+  - Cleans: ontology data, outputs, version tracking, logs, and cache
+  - Usage: `./clean_run.sh` before starting a new complete run
+- **`fix-permissions.sh`** - Fixes Docker-created file permissions
+- **`run_tests.sh`** - Runs unit test suite with pytest
+  - Generates coverage reports in `htmlcov/`
+  - Requires: `pip install pytest pytest-cov pytest-mock`
+
+### Custom Prefixes
+- **`semsql_custom_prefixes/`** - Custom URI prefix management
+  - `custom_prefixes.csv` - KEGG, SEED, MetaCyc, Reactome prefixes
+  - `README.md` - Documentation for custom prefix usage
 
 ## Memory Requirements
 
@@ -207,7 +383,7 @@ All environments use unified memory settings (1.5TB container limits):
 | Mode | Ontologies | Container Memory | Processing Time |
 |------|------------|------------------|-----------------|
 | Test | 6 | 1.5TB | ~10 minutes |
-| Production | 30+ | 1.5TB | 24+ hours |
+| Production | 32 | 1.5TB | 24+ hours |
 
 ## Documentation
 

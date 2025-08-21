@@ -475,6 +475,134 @@ def optimize_memory_usage():
             gc.set_threshold(0)  # Force cleanup
 ```
 
+## Run Summary and Monitoring
+
+### Run Summary Feature
+
+The pipeline includes a comprehensive run summary system that tracks all workflow activities and generates detailed reports.
+
+#### Architecture
+
+```python
+class RunSummary:
+    def __init__(self, run_id: str, output_dir: str, mode: str):
+        self.run_id = run_id
+        self.output_dir = output_dir
+        self.mode = mode
+        self.start_time = datetime.now()
+        
+        # System metrics
+        self.system_info = self.capture_system_state()
+        
+        # Workflow tracking
+        self.steps = {}
+        self.ontology_stats = {
+            'total_processed': 0,
+            'new_downloads': [],
+            'updated': [],
+            'skipped': [],
+            'failed': []
+        }
+        
+        # Processing results
+        self.processing_results = {}
+        self.output_files = {}
+```
+
+#### Integration Points
+
+The run summary integrates throughout the pipeline:
+
+1. **Workflow Wrapper** - Initializes and finalizes summary
+2. **CLI Module** - Tracks step execution timing and status
+3. **Download Module** - Records ontology download events
+4. **Version Tracker** - Monitors version changes and backups
+5. **Processing Scripts** - Capture metrics from each stage
+
+#### Summary Contents
+
+```yaml
+Run Summary:
+  Execution:
+    - Run ID and timestamps
+    - Total duration
+    - Final status (SUCCESS/FAILED)
+    - Execution mode (TEST/PRODUCTION)
+  
+  System Resources:
+    - Initial/final memory availability
+    - Peak memory usage
+    - Disk space utilization
+    - Resource consumption by stage
+  
+  Ontology Processing:
+    - Downloads: new, updated, skipped
+    - Version changes with checksums
+    - Failed downloads with errors
+    - Backup creation statistics
+  
+  Pipeline Steps:
+    - Step name and number
+    - Start/end timestamps
+    - Duration in seconds
+    - Success/failure status
+    - Step-specific metrics
+  
+  Output Artifacts:
+    - Generated files with sizes
+    - Database statistics
+    - Compression ratios
+    - Format conversions
+```
+
+#### Output Formats
+
+Each run generates two summary files:
+
+1. **Human-Readable Text** (`run_summary_YYYYMMDD_HHMMSS.txt`)
+   - Formatted for console display
+   - Clear section headers
+   - Hierarchical information
+   - Progress indicators
+
+2. **Machine-Readable JSON** (`run_summary_YYYYMMDD_HHMMSS.json`)
+   - Complete structured data
+   - Programmatic access
+   - Integration with monitoring
+   - Historical analysis
+
+#### Usage Examples
+
+```python
+# Initialize summary at workflow start
+from run_summary import init_summary
+summary = init_summary(run_id, output_dir, mode)
+
+# Track ontology download
+summary.add_ontology_download(
+    filename="bfo.owl",
+    status="updated",
+    size_bytes=1024000,
+    old_version="abc123",
+    new_version="def456"
+)
+
+# Record processing metrics
+summary.add_processing_result('database_tables', 17)
+summary.add_processing_result('total_rows', 435892)
+
+# Track output files
+summary.add_output_file(
+    name='semantic_sql_db',
+    path='/outputs/CDM_merged.db',
+    size_bytes=85500000
+)
+
+# Finalize and save
+summary.finalize(status='SUCCESS')
+summary.save_summary()
+```
+
 ## Extension Points
 
 ### Custom Ontology Sources

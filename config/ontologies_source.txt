@@ -1,27 +1,29 @@
+#Core Ontologies from OBO Foundry
+https://purl.obolibrary.org/obo/envo.owl
+https://purl.obolibrary.org/obo/go.owl
+https://purl.obolibrary.org/obo/ncbitaxon.owl
+https://purl.obolibrary.org/obo/chebi.owl
 #Core closure ontologies non base version
+http://purl.obolibrary.org/obo/omp.owl
 http://purl.obolibrary.org/obo/bfo.owl
 http://purl.obolibrary.org/obo/foodon.owl
 http://purl.obolibrary.org/obo/iao.owl
 http://purl.obolibrary.org/obo/omo.owl
 http://purl.obolibrary.org/obo/po.owl
 #Core closure ontologies -base version
+http://purl.obolibrary.org/obo/eco/eco-base.owl
 http://purl.obolibrary.org/obo/fao/fao-base.owl
 http://purl.obolibrary.org/obo/obi/obi-base.owl
 http://purl.obolibrary.org/obo/pato/pato-base.owl
 http://purl.obolibrary.org/obo/pco/pco-base.owl
 http://purl.obolibrary.org/obo/ro/ro-base.owl
 http://purl.obolibrary.org/obo/uberon/uberon-base.owl
-#Core Ontologies from OBO Foundry
-https://purl.obolibrary.org/obo/envo.owl
-https://purl.obolibrary.org/obo/go.owl
-https://purl.obolibrary.org/obo/ncbitaxon.owl
-https://purl.obolibrary.org/obo/chebi.owl
 #Additional OBO Foundry ontologies
 https://purl.obolibrary.org/obo/uo.owl
 https://purl.obolibrary.org/obo/taxrank.owl
 https://purl.obolibrary.org/obo/so.owl
 #PyOBO Controlled Vocabularies and Ontologies
-https://github.com/biopragmatics/obo-db-ingest/blob/main/export/gtdb/gtdb.owl
+https://raw.githubusercontent.com/biopragmatics/obo-db-ingest/refs/heads/main/export/gtdb/gtdb.owl
 https://w3id.org/biopragmatics/resources/eccode/eccode.owl.gz
 https://w3id.org/biopragmatics/resources/pfam/pfam.owl
 https://w3id.org/biopragmatics/resources/rhea/rhea.owl.gz
@@ -29,7 +31,6 @@ https://w3id.org/biopragmatics/resources/credit/credit.owl
 https://w3id.org/biopragmatics/resources/ror/ror.owl.gz
 https://w3id.org/biopragmatics/resources/interpro/interpro.owl
 #In-house Ontologies (manually added to ontologies_data_owl)
-seed
+https://github.com/ModelSEED/ModelSEEDTemplates/raw/template_ontology/templates/ontology/ontology/seed_unified.owl.gz
 metacyc
 kegg
-modelseed

@@ -8,6 +8,7 @@ import json
 import hashlib
 import shutil
 from datetime import datetime
+from run_summary import get_summary
 from pathlib import Path
 
 
@@ -54,6 +55,12 @@ def backup_old_version(filepath, checksum, version_dir):
     if not os.path.exists(backup_path):
         shutil.copy2(filepath, backup_path)
         print(f"📦 Backed up old version: {backup_name}")
+        
+        # Update summary if available
+        summary = get_summary()
+        if summary:
+            backup_size = os.path.getsize(backup_path)
+            summary.add_backup(backup_size)
 
 
 def log_download_attempt(version_dir, filename, status, checksum, url=None, error=None):
@@ -73,7 +80,7 @@ def log_download_attempt(version_dir, filename, status, checksum, url=None, erro
         f.write(log_entry + '\n')
 
 
-def update_version_info(version_file, filename, url, old_checksum, new_checksum):
+def update_version_info(version_file, filename, url, old_checksum, new_checksum, check_only=False, remote_metadata=None):
     """Update version tracking information."""
     version_info = load_version_info(version_file)
     
@@ -83,14 +90,25 @@ def update_version_info(version_file, filename, url, old_checksum, new_checksum)
         file_path = os.path.join(os.path.dirname(version_file), '..', filename)
         file_size = os.path.getsize(file_path)
     
-    version_info[filename] = {
-        'url': url,
-        'checksum': new_checksum,
-        'previous_checksum': old_checksum,
-        'last_updated': datetime.now().isoformat(),
-        'size_bytes': file_size,
-        'version_history': version_info.get(filename, {}).get('version_history', [])
-    }
+    # If we're just checking (not downloading), update last_checked only
+    if check_only and filename in version_info:
+        version_info[filename]['last_checked'] = datetime.now().isoformat()
+        # Update remote metadata if provided
+        if remote_metadata:
+            version_info[filename].update(remote_metadata)
+    else:
+        version_info[filename] = {
+            'url': url,
+            'checksum': new_checksum,
+            'previous_checksum': old_checksum,
+            'last_updated': datetime.now().isoformat(),
+            'last_checked': datetime.now().isoformat(),
+            'size_bytes': file_size,
+            'version_history': version_info.get(filename, {}).get('version_history', [])
+        }
+        # Add remote metadata if provided
+        if remote_metadata:
+            version_info[filename].update(remote_metadata)
     
     # Add to version history
     if old_checksum:
@@ -108,7 +126,7 @@ def get_version_status(version_file, filename):
     return version_info.get(filename, {})
 
 
-def should_download(filepath, url, version_file):
+def should_download(filepath, url, version_file, check_remote=True):
     """Determine if file should be downloaded based on version tracking."""
     filename = os.path.basename(filepath)
     
@@ -134,6 +152,13 @@ def should_download(filepath, url, version_file):
     # Check if URL has changed
     if file_info.get('url') != url:
         return True, "url_changed"
+    
+    # Check remote changes if enabled
+    if check_remote:
+        # Import here to avoid circular dependency
+        from enhanced_download import check_remote_changes
+        if check_remote_changes(url, file_info):
+            return True, "remote_changed"
     
     return False, "up_to_date"
 

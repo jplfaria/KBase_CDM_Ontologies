@@ -1,0 +1,470 @@
+time="2025-07-04T00:13:00-05:00" level=warning msg="/Users/jplfaria/repos/KBase_CDM_Ontologies/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+Adjusting ontology user to UID=502 GID=20
+usermod: no changes
+chown: invalid group: 'ontology:ontology'
+Testing complete workflow with test dataset...
+📝 Logging output to: /home/ontology/workspace/logs/cdm_ontologies_test_20250704_001300.log
+⏰ Timestamp: 20250704_001300
+[2025-07-04 05:13:01] Starting CDM Ontologies Workflow...
+📁 All outputs will be saved to: /home/ontology/workspace/outputs_test/run_20250704_001300
+[2025-07-04 05:13:01] Step 1: Analyzing Core Ontologies...
+🔧 Mode: TEST
+📁 Ontology data: /home/ontology/workspace/ontology_data_owl_test
+📁 Outputs: /home/ontology/workspace/outputs_test/run_20250704_001300
+
+Analysis Results:
+📁 Main directory ontologies: 4
+📁 Non-base ontologies: 2
+Downloading core ontology: ro-base.owl
+
+File: ro-base.owl
+  Has imports: No
+  Ontology IRI: http://purl.obolibrary.org/obo/ro/ro-base.owl
+  Own terms: 0
+  External terms: 823
+  Classification: Non-Base. Base version available in OBO Foundry: http://purl.obolibrary.org/obo/ro/ro-base.owl.
+  External Terms Subject of Triples? Yes
+  Number of external terms that are subjects of triples: 748
+  First 5 external terms that are subject of triples:
+    http://purl.obolibrary.org/obo/BFO_0000002
+    http://purl.obolibrary.org/obo/BFO_0000003
+    http://purl.obolibrary.org/obo/BFO_0000040
+    http://purl.obolibrary.org/obo/BFO_0000050
+    http://purl.obolibrary.org/obo/BFO_0000051
+  First 5 own terms:
+  First 5 external terms:
+    http://purl.obolibrary.org/obo/BFO_0000002
+    http://purl.obolibrary.org/obo/BFO_0000003
+    http://purl.obolibrary.org/obo/BFO_0000004
+    http://purl.obolibrary.org/obo/BFO_0000006
+    http://purl.obolibrary.org/obo/BFO_0000015
+Downloading core ontology: pato-base.owl
+
+File: pato-base.owl
+  Has imports: No
+  Ontology IRI: http://purl.obolibrary.org/obo/pato/pato-base.owl
+  Own terms: 0
+  External terms: 2951
+  Classification: Non-Base. Base version available in OBO Foundry: http://purl.obolibrary.org/obo/pato/pato-base.owl.
+  External Terms Subject of Triples? Yes
+  Number of external terms that are subjects of triples: 2901
+  First 5 external terms that are subject of triples:
+    http://purl.obolibrary.org/obo/PATO_0000000
+    http://purl.obolibrary.org/obo/PATO_0000001
+    http://purl.obolibrary.org/obo/PATO_0000002
+    http://purl.obolibrary.org/obo/PATO_0000003
+    http://purl.obolibrary.org/obo/PATO_0000004
+  First 5 own terms:
+  First 5 external terms:
+    http://purl.obolibrary.org/obo/BFO_0000020
+    http://purl.obolibrary.org/obo/BFO_0000050
+    http://purl.obolibrary.org/obo/BFO_0000051
+    http://purl.obolibrary.org/obo/CL_0000000
+    http://purl.obolibrary.org/obo/GO_0005634
+Downloading core ontology: envo.owl
+
+File: envo.owl
+  Has imports: No
+  Ontology IRI: http://purl.obolibrary.org/obo/envo.owl
+  Own terms: 4514
+  External terms: 2858
+  Classification: Non-Base. Base version available in OBO Foundry: http://purl.obolibrary.org/obo/envo/envo-base.owl.
+  External Terms Subject of Triples? Yes
+  Number of external terms that are subjects of triples: 2807
+  First 5 external terms that are subject of triples:
+    http://purl.obolibrary.org/obo/BFO_0000001
+    http://purl.obolibrary.org/obo/BFO_0000002
+    http://purl.obolibrary.org/obo/BFO_0000003
+    http://purl.obolibrary.org/obo/BFO_0000004
+    http://purl.obolibrary.org/obo/BFO_0000006
+  First 5 own terms:
+    http://purl.obolibrary.org/obo/ENVO_00000000
+    http://purl.obolibrary.org/obo/ENVO_00000001
+    http://purl.obolibrary.org/obo/ENVO_00000002
+    http://purl.obolibrary.org/obo/ENVO_00000003
+    http://purl.obolibrary.org/obo/ENVO_00000004
+  First 5 external terms:
+    http://geneontology.org/foo/applies-pattern
+    http://purl.obolibrary.org/obo/BFO_0000001
+    http://purl.obolibrary.org/obo/BFO_0000002
+    http://purl.obolibrary.org/obo/BFO_0000003
+    http://purl.obolibrary.org/obo/BFO_0000004
+Downloading core ontology: credit.owl
+
+File: credit.owl
+  Has imports: No
+  Ontology IRI: https://w3id.org/biopragmatics/resources/credit/credit.ofn
+  Own terms: 0
+  External terms: 19
+  Classification: Non-Base. No -base version available in OBO Foundry
+  External Terms Subject of Triples? Yes
+  Number of external terms that are subjects of triples: 15
+  First 5 external terms that are subject of triples:
+    https://credit.niso.org/contributor-roles/conceptualization
+    https://credit.niso.org/contributor-roles/data-curation
+    https://credit.niso.org/contributor-roles/formal-analysis
+    https://credit.niso.org/contributor-roles/funding-acquisition
+    https://credit.niso.org/contributor-roles/investigation
+  First 5 own terms:
+  First 5 external terms:
+    http://purl.org/dc/terms/description
+    http://purl.org/dc/terms/license
+    http://purl.org/dc/terms/title
+    http://www.geneontology.org/formats/oboInOwl#auto-generated-by
+    https://credit.niso.org/contributor-roles/conceptualization
+Downloading non-base ontology: bfo.owl
+
+File: bfo.owl (non-base folder)
+  Has imports: No
+  Ontology IRI: http://purl.obolibrary.org/obo/bfo.owl
+  Own terms: 37
+  External terms: 21
+  Classification: Non-Base. No -base version available in OBO Foundry
+Downloading non-base ontology: iao.owl
+
+File: iao.owl (non-base folder)
+  Has imports: No
+  Ontology IRI: http://purl.obolibrary.org/obo/iao.owl
+  Own terms: 283
+  External terms: 130
+  Classification: Non-Base. No -base version available in OBO Foundry
+
+Analysis complete!
+[2025-07-04 05:13:08] Step 1: Completed analyzing core ontologies
+[2025-07-04 05:13:08] Step 2: Analyzing Non-Core Ontologies...
+Error reading external terms file: [Errno 2] No such file or directory: '/home/ontology/workspace/outputs/core_onto_unique_external_terms.tsv'
+
+Processing external terms from core ontologies...
+
+Updating ontologies.txt...
+
+Processing Additional OBO Foundry, PyOBO and In-house ontologies...
+
+Analyzing non-core ontologies...
+
+Analyzing non-core ontologies:
+
+File: bfo.owl
+  Has imports: No
+  Ontology IRI: http://purl.obolibrary.org/obo/bfo.owl
+  Own terms: 37
+  External terms: 21
+  Classification: Non-Base. No -base version available in OBO Foundry
+  External Terms Subject of Triples? Yes
+  Number of external terms that are subjects of triples: 14
+  First 5 external terms that are subject of triples:
+    http://purl.obolibrary.org/obo/IAO_0000111
+    http://purl.obolibrary.org/obo/IAO_0000112
+    http://purl.obolibrary.org/obo/IAO_0000115
+    http://purl.obolibrary.org/obo/IAO_0000116
+    http://purl.obolibrary.org/obo/IAO_0000117
+  First 5 own terms:
+    http://purl.obolibrary.org/obo/BFO_0000001
+    http://purl.obolibrary.org/obo/BFO_0000002
+    http://purl.obolibrary.org/obo/BFO_0000003
+    http://purl.obolibrary.org/obo/BFO_0000004
+    http://purl.obolibrary.org/obo/BFO_0000006
+  First 5 external terms:
+    http://purl.obolibrary.org/obo/IAO_0000111
+    http://purl.obolibrary.org/obo/IAO_0000112
+    http://purl.obolibrary.org/obo/IAO_0000115
+    http://purl.obolibrary.org/obo/IAO_0000116
+    http://purl.obolibrary.org/obo/IAO_0000117
+
+File: iao.owl
+  Has imports: No
+  Ontology IRI: http://purl.obolibrary.org/obo/iao.owl
+  Own terms: 283
+  External terms: 130
+  Classification: Non-Base. No -base version available in OBO Foundry
+  External Terms Subject of Triples? Yes
+  Number of external terms that are subjects of triples: 101
+  First 5 external terms that are subject of triples:
+    http://purl.obolibrary.org/obo/APOLLO_SV_00000008
+    http://purl.obolibrary.org/obo/APOLLO_SV_00000032
+    http://purl.obolibrary.org/obo/APOLLO_SV_00000033
+    http://purl.obolibrary.org/obo/APOLLO_SV_00000522
+    http://purl.obolibrary.org/obo/APOLLO_SV_00000524
+  First 5 own terms:
+    http://purl.obolibrary.org/obo/IAO_0000001
+    http://purl.obolibrary.org/obo/IAO_0000002
+    http://purl.obolibrary.org/obo/IAO_0000003
+    http://purl.obolibrary.org/obo/IAO_0000004
+    http://purl.obolibrary.org/obo/IAO_0000005
+  First 5 external terms:
+    http://protege.stanford.edu/plugins/owl/protege#defaultLanguage
+    http://purl.obolibrary.org/obo/APOLLO_SV_00000008
+    http://purl.obolibrary.org/obo/APOLLO_SV_00000032
+    http://purl.obolibrary.org/obo/APOLLO_SV_00000033
+    http://purl.obolibrary.org/obo/APOLLO_SV_00000522
+
+Analysis complete!
+[2025-07-04 05:13:12] Step 2: Completed analyzing non-core ontologies
+[2025-07-04 05:13:12] Step 3: Creating Pseudo Base Ontologies...
+🔧 Mode: TEST
+📁 Processing non-base ontologies from: /home/ontology/workspace/ontology_data_owl_test/non-base-ontologies
+📁 Creating base versions in: /home/ontology/workspace/ontology_data_owl_test
+Using ROBOT at: /home/ontology/tools/robot
+ROBOT memory settings: -Xmx1024g -XX:MaxMetaspaceSize=8g -XX:+UseG1GC
+🔍 Memory monitoring enabled for ROBOT operations
+Base version already exists for bfo.owl, skipping...
+Base version already exists for iao.owl, skipping...
+
+Processing complete!
+[2025-07-04 05:13:12] Step 3: Completed creating pseudo base ontologies
+[2025-07-04 05:13:12] Step 4: Merging Ontologies...
+🔧 Mode: TEST
+📁 Input directory: /home/ontology/workspace/ontology_data_owl_test
+📁 Output directory: /home/ontology/workspace/outputs_test/run_20250704_001300
+Using ROBOT at: /home/ontology/tools/robot
+Looking for ontology files in: /home/ontology/workspace/ontology_data_owl_test
+💾 ROBOT memory settings: -Xmx1024g -XX:MaxMetaspaceSize=8g -XX:+UseG1GC
+Found 6 ontology files:
+  - /home/ontology/workspace/ontology_data_owl_test/pato-base.owl
+  - /home/ontology/workspace/ontology_data_owl_test/bfo-base.owl
+  - /home/ontology/workspace/ontology_data_owl_test/iao-base.owl
+  - /home/ontology/workspace/ontology_data_owl_test/envo.owl
+  - /home/ontology/workspace/ontology_data_owl_test/credit.owl
+  - /home/ontology/workspace/ontology_data_owl_test/ro-base.owl
+Created list of merged ontologies at: /home/ontology/workspace/config/ontologies_merged_test.txt
+Saving output to: /home/ontology/workspace/outputs_test/run_20250704_001300/CDM_merged_ontologies.owl
+
+Executing command:
+robot merge --annotate-defined-by true --input /home/ontology/workspace/ontology_data_owl_test/pato-base.owl --input /home/ontology/workspace/ontology_data_owl_test/bfo-base.owl --input /home/ontology/workspace/ontology_data_owl_test/iao-base.owl --input /home/ontology/workspace/ontology_data_owl_test/envo.owl --input /home/ontology/workspace/ontology_data_owl_test/credit.owl --input /home/ontology/workspace/ontology_data_owl_test/ro-base.owl remove --axioms disjoint --trim true --preserve-structure false remove --term owl:Nothing --trim true --preserve-structure false --output /home/ontology/workspace/outputs_test/run_20250704_001300/CDM_merged_ontologies.owl
+🔍 Memory monitoring enabled - tracking ROBOT memory usage
+2025-07-04 05:13:12,496 - INFO - Starting memory monitoring for ROBOT_merge
+2025-07-04 05:13:12,497 - INFO - Command: robot merge --annotate-defined-by true --input /home/ontology/workspace/ontology_data_owl_test/pato-base.owl --input /home/ontology/workspace/ontology_data_owl_test/bfo-base.owl --input /home/ontology/workspace/ontology_data_owl_test/iao-base.owl --input /home/ontology/workspace/ontology_data_owl_test/envo.owl --input /home/ontology/workspace/ontology_data_owl_test/credit.owl --input /home/ontology/workspace/ontology_data_owl_test/ro-base.owl remove --axioms disjoint --trim true --preserve-structure false remove --term owl:Nothing --trim true --preserve-structure false --output /home/ontology/workspace/outputs_test/run_20250704_001300/CDM_merged_ontologies.owl
+2025-07-04 05:13:12,498 - INFO - [2025-07-04 05:13:12] Memory Monitor:
+2025-07-04 05:13:12,498 - INFO -   System Total: 0.95GB used (29.0%), 4.10GB available
+2025-07-04 05:13:12,498 - INFO -   
+2025-07-04 05:13:12,498 - INFO -   Process Breakdown:
+2025-07-04 05:13:12,499 - INFO -     - Non-Java processes: 0.95GB (16.4% of system)
+2025-07-04 05:13:12,500 - INFO -   
+2025-07-04 05:13:12,500 - INFO -   Current Task: ROBOT_merge
+2025-07-04 05:13:12,500 - INFO -   Task Memory: 0.00GB
+2025-07-04 05:13:27,513 - INFO - 
+Tool ROBOT_merge completed with return code 0
+2025-07-04 05:13:27,513 - INFO - Peak memory usage: 0.00 GB (0.0% of system)
+2025-07-04 05:13:27,514 - INFO - Duration: 0.25 minutes
+Successfully merged ontologies into /home/ontology/workspace/outputs_test/run_20250704_001300/CDM_merged_ontologies.owl
+[2025-07-04 05:13:27] Step 4: Completed merging ontologies
+[2025-07-04 05:13:27] Step 5: Creating Semantic SQL Database...
+🔧 Mode: TEST
+📁 Working directory: /home/ontology/workspace/outputs_test/run_20250704_001300
+📥 Input OWL file: CDM_merged_ontologies.owl
+📤 Output DB file: CDM_merged_ontologies.db
+💾 SemsQL memory settings: -Xmx1024g -XX:MaxMetaspaceSize=8g -XX:+UseG1GC
+💾 Java options (_JAVA_OPTIONS): -Xmx1024g -XX:MaxMetaspaceSize=8g -XX:+UseG1GC
+
+🔧 Running semsql make to create database...
+Command: semsql make CDM_merged_ontologies.db
+🔍 Memory monitoring enabled - tracking SemsQL memory usage
+2025-07-04 05:13:27,642 - INFO - Starting memory monitoring for SemsQL_make
+2025-07-04 05:13:27,642 - INFO - Command: cd /home/ontology/workspace/outputs_test/run_20250704_001300 && semsql make CDM_merged_ontologies.db
+2025-07-04 05:13:27,643 - INFO - [2025-07-04 05:13:27] Memory Monitor:
+2025-07-04 05:13:27,644 - INFO -   System Total: 0.95GB used (28.9%), 4.11GB available
+2025-07-04 05:13:27,644 - INFO -   
+2025-07-04 05:13:27,644 - INFO -   Process Breakdown:
+2025-07-04 05:13:27,644 - INFO -     - Non-Java processes: 0.95GB (16.4% of system)
+2025-07-04 05:13:27,645 - INFO -   
+2025-07-04 05:13:27,645 - INFO -   Current Task: SemsQL_make
+2025-07-04 05:13:27,645 - INFO -   Task Memory: 0.00GB
+make[1]: Entering directory '/home/ontology/workspace/outputs_test/run_20250704_001300'
+robot \
+  remove -i CDM_merged_ontologies.owl --axioms "equivalent disjoint annotation abox type" \
+  filter --exclude-terms /usr/local/lib/python3.10/dist-packages/semsql/builder//exclude-terms.txt \
+  -o CDM_merged_ontologies-min.owl
+Picked up _JAVA_OPTIONS: -Xmx1024g -XX:MaxMetaspaceSize=8g -XX:+UseG1GC
+touch CDM_merged_ontologies-properties.txt
+grep -v ^prefix, /usr/local/lib/python3.10/dist-packages/semsql/builder/prefixes/prefixes.csv | grep -v ^obo, | perl -npe 's@,(.*)@: "$1"@'  > CDM_merged_ontologies-prefixes.yaml.tmp && mv CDM_merged_ontologies-prefixes.yaml.tmp CDM_merged_ontologies-prefixes.yaml
+relation-graph --disable-owl-nothing true \
+                       --ontology-file CDM_merged_ontologies-min.owl\
+	        \
+                       --output-file CDM_merged_ontologies-relation-graph.tsv.tmp \
+                       --equivalence-as-subclass true \
+                       --mode TSV \
+	       --prefixes CDM_merged_ontologies-prefixes.yaml \
+               --output-individuals true \
+               --output-subclasses true \
+                       --reflexive-subclasses true && \
+mv CDM_merged_ontologies-relation-graph.tsv.tmp CDM_merged_ontologies-relation-graph.tsv
+Picked up _JAVA_OPTIONS: -Xmx1024g -XX:MaxMetaspaceSize=8g -XX:+UseG1GC
+2025.07.04 05:13:33:157 zio-default-blocking-2 INFO org.renci.relationgraph.RelationGraph$
+    Running reasoner    
+2025.07.04 05:13:34:735 zio-default-blocking-2 INFO org.renci.relationgraph.RelationGraph$
+    Done running reasoner    
+2025.07.04 05:13:42:594 ZScheduler-Worker-1 INFO org.renci.relationgraph.Main.program:40
+    Done computing relations    
+2025-07-04 05:13:42,660 - INFO - [2025-07-04 05:13:42] Memory Monitor:
+2025-07-04 05:13:42,661 - INFO -   System Total: 2.58GB used (56.7%), 2.50GB available
+2025-07-04 05:13:42,661 - INFO -   
+2025-07-04 05:13:42,661 - INFO -   Process Breakdown:
+2025-07-04 05:13:42,661 - INFO -     - Non-Java processes: 2.58GB (44.6% of system)
+2025-07-04 05:13:42,661 - INFO -   
+2025-07-04 05:13:42,661 - INFO -   Current Task: SemsQL_make
+2025-07-04 05:13:42,661 - INFO -   Task Memory: 0.00GB
+rm -f CDM_merged_ontologies.db.tmp && \
+cat /usr/local/lib/python3.10/dist-packages/semsql/builder//sql_schema/semsql.sql | sqlite3 CDM_merged_ontologies.db.tmp && \
+echo .exit | sqlite3 -echo CDM_merged_ontologies.db.tmp -cmd ".mode csv" -cmd ".import /usr/local/lib/python3.10/dist-packages/semsql/builder/prefixes/prefixes.csv prefix" && \
+rdftab CDM_merged_ontologies.db.tmp < CDM_merged_ontologies.owl && \
+sqlite3 CDM_merged_ontologies.db.tmp -cmd '.separator "\t"' ".import CDM_merged_ontologies-relation-graph.tsv entailed_edge" && \
+gzip -f CDM_merged_ontologies-relation-graph.tsv && \
+cat /usr/local/lib/python3.10/dist-packages/semsql/builder//indexes/*.sql | sqlite3 CDM_merged_ontologies.db.tmp && \
+echo "ALTER TABLE statements ADD COLUMN graph TEXT;" | sqlite3 CDM_merged_ontologies.db.tmp && \
+(test -d views && find views -maxdepth 1 -name 'CDM_merged_ontologies*.sql' -type f -print0 | xargs -0 -I{} sh -c 'sqlite3 CDM_merged_ontologies.db.tmp< "$1"' sh {} || echo no views ) && \
+mv CDM_merged_ontologies.db.tmp CDM_merged_ontologies.db
+.exit
+no views
+rm CDM_merged_ontologies-min.owl CDM_merged_ontologies-properties.txt CDM_merged_ontologies-prefixes.yaml
+make[1]: Leaving directory '/home/ontology/workspace/outputs_test/run_20250704_001300'
+2025-07-04 05:13:57,675 - INFO - 
+Tool SemsQL_make completed with return code 0
+2025-07-04 05:13:57,675 - INFO - Peak memory usage: 0.00 GB (0.0% of system)
+2025-07-04 05:13:57,676 - INFO - Duration: 0.50 minutes
+
+✅ Database successfully created!
+📊 Database file: CDM_merged_ontologies.db
+📏 Database size: 89,608,192 bytes (85.5 MB)
+📋 Database contains 18 tables:
+   - anonymous_class_expression: 0 rows
+   - anonymous_expression: 0 rows
+   - anonymous_individual_expression: 0 rows
+   - anonymous_property_expression: 0 rows
+   - entailed_edge: 430,947 rows
+   - has_oio_synonym_statement: 0 rows
+   - lexical_problem: 0 rows
+   - owl_complex_axiom: 0 rows
+   - owl_restriction: 0 rows
+   - prefix: 1,216 rows
+   ... and 8 more tables
+[2025-07-04 05:13:57] Step 5: Completed creating semantic SQL database
+[2025-07-04 05:13:57] Step 6: Extracting SQL Tables to TSV...
+🔧 Mode: TEST
+📁 Database file: /home/ontology/workspace/outputs_test/run_20250704_001300/CDM_merged_ontologies.db
+📁 TSV output directory: /home/ontology/workspace/outputs_test/run_20250704_001300/tsv_tables
+Reading database from: /home/ontology/workspace/outputs_test/run_20250704_001300/CDM_merged_ontologies.db
+Saving TSV files to: /home/ontology/workspace/outputs_test/run_20250704_001300/tsv_tables
+Processing table: prefix
+Exported 'prefix' to '/home/ontology/workspace/outputs_test/run_20250704_001300/tsv_tables/prefix.tsv'
+Processing table: rdf_list_statement
+Exported 'rdf_list_statement' to '/home/ontology/workspace/outputs_test/run_20250704_001300/tsv_tables/rdf_list_statement.tsv'
+Processing table: rdf_level_summary_statistic
+Exported 'rdf_level_summary_statistic' to '/home/ontology/workspace/outputs_test/run_20250704_001300/tsv_tables/rdf_level_summary_statistic.tsv'
+Processing table: anonymous_expression
+Exported 'anonymous_expression' to '/home/ontology/workspace/outputs_test/run_20250704_001300/tsv_tables/anonymous_expression.tsv'
+Processing table: anonymous_class_expression
+Exported 'anonymous_class_expression' to '/home/ontology/workspace/outputs_test/run_20250704_001300/tsv_tables/anonymous_class_expression.tsv'
+Processing table: anonymous_property_expression
+Exported 'anonymous_property_expression' to '/home/ontology/workspace/outputs_test/run_20250704_001300/tsv_tables/anonymous_property_expression.tsv'
+Processing table: anonymous_individual_expression
+Exported 'anonymous_individual_expression' to '/home/ontology/workspace/outputs_test/run_20250704_001300/tsv_tables/anonymous_individual_expression.tsv'
+Processing table: owl_restriction
+Exported 'owl_restriction' to '/home/ontology/workspace/outputs_test/run_20250704_001300/tsv_tables/owl_restriction.tsv'
+Processing table: owl_complex_axiom
+Exported 'owl_complex_axiom' to '/home/ontology/workspace/outputs_test/run_20250704_001300/tsv_tables/owl_complex_axiom.tsv'
+Processing table: has_oio_synonym_statement
+Exported 'has_oio_synonym_statement' to '/home/ontology/workspace/outputs_test/run_20250704_001300/tsv_tables/has_oio_synonym_statement.tsv'
+Processing table: repair_action
+Exported 'repair_action' to '/home/ontology/workspace/outputs_test/run_20250704_001300/tsv_tables/repair_action.tsv'
+Processing table: problem
+Exported 'problem' to '/home/ontology/workspace/outputs_test/run_20250704_001300/tsv_tables/problem.tsv'
+Processing table: lexical_problem
+Exported 'lexical_problem' to '/home/ontology/workspace/outputs_test/run_20250704_001300/tsv_tables/lexical_problem.tsv'
+Processing table: relation_graph_construct
+Exported 'relation_graph_construct' to '/home/ontology/workspace/outputs_test/run_20250704_001300/tsv_tables/relation_graph_construct.tsv'
+Processing table: subgraph_query
+Exported 'subgraph_query' to '/home/ontology/workspace/outputs_test/run_20250704_001300/tsv_tables/subgraph_query.tsv'
+Processing table: entailed_edge
+Exported 'entailed_edge' to '/home/ontology/workspace/outputs_test/run_20250704_001300/tsv_tables/entailed_edge.tsv'
+Processing table: term_association
+Exported 'term_association' to '/home/ontology/workspace/outputs_test/run_20250704_001300/tsv_tables/term_association.tsv'
+Processing table: statements
+Exported 'statements' to '/home/ontology/workspace/outputs_test/run_20250704_001300/tsv_tables/statements.tsv'
+
+All tables have been exported to TSV files in: /home/ontology/workspace/outputs_test/run_20250704_001300/tsv_tables
+[2025-07-04 05:13:59] Step 6: Completed extracting SQL tables to TSV
+[2025-07-04 05:13:59] Step 7: Creating Parquet Files...
+🔧 Mode: TEST
+📁 Database file: /home/ontology/workspace/outputs_test/run_20250704_001300/CDM_merged_ontologies.db
+📁 Parquet output directory: /home/ontology/workspace/outputs_test/run_20250704_001300/parquet_files
+
+📖 Reading database from: /home/ontology/workspace/outputs_test/run_20250704_001300/CDM_merged_ontologies.db
+💾 Saving Parquet files to: /home/ontology/workspace/outputs_test/run_20250704_001300/parquet_files
+
+📋 Found 18 tables to export:
+Processing table: anonymous_class_expression
+✅ Exported 'anonymous_class_expression' to '/home/ontology/workspace/outputs_test/run_20250704_001300/parquet_files/anonymous_class_expression.parquet'
+   📊 0 rows, 1 columns, 978 bytes (0.0 MB)
+Processing table: anonymous_expression
+✅ Exported 'anonymous_expression' to '/home/ontology/workspace/outputs_test/run_20250704_001300/parquet_files/anonymous_expression.parquet'
+   📊 0 rows, 1 columns, 978 bytes (0.0 MB)
+Processing table: anonymous_individual_expression
+✅ Exported 'anonymous_individual_expression' to '/home/ontology/workspace/outputs_test/run_20250704_001300/parquet_files/anonymous_individual_expression.parquet'
+   📊 0 rows, 1 columns, 978 bytes (0.0 MB)
+Processing table: anonymous_property_expression
+✅ Exported 'anonymous_property_expression' to '/home/ontology/workspace/outputs_test/run_20250704_001300/parquet_files/anonymous_property_expression.parquet'
+   📊 0 rows, 1 columns, 978 bytes (0.0 MB)
+Processing table: entailed_edge
+✅ Exported 'entailed_edge' to '/home/ontology/workspace/outputs_test/run_20250704_001300/parquet_files/entailed_edge.parquet'
+   📊 430,947 rows, 3 columns, 970,393 bytes (0.9 MB)
+Processing table: has_oio_synonym_statement
+✅ Exported 'has_oio_synonym_statement' to '/home/ontology/workspace/outputs_test/run_20250704_001300/parquet_files/has_oio_synonym_statement.parquet'
+   📊 0 rows, 6 columns, 3,032 bytes (0.0 MB)
+Processing table: lexical_problem
+✅ Exported 'lexical_problem' to '/home/ontology/workspace/outputs_test/run_20250704_001300/parquet_files/lexical_problem.parquet'
+   📊 0 rows, 3 columns, 1,814 bytes (0.0 MB)
+Processing table: owl_complex_axiom
+✅ Exported 'owl_complex_axiom' to '/home/ontology/workspace/outputs_test/run_20250704_001300/parquet_files/owl_complex_axiom.parquet'
+   📊 0 rows, 3 columns, 1,818 bytes (0.0 MB)
+Processing table: owl_restriction
+✅ Exported 'owl_restriction' to '/home/ontology/workspace/outputs_test/run_20250704_001300/parquet_files/owl_restriction.parquet'
+   📊 0 rows, 3 columns, 1,798 bytes (0.0 MB)
+Processing table: prefix
+✅ Exported 'prefix' to '/home/ontology/workspace/outputs_test/run_20250704_001300/parquet_files/prefix.parquet'
+   📊 1,216 rows, 2 columns, 12,734 bytes (0.0 MB)
+Processing table: problem
+✅ Exported 'problem' to '/home/ontology/workspace/outputs_test/run_20250704_001300/parquet_files/problem.parquet'
+   📊 0 rows, 3 columns, 1,814 bytes (0.0 MB)
+Processing table: rdf_level_summary_statistic
+✅ Exported 'rdf_level_summary_statistic' to '/home/ontology/workspace/outputs_test/run_20250704_001300/parquet_files/rdf_level_summary_statistic.parquet'
+   📊 0 rows, 2 columns, 1,440 bytes (0.0 MB)
+Processing table: rdf_list_statement
+✅ Exported 'rdf_list_statement' to '/home/ontology/workspace/outputs_test/run_20250704_001300/parquet_files/rdf_list_statement.parquet'
+   📊 0 rows, 6 columns, 3,032 bytes (0.0 MB)
+Processing table: relation_graph_construct
+✅ Exported 'relation_graph_construct' to '/home/ontology/workspace/outputs_test/run_20250704_001300/parquet_files/relation_graph_construct.parquet'
+   📊 0 rows, 3 columns, 1,818 bytes (0.0 MB)
+Processing table: repair_action
+✅ Exported 'repair_action' to '/home/ontology/workspace/outputs_test/run_20250704_001300/parquet_files/repair_action.parquet'
+   📊 0 rows, 2 columns, 1,440 bytes (0.0 MB)
+Processing table: statements
+✅ Exported 'statements' to '/home/ontology/workspace/outputs_test/run_20250704_001300/parquet_files/statements.parquet'
+   📊 162,810 rows, 8 columns, 2,016,548 bytes (1.9 MB)
+Processing table: subgraph_query
+✅ Exported 'subgraph_query' to '/home/ontology/workspace/outputs_test/run_20250704_001300/parquet_files/subgraph_query.parquet'
+   📊 0 rows, 5 columns, 2,741 bytes (0.0 MB)
+Processing table: term_association
+✅ Exported 'term_association' to '/home/ontology/workspace/outputs_test/run_20250704_001300/parquet_files/term_association.parquet'
+   📊 0 rows, 7 columns, 3,455 bytes (0.0 MB)
+
+✅ Export completed successfully!
+📁 Created 18 Parquet files
+📏 Total size: 3,027,789 bytes (2.9 MB)
+📂 Files saved in: /home/ontology/workspace/outputs_test/run_20250704_001300/parquet_files
+
+📊 Compression Analysis:
+   TSV files: 29,081,725 bytes (27.7 MB)
+   Parquet files: 3,027,789 bytes (2.9 MB)
+   Space saved: 89.6% (24.8 MB)
+[2025-07-04 05:14:00] Step 7: Completed creating parquet files
+[2025-07-04 05:14:00] Workflow completed successfully!
+
+✅ Workflow completed successfully! Log saved to: /home/ontology/workspace/logs/cdm_ontologies_test_20250704_001300.log
+Unable to find image 'alpine:latest' locally
+latest: Pulling from library/alpine
+d69d4d41cfe2: Pulling fs layer
+d69d4d41cfe2: Verifying Checksum
+d69d4d41cfe2: Download complete
+d69d4d41cfe2: Pull complete
+Digest: sha256:8a1f59ffb675680d47db6337b49d22281a139e9d709335b492be023728e11715
+Status: Downloaded newer image for alpine:latest

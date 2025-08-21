@@ -23,6 +23,7 @@ from create_semantic_sql_db import create_semantic_sql_db
 from extract_sql_tables_to_tsv import extract_sql_tables_to_tsv
 from create_parquet_files import create_parquet_files
 from resource_check import check_system_resources
+from run_summary import get_summary
 
 
 def setup_logging(verbose=False):
@@ -32,7 +33,6 @@ def setup_logging(verbose=False):
         level=level,
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
         handlers=[
-            logging.FileHandler('logs/cdm_ontologies.log'),
             logging.StreamHandler()
         ]
     )
@@ -89,90 +89,185 @@ def run_all(args):
             timestamp_print("⚠️  Resource check failed. Use --skip-resource-check to override.")
             return 1
     
+    # Create a single output directory for this entire run
+    from enhanced_download import is_test_mode
+    test_mode = is_test_mode()
+    
+    # Use timestamp from environment if available (for consistent logging)
+    timestamp = os.environ.get('WORKFLOW_TIMESTAMP')
+    if not timestamp:
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        os.environ['WORKFLOW_TIMESTAMP'] = timestamp
+    
+    outputs_base = os.path.join(repo_path, 'outputs_test' if test_mode else 'outputs')
+    run_output_dir = os.path.join(outputs_base, f'run_{timestamp}')
+    os.makedirs(run_output_dir, exist_ok=True)
+    
+    # Set environment variables
+    os.environ['WORKFLOW_OUTPUT_DIR'] = run_output_dir
+    
+    print(f"📁 All outputs will be saved to: {run_output_dir}")
+    
+    # Get summary instance if available
+    summary = get_summary()
+    
     # Step 1: Analyze Core Ontologies
     timestamp_print("Step 1: Analyzing Core Ontologies...")
+    if summary:
+        summary.start_step("Analyze Core Ontologies", 1)
     try:
-        analyze_core_ontologies(str(repo_path))
+        stats = analyze_core_ontologies(str(repo_path))
         timestamp_print("Step 1: Completed analyzing core ontologies")
+        if summary:
+            details = {
+                'main_ontologies': stats.get('main_ontologies', 0) if stats else 0,
+                'non_base_ontologies': stats.get('non_base_ontologies', 0) if stats else 0,
+                'analyzed': stats.get('analyzed', 0) if stats else 0,
+                'downloaded': stats.get('downloaded', 0) if stats else 0,
+                'skipped': stats.get('skipped', 0) if stats else 0,
+                'failed': stats.get('failed', 0) if stats else 0
+            }
+            summary.end_step("Analyze Core Ontologies", "SUCCESS", details)
     except Exception as e:
         logging.error(f"Failed to analyze core ontologies: {e}")
         timestamp_print(f"Step 1: Failed - {e}")
+        if summary:
+            summary.end_step("Analyze Core Ontologies", "FAILED")
+            summary.add_error(str(e))
         if not args.continue_on_error:
             return 1
     
-    # Step 2: Analyze Non-Core Ontologies
-    timestamp_print("Step 2: Analyzing Non-Core Ontologies...")
-    try:
-        analyze_non_core_ontologies(str(repo_path))
-        timestamp_print("Step 2: Completed analyzing non-core ontologies")
-    except Exception as e:
-        logging.error(f"Failed to analyze non-core ontologies: {e}")
-        timestamp_print(f"Step 2: Failed - {e}")
-        if not args.continue_on_error:
-            return 1
+    # Step 2: Analyze Non-Core Ontologies (can be skipped)
+    skip_non_core = os.environ.get('SKIP_NON_CORE_ANALYSIS', 'false').lower() == 'true'
+    if skip_non_core:
+        timestamp_print("Step 2: Skipping Non-Core Ontology Analysis (SKIP_NON_CORE_ANALYSIS=true)")
+    else:
+        timestamp_print("Step 2: Analyzing Non-Core Ontologies...")
+        if summary:
+            summary.start_step("Analyze Non-Core Ontologies", 2)
+        try:
+            analyze_non_core_ontologies(str(repo_path))
+            timestamp_print("Step 2: Completed analyzing non-core ontologies")
+            if summary:
+                summary.end_step("Analyze Non-Core Ontologies", "SUCCESS")
+        except Exception as e:
+            logging.error(f"Failed to analyze non-core ontologies: {e}")
+            timestamp_print(f"Step 2: Failed - {e}")
+            if summary:
+                summary.end_step("Analyze Non-Core Ontologies", "FAILED")
+                summary.add_error(str(e))
+            if not args.continue_on_error:
+                return 1
     
     # Step 3: Create Pseudo Base Ontologies
     timestamp_print("Step 3: Creating Pseudo Base Ontologies...")
+    if summary:
+        summary.start_step("Create Pseudo Base Ontologies", 3)
     try:
         create_pseudo_base_ontologies(str(repo_path))
         timestamp_print("Step 3: Completed creating pseudo base ontologies")
+        if summary:
+            summary.end_step("Create Pseudo Base Ontologies", "SUCCESS")
     except Exception as e:
         logging.error(f"Failed to create pseudo base ontologies: {e}")
         timestamp_print(f"Step 3: Failed - {e}")
+        if summary:
+            summary.end_step("Create Pseudo Base Ontologies", "FAILED")
+            summary.add_error(str(e))
         if not args.continue_on_error:
             return 1
     
     # Step 4: Merge Ontologies
     timestamp_print("Step 4: Merging Ontologies...")
+    if summary:
+        summary.start_step("Merge Ontologies", 4)
     try:
         if not merge_ontologies(str(repo_path)):
             raise Exception("Ontology merge failed")
         timestamp_print("Step 4: Completed merging ontologies")
+        if summary:
+            summary.end_step("Merge Ontologies", "SUCCESS")
     except Exception as e:
         logging.error(f"Failed to merge ontologies: {e}")
         timestamp_print(f"Step 4: Failed - {e}")
+        if summary:
+            summary.end_step("Merge Ontologies", "FAILED")
+            summary.add_error(str(e))
         if not args.continue_on_error:
             return 1
     
     # Step 5: Create Semantic SQL Database
     timestamp_print("Step 5: Creating Semantic SQL Database...")
+    if summary:
+        summary.start_step("Create Semantic SQL Database", 5)
     try:
         if not create_semantic_sql_db(str(repo_path)):
             raise Exception("Database creation failed")
         timestamp_print("Step 5: Completed creating semantic SQL database")
+        if summary:
+            summary.end_step("Create Semantic SQL Database", "SUCCESS")
     except Exception as e:
         logging.error(f"Failed to create database: {e}")
         timestamp_print(f"Step 5: Failed - {e}")
+        if summary:
+            summary.end_step("Create Semantic SQL Database", "FAILED")
+            summary.add_error(str(e))
         if not args.continue_on_error:
             return 1
     
     # Step 6: Extract SQL Tables to TSV
     timestamp_print("Step 6: Extracting SQL Tables to TSV...")
+    if summary:
+        summary.start_step("Extract SQL Tables to TSV", 6)
     try:
         if not extract_sql_tables_to_tsv(str(repo_path)):
             raise Exception("TSV extraction failed")
         timestamp_print("Step 6: Completed extracting SQL tables to TSV")
+        if summary:
+            summary.end_step("Extract SQL Tables to TSV", "SUCCESS")
     except Exception as e:
         logging.error(f"Failed to extract tables: {e}")
         timestamp_print(f"Step 6: Failed - {e}")
+        if summary:
+            summary.end_step("Extract SQL Tables to TSV", "FAILED")
+            summary.add_error(str(e))
         if not args.continue_on_error:
             return 1
     
     # Step 7: Create Parquet Files
     timestamp_print("Step 7: Creating Parquet Files...")
+    if summary:
+        summary.start_step("Create Parquet Files", 7)
     try:
         if not create_parquet_files(str(repo_path)):
             raise Exception("Parquet creation failed")
         timestamp_print("Step 7: Completed creating parquet files")
+        if summary:
+            summary.end_step("Create Parquet Files", "SUCCESS")
     except Exception as e:
         logging.error(f"Failed to create parquet files: {e}")
         timestamp_print(f"Step 7: Failed - {e}")
+        if summary:
+            summary.end_step("Create Parquet Files", "FAILED")
+            summary.add_error(str(e))
         if not args.continue_on_error:
             return 1
     
     # Fix Docker permissions if running outside Docker
     if 'DOCKER_CONTAINER' not in os.environ:
         fix_docker_permissions()
+    
+    # Create symlink to latest run
+    latest_link = os.path.join(outputs_base, 'latest')
+    if os.path.islink(latest_link):
+        os.unlink(latest_link)
+    elif os.path.exists(latest_link):
+        if os.path.isdir(latest_link):
+            import shutil
+            shutil.rmtree(latest_link)
+        else:
+            os.remove(latest_link)
+    os.symlink(os.path.basename(run_output_dir), latest_link)
     
     timestamp_print("Workflow completed successfully!")
     return 0
@@ -223,27 +318,48 @@ def main():
     # Execute the appropriate command
     if args.command == 'run-all':
         return run_all(args)
-    elif args.command == 'analyze-core':
-        analyze_core_ontologies(str(repo_path))
-    elif args.command == 'analyze-non-core':
-        analyze_non_core_ontologies(str(repo_path))
-    elif args.command == 'create-base':
-        create_pseudo_base_ontologies(str(repo_path))
-    elif args.command == 'merge':
-        if not merge_ontologies(str(repo_path)):
-            return 1
-    elif args.command == 'create-db':
-        if not create_semantic_sql_db(str(repo_path)):
-            return 1
-    elif args.command == 'extract-tables':
-        if not extract_sql_tables_to_tsv(str(repo_path)):
-            return 1
-    elif args.command == 'create-parquet':
-        if not create_parquet_files(str(repo_path)):
-            return 1
     else:
-        parser.print_help()
-        return 1
+        # For individual commands, ensure we have a consistent output directory
+        # if not already set by a parent process
+        if 'WORKFLOW_OUTPUT_DIR' not in os.environ:
+            from enhanced_download import is_test_mode
+            test_mode = is_test_mode()
+            
+            # Use timestamp from environment if available
+            timestamp = os.environ.get('WORKFLOW_TIMESTAMP')
+            if not timestamp:
+                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                os.environ['WORKFLOW_TIMESTAMP'] = timestamp
+            
+            outputs_base = os.path.join(repo_path, 'outputs_test' if test_mode else 'outputs')
+            run_output_dir = os.path.join(outputs_base, f'run_{timestamp}')
+            os.makedirs(run_output_dir, exist_ok=True)
+            os.environ['WORKFLOW_OUTPUT_DIR'] = run_output_dir
+            
+            print(f"📁 Output directory: {run_output_dir}")
+        
+        # Now execute the command
+        if args.command == 'analyze-core':
+            analyze_core_ontologies(str(repo_path))
+        elif args.command == 'analyze-non-core':
+            analyze_non_core_ontologies(str(repo_path))
+        elif args.command == 'create-base':
+            create_pseudo_base_ontologies(str(repo_path))
+        elif args.command == 'merge':
+            if not merge_ontologies(str(repo_path)):
+                return 1
+        elif args.command == 'create-db':
+            if not create_semantic_sql_db(str(repo_path)):
+                return 1
+        elif args.command == 'extract-tables':
+            if not extract_sql_tables_to_tsv(str(repo_path)):
+                return 1
+        elif args.command == 'create-parquet':
+            if not create_parquet_files(str(repo_path)):
+                return 1
+        else:
+            parser.print_help()
+            return 1
     
     return 0
 

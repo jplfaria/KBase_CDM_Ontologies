@@ -43,45 +43,45 @@ install:
 
 # Run the complete workflow
 .PHONY: run-workflow
-run-workflow: setup
+run-workflow:
 	@echo "Starting CDM Ontologies workflow..."
 	@echo "Dataset size: $(DATASET_SIZE)"
 	@echo "Java memory: $(ROBOT_JAVA_ARGS)"
-	@PYTHONPATH=$(SCRIPTS_DIR):$(PYTHONPATH) $(PYTHON) -m cdm_ontologies.cli run-all
+	@PYTHONPATH=$(SCRIPTS_DIR):$(PYTHONPATH) $(PYTHON) $(SCRIPTS_DIR)/workflow_wrapper.py
 
 # Run individual workflow steps
 .PHONY: analyze-core
-analyze-core: setup
+analyze-core:
 	@echo "Analyzing core ontologies..."
 	@PYTHONPATH=$(SCRIPTS_DIR):$(PYTHONPATH) $(PYTHON) -m cdm_ontologies.cli analyze-core
 
 .PHONY: analyze-non-core
-analyze-non-core: setup
+analyze-non-core:
 	@echo "Analyzing non-core ontologies..."
 	@PYTHONPATH=$(SCRIPTS_DIR):$(PYTHONPATH) $(PYTHON) -m cdm_ontologies.cli analyze-non-core
 
 .PHONY: create-base
-create-base: setup
+create-base:
 	@echo "Creating pseudo-base ontologies..."
 	@PYTHONPATH=$(SCRIPTS_DIR):$(PYTHONPATH) $(PYTHON) -m cdm_ontologies.cli create-base
 
 .PHONY: merge
-merge: setup
+merge:
 	@echo "Merging ontologies..."
 	@PYTHONPATH=$(SCRIPTS_DIR):$(PYTHONPATH) $(PYTHON) -m cdm_ontologies.cli merge
 
 .PHONY: create-db
-create-db: setup
+create-db:
 	@echo "Creating semantic SQL database..."
 	@PYTHONPATH=$(SCRIPTS_DIR):$(PYTHONPATH) $(PYTHON) -m cdm_ontologies.cli create-db
 
 .PHONY: extract-tables
-extract-tables: setup
+extract-tables:
 	@echo "Extracting SQL tables to TSV..."
 	@PYTHONPATH=$(SCRIPTS_DIR):$(PYTHONPATH) $(PYTHON) -m cdm_ontologies.cli extract-tables
 
 .PHONY: create-parquet
-create-parquet: setup
+create-parquet:
 	@echo "Creating Parquet files..."
 	@PYTHONPATH=$(SCRIPTS_DIR):$(PYTHONPATH) $(PYTHON) -m cdm_ontologies.cli create-parquet
 
@@ -91,6 +91,14 @@ clean:
 	@echo "Cleaning up output files..."
 	@rm -rf outputs/*
 	@rm -rf logs/*
+
+# Clean Docker volumes and containers
+.PHONY: docker-clean
+docker-clean:
+	@echo "Cleaning Docker volumes and containers..."
+	@docker compose down -v 2>/dev/null || true
+	@docker volume rm kbase_cdm_ontologies_cdm-outputs kbase_cdm_ontologies_cdm-cache 2>/dev/null || true
+	@echo "Docker cleanup complete"
 
 # Clean everything including downloaded ontologies
 .PHONY: clean-all
@@ -136,9 +144,9 @@ test-create-parquet: setup
 	@ONTOLOGIES_SOURCE_FILE=config/ontologies_source_test.txt PYTHONPATH=$(SCRIPTS_DIR):$(PYTHONPATH) $(PYTHON) -m cdm_ontologies.cli create-parquet
 
 .PHONY: test-workflow
-test-workflow: setup
+test-workflow:
 	@echo "Testing complete workflow with test dataset..."
-	@ONTOLOGIES_SOURCE_FILE=config/ontologies_source_test.txt PYTHONPATH=$(SCRIPTS_DIR):$(PYTHONPATH) $(PYTHON) -m cdm_ontologies.cli run-all
+	@ONTOLOGIES_SOURCE_FILE=config/ontologies_source_test.txt PYTHONPATH=$(SCRIPTS_DIR):$(PYTHONPATH) $(PYTHON) $(SCRIPTS_DIR)/workflow_wrapper.py
 
 # Docker targets
 .PHONY: docker-build
@@ -149,32 +157,32 @@ docker-build:
 .PHONY: docker-run-production
 docker-run-production: docker-build
 	@echo "Running pipeline with production dataset..."
+	@mkdir -p outputs .cache
 	@ENV_FILE=.env UID=$(UID) GID=$(GID) docker compose run --rm cdm-ontologies
-	@echo "Fixing any permission issues..."
-	@docker run --rm -v "$(PWD):/workspace" --user root alpine:latest sh -c "chown -R $(UID):$(GID) /workspace/outputs /workspace/ontology_data_owl /workspace/logs 2>/dev/null || true"
 
 .PHONY: docker-run-prod
 docker-run-prod: docker-build
 	@echo "Running pipeline with production dataset (30+ ontologies)..."
+	@mkdir -p outputs logs .cache
 	@ENV_FILE=.env UID=$(UID) GID=$(GID) docker compose run --rm cdm-ontologies
-	@echo "Fixing any permission issues..."
-	@docker run --rm -v "$(PWD):/workspace" --user root alpine:latest sh -c "chown -R $(UID):$(GID) /workspace/outputs /workspace/ontology_data_owl /workspace/logs 2>/dev/null || true"
 
 .PHONY: docker-run-prod-nohup
 docker-run-prod-nohup: docker-build
 	@echo "Starting production pipeline in background with nohup..."
-	@mkdir -p logs
-	@nohup bash -c 'ENV_FILE=.env UID=$(UID) GID=$(GID) docker compose run --rm cdm-ontologies && \
-	docker run --rm -v "$(PWD):/workspace" --user root alpine:latest sh -c "chown -R $(UID):$(GID) /workspace/outputs /workspace/ontology_data_owl /workspace/logs 2>/dev/null || true"' \
-	> logs/nohup_cdm_prod.out 2>&1 &
-	@echo "Production pipeline started in background. PID: $$!"
-	@echo "Monitor progress with: make docker-prod-status"
-	@echo "Or check the log file: tail -f logs/nohup_cdm_prod.out"
+	@mkdir -p logs outputs .cache
+	@TIMESTAMP=$$(date +%Y%m%d_%H%M%S); \
+	nohup bash -c 'ENV_FILE=.env UID=$(UID) GID=$(GID) WORKFLOW_TIMESTAMP='"$$TIMESTAMP"' docker compose run --rm cdm-ontologies' \
+	> logs/nohup_cdm_prod_$$TIMESTAMP.out 2>&1 & \
+	echo "Production pipeline started in background. PID: $$!"; \
+	echo "Monitor progress with: make docker-prod-status"; \
+	echo "Or check the log file: tail -f logs/nohup_cdm_prod_$$TIMESTAMP.out"
 
 .PHONY: docker-prod-status
 docker-prod-status:
-	@if [ -f logs/nohup_cdm_prod.out ]; then \
-		tail -f logs/nohup_cdm_prod.out; \
+	@LATEST_LOG=$$(ls -t logs/nohup_cdm_prod_*.out 2>/dev/null | head -1); \
+	if [ -n "$$LATEST_LOG" ]; then \
+		echo "Following latest production log: $$LATEST_LOG"; \
+		tail -f $$LATEST_LOG; \
 	else \
 		echo "No production run log found. Start with: make docker-run-prod-nohup"; \
 	fi
@@ -182,25 +190,27 @@ docker-prod-status:
 .PHONY: docker-test
 docker-test: docker-build
 	@echo "Running pipeline with test dataset in Docker..."
+	@mkdir -p outputs_test logs .cache
 	@ENV_FILE=.env.test UID=$(UID) GID=$(GID) docker compose run --rm cdm-ontologies make test-workflow
-	@echo "Fixing any permission issues..."
-	@docker run --rm -v "$(PWD):/workspace" --user root alpine:latest sh -c "chown -R $(UID):$(GID) /workspace/outputs_test /workspace/ontology_data_owl_test /workspace/logs 2>/dev/null || true"
 
 .PHONY: docker-test-nohup
 docker-test-nohup: docker-build
 	@echo "Starting test pipeline in background with nohup..."
 	@mkdir -p logs
-	@nohup bash -c 'ENV_FILE=.env.test UID=$(UID) GID=$(GID) docker compose run --rm cdm-ontologies make test-workflow && \
+	@TIMESTAMP=$$(date +%Y%m%d_%H%M%S); \
+	nohup bash -c 'ENV_FILE=.env.test UID=$(UID) GID=$(GID) WORKFLOW_TIMESTAMP='"$$TIMESTAMP"' docker compose run --rm cdm-ontologies make test-workflow && \
 	docker run --rm -v "$(PWD):/workspace" --user root alpine:latest sh -c "chown -R $(UID):$(GID) /workspace/outputs_test /workspace/ontology_data_owl_test /workspace/logs 2>/dev/null || true"' \
-	> logs/nohup_cdm_test.out 2>&1 &
-	@echo "Test pipeline started in background. PID: $$!"
-	@echo "Monitor progress with: make docker-test-status"
-	@echo "Or check the log file: tail -f logs/nohup_cdm_test.out"
+	> logs/nohup_cdm_test_$$TIMESTAMP.out 2>&1 & \
+	echo "Test pipeline started in background. PID: $$!"; \
+	echo "Monitor progress with: make docker-test-status"; \
+	echo "Or check the log file: tail -f logs/nohup_cdm_test_$$TIMESTAMP.out"
 
 .PHONY: docker-test-status
 docker-test-status:
-	@if [ -f logs/nohup_cdm_test.out ]; then \
-		tail -f logs/nohup_cdm_test.out; \
+	@LATEST_LOG=$$(ls -t logs/nohup_cdm_test_*.out 2>/dev/null | head -1); \
+	if [ -n "$$LATEST_LOG" ]; then \
+		echo "Following latest test log: $$LATEST_LOG"; \
+		tail -f $$LATEST_LOG; \
 	else \
 		echo "No test run log found. Start with: make docker-test-nohup"; \
 	fi
@@ -245,6 +255,7 @@ help:
 	@echo "  make docker-run-prod    - Run with production dataset (30+ ontologies)"
 	@echo "  make docker-run-prod-nohup - Run production in background with nohup"
 	@echo "  make docker-prod-status - Monitor production run progress"
+	@echo "  make docker-clean       - Clean Docker volumes and containers"
 	@echo ""
 	@echo "Environment variables:"
 	@echo "  ENV_FILE=.env      - Use production dataset configuration (default)"

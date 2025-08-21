@@ -1,0 +1,30 @@
+Memory Usage Summary for SemsQL_make
+======================================================================
+
+TASK INFORMATION
+----------------------------------------------------------------------
+Tool Name: SemsQL_make
+Start Time: 2025-07-04T05:13:27.643409
+End Time: 2025-07-04T05:13:57.668759
+Duration: 0.50 minutes
+Status: SUCCESS (Return Code: 0)
+
+MEMORY USAGE SUMMARY
+----------------------------------------------------------------------
+System Total Memory: 5.78 GB
+
+Peak Memory Usage:
+  - Task Process: 0.00 GB (0.0% of system)
+  - All User Java: 0.00 GB
+  - Total System: 2.58 GB
+
+Final Memory Usage:
+  - Task Process: 0.00 GB
+  - Total System: 2.58 GB
+
+MONITORING DETAILS
+----------------------------------------------------------------------
+Data Points Collected: 2
+Monitoring Interval: 15 seconds
+
+Detailed logs saved to: SemsQL_make_memory_log.json

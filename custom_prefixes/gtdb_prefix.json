@@ -1,7 +1,0 @@
-{
-  "@context": {
-    "GTDB": "https://gtdb.ecogenomic.org/tree?r=",
-    "GO": "http://purl.obolibrary.org/obo/GO_",
-    "ENVO": "http://purl.obolibrary.org/obo/ENVO_"
-  }
-}

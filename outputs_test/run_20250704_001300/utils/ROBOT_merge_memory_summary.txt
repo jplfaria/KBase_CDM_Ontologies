@@ -1,0 +1,30 @@
+Memory Usage Summary for ROBOT_merge
+======================================================================
+
+TASK INFORMATION
+----------------------------------------------------------------------
+Tool Name: ROBOT_merge
+Start Time: 2025-07-04T05:13:12.497679
+End Time: 2025-07-04T05:13:27.508578
+Duration: 0.25 minutes
+Status: SUCCESS (Return Code: 0)
+
+MEMORY USAGE SUMMARY
+----------------------------------------------------------------------
+System Total Memory: 5.78 GB
+
+Peak Memory Usage:
+  - Task Process: 0.00 GB (0.0% of system)
+  - All User Java: 0.00 GB
+  - Total System: 0.95 GB
+
+Final Memory Usage:
+  - Task Process: 0.00 GB
+  - Total System: 0.95 GB
+
+MONITORING DETAILS
+----------------------------------------------------------------------
+Data Points Collected: 1
+Monitoring Interval: 15 seconds
+
+Detailed logs saved to: ROBOT_merge_memory_log.json

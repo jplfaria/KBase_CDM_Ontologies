@@ -2,8 +2,10 @@ import sys
 import os
 import subprocess
 import traceback
+import shutil
 from pathlib import Path
 from enhanced_download import get_output_directories, is_test_mode
+from run_summary import get_summary
 
 def create_semantic_sql_db(
     repo_path: str,
@@ -41,10 +43,15 @@ def create_semantic_sql_db(
         env['PATH'] = f"/home/ontology/.local/bin:{env.get('PATH', '')}"
         
         # Use environment variables for memory settings or set defaults
-        env['ROBOT_JAVA_ARGS'] = os.getenv('ROBOT_JAVA_ARGS', '-Xmx32g -XX:MaxMetaspaceSize=4g')
-        env['_JAVA_OPTIONS'] = os.getenv('_JAVA_OPTIONS', '-Xmx32g -XX:MaxMetaspaceSize=4g')
+        # For SemsQL, we need to ensure ROBOT inside semsql uses sufficient memory
+        robot_memory = os.getenv('ROBOT_JAVA_ARGS', '-Xmx32g -XX:MaxMetaspaceSize=4g')
+        env['ROBOT_JAVA_ARGS'] = robot_memory
+        # _JAVA_OPTIONS will be picked up by all Java processes including ROBOT inside semsql
+        # Use the same memory settings as ROBOT_JAVA_ARGS for consistency
+        env['_JAVA_OPTIONS'] = robot_memory
         
         print(f"💾 SemsQL memory settings: {env['ROBOT_JAVA_ARGS']}")
+        print(f"💾 Java options (_JAVA_OPTIONS): {env['_JAVA_OPTIONS']}")
         
         # Check if memory monitoring is enabled
         enable_monitoring = os.getenv('ENABLE_MEMORY_MONITORING', 'false').lower() == 'true'
@@ -55,17 +62,16 @@ def create_semantic_sql_db(
         # Run semsql make command with optional memory monitoring
         if enable_monitoring:
             print("🔍 Memory monitoring enabled - tracking SemsQL memory usage")
-            os.chdir(original_cwd)  # Change back for monitor script
             monitor_script = os.path.join(os.path.dirname(__file__), 'memory_monitor.py')
+            # Already in outputs_dir, so semsql can run directly
             monitor_command = [
                 'python3', monitor_script,
                 'SemsQL_make',
-                f'cd {outputs_dir} && semsql make {db_filename}',
+                f'semsql make {db_filename}',
                 repo_path,
                 str(os.getenv('MEMORY_MONITOR_INTERVAL', '15'))
             ]
-            result = subprocess.run(monitor_command, check=True, env=env)
-            os.chdir(outputs_dir)  # Change back to outputs dir for file checks
+            result = subprocess.run(monitor_command, check=True, env=env, cwd=outputs_dir)
         else:
             # Run semsql make command normally
             result = subprocess.run(
@@ -91,6 +97,12 @@ def create_semantic_sql_db(
             print(f"📊 Database file: {db_filename}")
             print(f"📏 Database size: {db_size:,} bytes ({db_size / (1024*1024):.1f} MB)")
             
+            # Update summary if available
+            summary = get_summary()
+            if summary:
+                summary.add_output_file('semantic_sql_db', os.path.join(outputs_dir, db_filename), db_size)
+                summary.add_processing_result('database_size_gb', round(db_size / (1024**3), 2))
+            
             # Try to connect and show basic info
             try:
                 import sqlite3
@@ -102,13 +114,28 @@ def create_semantic_sql_db(
                 tables = [row[0] for row in cursor.fetchall()]
                 
                 print(f"📋 Database contains {len(tables)} tables:")
+                
+                # Update summary with table count
+                if summary:
+                    summary.add_processing_result('database_tables', len(tables))
+                
+                total_rows = 0
                 for table in tables[:10]:  # Show first 10 tables
                     cursor.execute(f"SELECT COUNT(*) FROM {table}")
                     count = cursor.fetchone()[0]
+                    total_rows += count
                     print(f"   - {table}: {count:,} rows")
                 
                 if len(tables) > 10:
                     print(f"   ... and {len(tables) - 10} more tables")
+                    # Count rows in remaining tables for summary
+                    for table in tables[10:]:
+                        cursor.execute(f"SELECT COUNT(*) FROM {table}")
+                        count = cursor.fetchone()[0]
+                        total_rows += count
+                
+                if summary:
+                    summary.add_processing_result('database_total_rows', total_rows)
                 
                 conn.close()
                 

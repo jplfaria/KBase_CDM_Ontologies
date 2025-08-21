@@ -3,6 +3,7 @@ import sqlite3
 import pandas as pd
 from pathlib import Path
 from enhanced_download import get_output_directories, is_test_mode
+from run_summary import get_summary
 
 def extract_sql_tables_to_tsv(repo_path: str) -> bool:
     """
@@ -46,6 +47,13 @@ def extract_sql_tables_to_tsv(repo_path: str) -> bool:
             cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
             tables = cursor.fetchall()
             
+            # Update summary if available
+            summary = get_summary()
+            if summary:
+                summary.add_processing_result('tsv_tables_exported', len(tables))
+            
+            total_tsv_size = 0
+            
             # Extract each table and save as TSV
             for table in tables:
                 table_name = table[0]
@@ -54,14 +62,33 @@ def extract_sql_tables_to_tsv(repo_path: str) -> bool:
                 # Read the table into a pandas DataFrame
                 df = pd.read_sql_query(f"SELECT * FROM {table_name}", conn)
                 
+                # Escape newlines, carriage returns, and tabs in all string columns
+                for col in df.columns:
+                    if df[col].dtype == 'object':  # String columns
+                        df[col] = df[col].apply(lambda x: 
+                            x.replace('\n', '\\n').replace('\r', '\\r').replace('\t', '\\t') 
+                            if isinstance(x, str) else x
+                        )
+                
                 # Create the output path
                 output_path = os.path.join(tsv_dir, f"{table_name}.tsv")
                 
-                # Save as TSV
-                df.to_csv(output_path, sep='\t', index=False)
+                # Save as TSV with proper escaping
+                df.to_csv(output_path, sep='\t', index=False, escapechar='\\', doublequote=False)
                 print(f"Exported '{table_name}' to '{output_path}'")
+                
+                # Track file size
+                if os.path.exists(output_path):
+                    file_size = os.path.getsize(output_path)
+                    total_tsv_size += file_size
             
             print(f"\nAll tables have been exported to TSV files in: {tsv_dir}")
+            
+            # Update summary with TSV output info
+            if summary:
+                summary.add_output_file('tsv_tables', tsv_dir, total_tsv_size)
+                summary.add_processing_result('tsv_total_size_gb', round(total_tsv_size / (1024**3), 2))
+            
             return True
             
         finally:

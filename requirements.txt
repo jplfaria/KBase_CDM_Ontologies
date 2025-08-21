@@ -11,3 +11,8 @@ oaklib>=0.5.20
 tqdm>=4.65.0  # Progress bars
 psutil>=5.9.0  # Memory monitoring
 pyarrow>=14.0.0  # For parquet support
+
+# Testing dependencies (optional)
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-mock>=3.11.0

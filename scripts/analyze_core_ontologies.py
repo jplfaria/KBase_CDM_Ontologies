@@ -6,7 +6,7 @@ import hashlib
 from pathlib import Path
 from datetime import datetime
 import re
-from enhanced_download import download_ontology_safe, get_output_directories, is_test_mode
+from enhanced_download import download_ontology_safe, download_ontology_with_versioning, get_output_directories, is_test_mode
 
 def normalize_iri(iri):
     """Normalize IRI to extract the base ontology prefix and standardize to lowercase."""
@@ -186,15 +186,47 @@ def analyze_core_ontologies(repo_path):
     non_base_dir = os.path.join(ontology_data_path, 'non-base-ontologies')
     os.makedirs(non_base_dir, exist_ok=True)
     
+    # Initialize counters
+    downloaded_count = 0
+    skipped_count = 0
+    failed_count = 0
+    
     # Process main directory ontologies
-    for url in main_dir_ontologies:
-        filename = os.path.basename(url)
-        output_path = os.path.join(ontology_data_path, filename)
-        
-        print(f"Downloading core ontology: {filename}")
-        if not download_ontology(url, output_path, repo_path):
-            print(f"⚠️  Failed to download {filename}, skipping analysis")
-            continue
+    for entry in main_dir_ontologies:
+        # Check if it's a URL or a local filename
+        if entry.startswith('http://') or entry.startswith('https://'):
+            # It's a URL, download it
+            filename = os.path.basename(entry)
+            output_path = os.path.join(ontology_data_path, filename)
+            
+            print(f"Checking core ontology: {filename}")
+            success, status, message = download_ontology_with_versioning(entry, output_path, repo_path)
+            
+            if status == "skipped":
+                skipped_count += 1
+            elif status in ["new", "updated"]:
+                downloaded_count += 1
+            elif not success:
+                failed_count += 1
+                print(f"⚠️  Failed to download {filename}, skipping analysis")
+                continue
+                
+            # If it was a .gz file, adjust the path to the decompressed file
+            if filename.endswith('.gz'):
+                output_path = output_path[:-3]  # Remove .gz extension
+                filename = filename[:-3]
+        else:
+            # It's a local filename - assume it has .owl extension
+            filename = entry if entry.endswith('.owl') else f"{entry}.owl"
+            output_path = os.path.join(ontology_data_path, filename)
+            
+            if not os.path.exists(output_path):
+                print(f"❌ Local ontology file not found: {filename}")
+                print(f"   Expected location: {output_path}")
+                print(f"   Please manually place this file in the ontology_data_owl directory")
+                continue
+            else:
+                print(f"✅ Found local ontology: {filename}")
         
         # Analyze ontology
         result = analyze_ontology(output_path)
@@ -245,14 +277,48 @@ def analyze_core_ontologies(repo_path):
             all_external_subjects.update(result['external_terms_as_subjects'])
     
     # Process non-base ontologies (go to non-base-ontologies directory)
-    for url in non_base_ontologies:
-        filename = os.path.basename(url)
-        output_path = os.path.join(non_base_dir, filename)
-        
-        print(f"Downloading non-base ontology: {filename}")
-        if not download_ontology(url, output_path, repo_path):
-            print(f"⚠️  Failed to download {filename}, skipping analysis")
-            continue
+    for entry in non_base_ontologies:
+        # Check if it's a URL or a local filename
+        if entry.startswith('http://') or entry.startswith('https://'):
+            # It's a URL, download it
+            filename = os.path.basename(entry)
+            output_path = os.path.join(non_base_dir, filename)
+            
+            print(f"Checking non-base ontology: {filename}")
+            success, status, message = download_ontology_with_versioning(entry, output_path, repo_path)
+            
+            if status == "skipped":
+                skipped_count += 1
+            elif status in ["new", "updated"]:
+                downloaded_count += 1
+            elif not success:
+                failed_count += 1
+                print(f"⚠️  Failed to download {filename}, skipping analysis")
+                continue
+                
+            # If it was a .gz file, adjust the path to the decompressed file
+            if filename.endswith('.gz'):
+                output_path = output_path[:-3]  # Remove .gz extension
+                filename = filename[:-3]
+        else:
+            # It's a local filename - assume it has .owl extension
+            filename = entry if entry.endswith('.owl') else f"{entry}.owl"
+            # Check both in main directory and non-base directory
+            main_path = os.path.join(ontology_data_path, filename)
+            output_path = os.path.join(non_base_dir, filename)
+            
+            if os.path.exists(main_path):
+                # Copy from main directory to non-base directory
+                import shutil
+                shutil.copy2(main_path, output_path)
+                print(f"✅ Copied local ontology to non-base directory: {filename}")
+            elif os.path.exists(output_path):
+                print(f"✅ Found local ontology in non-base directory: {filename}")
+            else:
+                print(f"❌ Local ontology file not found: {filename}")
+                print(f"   Expected locations: {main_path} or {output_path}")
+                print(f"   Please manually place this file in the ontology_data_owl directory")
+                continue
         
         # Analyze ontology
         result = analyze_ontology(output_path)
@@ -310,6 +376,25 @@ def analyze_core_ontologies(repo_path):
                 f.write(f"{term}\n")
     
     print("\nAnalysis complete!")
+    
+    # Return statistics for summary
+    stats = {
+        'main_ontologies': len(main_dir_ontologies),
+        'non_base_ontologies': len(non_base_ontologies),
+        'analyzed': len(analysis_results),
+        'downloaded': downloaded_count,
+        'skipped': skipped_count,
+        'failed': failed_count
+    }
+    
+    # Update run summary if available
+    from run_summary import get_summary
+    summary = get_summary()
+    if summary:
+        for key, value in stats.items():
+            summary.add_processing_result(f"core_analysis_{key}", value)
+    
+    return stats
 
 if __name__ == "__main__":
     # If run directly, analyze the current directory

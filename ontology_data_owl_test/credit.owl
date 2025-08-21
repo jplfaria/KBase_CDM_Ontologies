@@ -1,0 +1,197 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="https://w3id.org/biopragmatics/resources/credit/credit.ofn#"
+     xml:base="https://w3id.org/biopragmatics/resources/credit/credit.ofn"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:credit="https://credit.niso.org/contributor-roles/"
+     xmlns:dcterms="http://purl.org/dc/terms/"
+     xmlns:oboInOwl="http://www.geneontology.org/formats/oboInOwl#">
+    <owl:Ontology rdf:about="https://w3id.org/biopragmatics/resources/credit/credit.ofn">
+        <owl:versionIRI rdf:resource="https://w3id.org/biopragmatics/resources/credit/2022/credit.ofn"/>
+        <dcterms:description>CRediT \(Contributor Roles Taxonomy\) is high-level taxonomy\, including 14 roles\, that can be used to represent the roles typically played by contributors to scientific scholarly output. The roles describe each contributor’s specific contribution to the scholarly output.</dcterms:description>
+        <dcterms:license>CC-BY-4.0</dcterms:license>
+        <dcterms:title>CASRAI Contributor Roles Taxonomy</dcterms:title>
+        <oboInOwl:auto-generated-by>PyOBO v0.12.0-dev-fc140cc1 on 2025-03-12T12:20:11.654448</oboInOwl:auto-generated-by>
+        <owl:versionInfo>2022</owl:versionInfo>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/dc/terms/description -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/description"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/license -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/license"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/title -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/title"/>
+    
+
+
+    <!-- http://www.geneontology.org/formats/oboInOwl#auto-generated-by -->
+
+    <owl:AnnotationProperty rdf:about="http://www.geneontology.org/formats/oboInOwl#auto-generated-by"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- https://credit.niso.org/contributor-roles/conceptualization -->
+
+    <owl:Class rdf:about="https://credit.niso.org/contributor-roles/conceptualization">
+        <dcterms:description>Ideas; formulation or evolution of overarching research goals and aims.</dcterms:description>
+        <rdfs:label>Conceptualization</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://credit.niso.org/contributor-roles/data-curation -->
+
+    <owl:Class rdf:about="https://credit.niso.org/contributor-roles/data-curation">
+        <dcterms:description>Management activities to annotate (produce metadata), scrub data and maintain research data (including software code, where it is necessary for interpreting the data itself) for initial use and later re-use.</dcterms:description>
+        <rdfs:label>Data curation</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://credit.niso.org/contributor-roles/formal-analysis -->
+
+    <owl:Class rdf:about="https://credit.niso.org/contributor-roles/formal-analysis">
+        <dcterms:description>Application of statistical, mathematical, computational, or other formal techniques to analyse or synthesize study data.</dcterms:description>
+        <rdfs:label>Formal analysis</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://credit.niso.org/contributor-roles/funding-acquisition -->
+
+    <owl:Class rdf:about="https://credit.niso.org/contributor-roles/funding-acquisition">
+        <dcterms:description>Acquisition of the financial support for the project leading to this publication.</dcterms:description>
+        <rdfs:label>Funding acquisition</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://credit.niso.org/contributor-roles/investigation -->
+
+    <owl:Class rdf:about="https://credit.niso.org/contributor-roles/investigation">
+        <dcterms:description>Conducting a research and investigation process, specifically performing the experiments, or data/evidence collection.</dcterms:description>
+        <rdfs:label>Investigation</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://credit.niso.org/contributor-roles/methodology -->
+
+    <owl:Class rdf:about="https://credit.niso.org/contributor-roles/methodology">
+        <dcterms:description>Development or design of methodology; creation of models.</dcterms:description>
+        <rdfs:label>Methodology</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://credit.niso.org/contributor-roles/project-administration -->
+
+    <owl:Class rdf:about="https://credit.niso.org/contributor-roles/project-administration">
+        <dcterms:description>Management and coordination responsibility for the research activity planning and execution.</dcterms:description>
+        <rdfs:label>Project administration</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://credit.niso.org/contributor-roles/resources -->
+
+    <owl:Class rdf:about="https://credit.niso.org/contributor-roles/resources">
+        <dcterms:description>Provision of study materials, reagents, materials, patients, laboratory samples, animals, instrumentation, computing resources, or other analysis tools.</dcterms:description>
+        <rdfs:label>Resources</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://credit.niso.org/contributor-roles/software -->
+
+    <owl:Class rdf:about="https://credit.niso.org/contributor-roles/software">
+        <dcterms:description>Programming, software development; designing computer programs; implementation of the computer code and supporting algorithms; testing of existing code components.</dcterms:description>
+        <rdfs:label>Software</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://credit.niso.org/contributor-roles/supervision -->
+
+    <owl:Class rdf:about="https://credit.niso.org/contributor-roles/supervision">
+        <dcterms:description>Oversight and leadership responsibility for the research activity planning and execution, including mentorship external to the core team.</dcterms:description>
+        <rdfs:label>Supervision</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://credit.niso.org/contributor-roles/validation -->
+
+    <owl:Class rdf:about="https://credit.niso.org/contributor-roles/validation">
+        <dcterms:description>Verification, whether as a part of the activity or separate, of the overall replication/reproducibility of results/experiments and other research outputs.</dcterms:description>
+        <rdfs:label>Validation</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://credit.niso.org/contributor-roles/visualization -->
+
+    <owl:Class rdf:about="https://credit.niso.org/contributor-roles/visualization">
+        <dcterms:description>Preparation, creation and/or presentation of the published work, specifically visualization/data presentation.</dcterms:description>
+        <rdfs:label>Visualization</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://credit.niso.org/contributor-roles/writing-original-draft -->
+
+    <owl:Class rdf:about="https://credit.niso.org/contributor-roles/writing-original-draft">
+        <dcterms:description>Preparation, creation and/or presentation of the published work, specifically writing the initial draft (including substantive translation).</dcterms:description>
+        <rdfs:label>Writing – original draft</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://credit.niso.org/contributor-roles/writing-review-editing -->
+
+    <owl:Class rdf:about="https://credit.niso.org/contributor-roles/writing-review-editing">
+        <dcterms:description>Preparation, creation and/or presentation of the published work by those from the original research group, specifically critical review, commentary or revision — including pre- or post-publication stages.</dcterms:description>
+        <rdfs:label>Writing – review &amp; editing</rdfs:label>
+    </owl:Class>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.29) https://github.com/owlcs/owlapi -->
+

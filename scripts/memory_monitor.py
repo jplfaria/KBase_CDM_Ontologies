@@ -40,36 +40,92 @@ def get_memory_info():
 def get_java_processes_memory():
     """Get memory usage of Java processes (ROBOT, relation-graph)."""
     java_processes = []
-    for proc in psutil.process_iter(['pid', 'name', 'cmdline', 'memory_info']):
+    for proc in psutil.process_iter(['pid', 'name', 'cmdline', 'memory_info', 'username', 'exe']):
         try:
-            if proc.info['name'] == 'java':
-                cmdline = ' '.join(proc.info['cmdline'])
-                memory_mb = proc.info['memory_info'].rss / (1024**2)
+            info = proc.info
+            name = info.get('name', '').lower()
+            cmdline_list = info.get('cmdline', [])
+            cmdline = ' '.join(cmdline_list) if cmdline_list else ''
+            exe = info.get('exe', '') or ''
+            
+            # Multiple ways to detect Java processes
+            is_java = False
+            
+            # Method 1: Process name is exactly 'java'
+            if name == 'java':
+                is_java = True
+            # Method 2: Process name contains 'java'
+            elif 'java' in name:
+                is_java = True
+            # Method 3: Executable path contains java
+            elif 'java' in exe.lower() or 'jdk' in exe.lower() or 'jre' in exe.lower():
+                is_java = True
+            # Method 4: Command line patterns
+            elif cmdline and any(pattern in cmdline.lower() for pattern in 
+                               ['java ', 'java.exe', '/bin/java', 'robot.jar', 
+                                'semsql', 'relation-graph', 'semantic-sql']):
+                is_java = True
+            # Method 5: Check first argument in cmdline
+            elif cmdline_list and len(cmdline_list) > 0:
+                first_arg = cmdline_list[0].lower()
+                if 'java' in first_arg or first_arg.endswith('/java'):
+                    is_java = True
+            
+            if is_java:
+                memory_mb = info['memory_info'].rss / (1024**2)
+                username = info.get('username', 'unknown')
                 
+                # Determine process type from command line
                 process_type = 'unknown'
-                if 'robot.jar' in cmdline:
-                    process_type = 'ROBOT'
-                elif 'relation-graph' in cmdline:
+                cmdline_lower = cmdline.lower()
+                
+                # Check for specific tools first
+                if 'relation-graph' in cmdline_lower:
                     process_type = 'relation-graph'
-                elif 'semsql' in cmdline:
+                elif 'semsql' in cmdline_lower or 'semantic' in cmdline_lower:
                     process_type = 'SemanticSQL'
+                elif 'robot.jar' in cmdline_lower or 'robot' in cmdline_lower:
+                    # Further classify ROBOT commands
+                    if 'merge' in cmdline_lower:
+                        process_type = 'ROBOT-merge'
+                    elif 'query' in cmdline_lower:
+                        process_type = 'ROBOT-query'
+                    elif 'reason' in cmdline_lower:
+                        process_type = 'ROBOT-reason'
+                    elif 'extract' in cmdline_lower:
+                        process_type = 'ROBOT-extract'
+                    else:
+                        process_type = 'ROBOT'
+                elif any(x in cmdline_lower for x in ['cdm_merged', 'ontolog', '.owl']):
+                    process_type = 'ROBOT'  # Likely ROBOT working on ontologies
                 
                 java_processes.append({
-                    'pid': proc.info['pid'],
+                    'pid': info['pid'],
+                    'name': info.get('name', 'unknown'),
                     'type': process_type,
                     'memory_mb': round(memory_mb, 2),
                     'memory_gb': round(memory_mb / 1024, 2),
+                    'username': username,
                     'cmdline_snippet': cmdline[:100] + '...' if len(cmdline) > 100 else cmdline
                 })
         except (psutil.NoSuchProcess, psutil.AccessDenied):
             continue
+        except Exception as e:
+            logging.debug(f"Error processing process {proc.pid}: {e}")
+            continue
     
     return java_processes
 
-def monitor_tool_execution(tool_name, command, log_dir, interval=15):
+def monitor_tool_execution(tool_name, command, log_dir, interval=60):
     """Monitor memory usage during tool execution."""
     log_file = os.path.join(log_dir, f"{tool_name}_memory_log.json")
     summary_file = os.path.join(log_dir, f"{tool_name}_memory_summary.txt")
+    
+    # Import run summary here to avoid circular import
+    from run_summary import get_summary
+    
+    # Get current user for process filtering
+    current_user = os.environ.get('USER', 'unknown')
     
     # Create log directory if it doesn't exist
     os.makedirs(log_dir, exist_ok=True)
@@ -93,25 +149,80 @@ def monitor_tool_execution(tool_name, command, log_dir, interval=15):
             # Get Java processes memory
             java_procs = get_java_processes_memory()
             
-            # Calculate total Java memory usage
-            total_java_memory = sum(p['memory_gb'] for p in java_procs)
+            # Filter for current user's processes
+            user_java_procs = [p for p in java_procs if p.get('username') == current_user]
+            other_java_procs = [p for p in java_procs if p.get('username') != current_user]
+            
+            # Calculate memory usage
+            user_java_memory = sum(p['memory_gb'] for p in user_java_procs)
+            other_java_memory = sum(p['memory_gb'] for p in other_java_procs)
+            total_java_memory = user_java_memory + other_java_memory
+            
+            # Find the main task process (largest memory user for current user)
+            task_process = max(user_java_procs, key=lambda p: p['memory_gb']) if user_java_procs else None
+            task_memory = task_process['memory_gb'] if task_process else 0
+            
+            # If no Java processes found, log diagnostic info
+            if not java_procs and len(memory_data) == 0:
+                logging.debug(f"No Java processes found. Current user: {current_user}")
+                # Try to find any process related to our tools
+                for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
+                    try:
+                        cmdline = ' '.join(proc.info.get('cmdline', []))
+                        if any(tool in cmdline for tool in ['robot', 'semsql', 'relation-graph', tool_name]):
+                            logging.debug(f"Found related process: PID={proc.info['pid']}, name={proc.info['name']}, cmdline={cmdline[:100]}")
+                    except:
+                        pass
             
             # Track peak memory
-            peak_memory = max(peak_memory, mem_info['used_memory_gb'])
+            peak_memory = max(peak_memory, task_memory)
             
             # Store data point
             data_point = {
                 **mem_info,
                 'java_processes': java_procs,
+                'user_java_processes': user_java_procs,
+                'other_java_processes': other_java_procs,
+                'user_java_memory_gb': round(user_java_memory, 2),
+                'other_java_memory_gb': round(other_java_memory, 2),
                 'total_java_memory_gb': round(total_java_memory, 2),
+                'task_memory_gb': round(task_memory, 2),
                 'tool_name': tool_name
             }
             memory_data.append(data_point)
             
-            # Log current state
-            logging.info(f"Memory: {mem_info['used_memory_gb']:.2f}GB used, "
-                        f"{mem_info['available_memory_gb']:.2f}GB available, "
-                        f"Java: {total_java_memory:.2f}GB")
+            # Log only significant changes or every 10 minutes
+            current_time = datetime.now()
+            time_since_start = (current_time - start_time).total_seconds()
+            
+            # Log every 10 minutes or when memory changes significantly (>5GB)
+            should_log = (len(memory_data) == 1 or  # First data point
+                         time_since_start % 600 < interval or  # Every 10 minutes
+                         abs(task_memory - memory_data[-2].get('task_memory_gb', 0)) > 5.0 if len(memory_data) > 1 else False)  # Significant change
+            
+            if should_log:
+                system_percent = round(mem_info['memory_percent'], 1)
+                task_percent = round((task_memory / mem_info['total_memory_gb']) * 100, 1) if mem_info['total_memory_gb'] > 0 else 0
+                
+                log_msg = f"[{current_time.strftime('%Y-%m-%d %H:%M:%S')}] {tool_name}: "
+                if task_memory > 0:
+                    log_msg += f"Task={task_memory:.1f}GB ({task_percent:.1f}%), "
+                else:
+                    log_msg += f"Java processes: {len(user_java_procs)}, "
+                log_msg += (f"System={mem_info['used_memory_gb']:.1f}GB ({system_percent}%), "
+                           f"Available={mem_info['available_memory_gb']:.1f}GB")
+                
+                # Add process details if we have them
+                if user_java_procs and should_log:
+                    for proc in user_java_procs[:3]:  # Show up to 3 processes
+                        log_msg += f"\n    {proc['type']}: {proc['memory_gb']:.1f}GB (PID: {proc['pid']})"
+                
+                logging.info(log_msg)
+                
+                # Update run summary with memory usage
+                summary = get_summary()
+                if summary:
+                    summary.update_memory_usage(task_memory, task_percent)
             
             time.sleep(interval)
         
@@ -124,8 +235,17 @@ def monitor_tool_execution(tool_name, command, log_dir, interval=15):
         with open(log_file, 'w') as f:
             json.dump(memory_data, f, indent=2)
         
-        # Create summary
+        # Create enhanced summary
         final_memory = memory_data[-1] if memory_data else None
+        
+        # Calculate peak values
+        peak_task_memory = max(d.get('task_memory_gb', 0) for d in memory_data) if memory_data else 0
+        peak_system_memory = max(d.get('used_memory_gb', 0) for d in memory_data) if memory_data else 0
+        peak_user_java_memory = max(d.get('user_java_memory_gb', 0) for d in memory_data) if memory_data else 0
+        
+        # Get system info
+        total_system_memory = memory_data[0]['total_memory_gb'] if memory_data else 0
+        
         summary = {
             'tool_name': tool_name,
             'start_time': start_time.isoformat(),
@@ -133,28 +253,67 @@ def monitor_tool_execution(tool_name, command, log_dir, interval=15):
             'duration_seconds': round(duration, 2),
             'duration_minutes': round(duration / 60, 2),
             'return_code': return_code,
-            'peak_memory_gb': round(peak_memory, 2),
-            'final_memory_gb': round(final_memory['used_memory_gb'], 2) if final_memory else 0,
-            'max_java_memory_gb': round(max(d.get('total_java_memory_gb', 0) for d in memory_data), 2) if memory_data else 0,
-            'data_points': len(memory_data)
+            'peak_task_memory_gb': round(peak_task_memory, 2),
+            'peak_task_memory_percent': round((peak_task_memory / total_system_memory) * 100, 1) if total_system_memory > 0 else 0,
+            'peak_system_memory_gb': round(peak_system_memory, 2),
+            'peak_user_java_memory_gb': round(peak_user_java_memory, 2),
+            'final_task_memory_gb': round(final_memory.get('task_memory_gb', 0), 2) if final_memory else 0,
+            'final_system_memory_gb': round(final_memory['used_memory_gb'], 2) if final_memory else 0,
+            'total_system_memory_gb': round(total_system_memory, 2),
+            'data_points': len(memory_data),
+            'success': return_code == 0
         }
         
-        # Save summary
+        # Save enhanced summary
         with open(summary_file, 'w') as f:
             f.write(f"Memory Usage Summary for {tool_name}\n")
-            f.write("=" * 50 + "\n\n")
+            f.write("=" * 70 + "\n\n")
+            
+            # Task Information
+            f.write("TASK INFORMATION\n")
+            f.write("-" * 70 + "\n")
+            f.write(f"Tool Name: {tool_name}\n")
             f.write(f"Start Time: {summary['start_time']}\n")
             f.write(f"End Time: {summary['end_time']}\n")
             f.write(f"Duration: {summary['duration_minutes']:.2f} minutes\n")
-            f.write(f"Return Code: {summary['return_code']}\n")
-            f.write(f"Peak System Memory: {summary['peak_memory_gb']:.2f} GB\n")
-            f.write(f"Final System Memory: {summary['final_memory_gb']:.2f} GB\n")
-            f.write(f"Max Java Memory: {summary['max_java_memory_gb']:.2f} GB\n")
-            f.write(f"Monitoring Data Points: {summary['data_points']}\n")
+            f.write(f"Status: {'SUCCESS' if summary['success'] else 'FAILED'} (Return Code: {summary['return_code']})\n")
+            f.write("\n")
+            
+            # Memory Usage Summary
+            f.write("MEMORY USAGE SUMMARY\n")
+            f.write("-" * 70 + "\n")
+            f.write(f"System Total Memory: {summary['total_system_memory_gb']:.2f} GB\n")
+            f.write("\n")
+            
+            # Peak Memory Usage
+            f.write("Peak Memory Usage:\n")
+            f.write(f"  - Task Process: {summary['peak_task_memory_gb']:.2f} GB "
+                   f"({summary['peak_task_memory_percent']:.1f}% of system)\n")
+            f.write(f"  - All User Java: {summary['peak_user_java_memory_gb']:.2f} GB\n")
+            f.write(f"  - Total System: {summary['peak_system_memory_gb']:.2f} GB\n")
+            f.write("\n")
+            
+            # Final Memory Usage
+            f.write("Final Memory Usage:\n")
+            f.write(f"  - Task Process: {summary['final_task_memory_gb']:.2f} GB\n")
+            f.write(f"  - Total System: {summary['final_system_memory_gb']:.2f} GB\n")
+            f.write("\n")
+            
+            # Monitoring Details
+            f.write("MONITORING DETAILS\n")
+            f.write("-" * 70 + "\n")
+            f.write(f"Data Points Collected: {summary['data_points']}\n")
+            f.write(f"Monitoring Interval: {interval} seconds\n")
+            f.write(f"\nDetailed logs saved to: {os.path.basename(log_file)}\n")
         
-        logging.info(f"Tool {tool_name} completed with return code {return_code}")
-        logging.info(f"Peak memory usage: {peak_memory:.2f} GB")
+        logging.info(f"\nTool {tool_name} completed with return code {return_code}")
+        logging.info(f"Peak memory usage: {peak_task_memory:.2f} GB ({summary['peak_task_memory_percent']:.1f}% of system)")
         logging.info(f"Duration: {duration/60:.2f} minutes")
+        
+        # Update run summary with final peak memory
+        run_summary = get_summary()
+        if run_summary:
+            run_summary.update_memory_usage(peak_task_memory, summary['peak_task_memory_percent'])
         
         return return_code, summary
         
@@ -183,7 +342,7 @@ if __name__ == "__main__":
     tool_name = sys.argv[1]
     command = sys.argv[2]
     repo_path = sys.argv[3]
-    interval = int(sys.argv[4]) if len(sys.argv) > 4 else 15
+    interval = int(sys.argv[4]) if len(sys.argv) > 4 else 60
     
     utils_dir = create_utils_directory(repo_path)
     return_code, summary = monitor_tool_execution(tool_name, command, utils_dir, interval)
